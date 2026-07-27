@@ -1,0 +1,23 @@
+{
+  "name": "MemoryApp (TypeScript, Vite & SCSS)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "remoteUser": "node",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite development server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "mounts": [
+    "source=memoryapp-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ],
+  "postCreateCommand": "npm ci",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
