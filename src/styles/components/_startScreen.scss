@@ -1,0 +1,10 @@
+@use '../abstracts/mixins' as mixin;
+
+.start-screen {
+    @include mixin.flexCenter(flex, center, center);
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #303131;
+    color: white;
+}
