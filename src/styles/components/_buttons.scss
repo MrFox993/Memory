@@ -1,0 +1,7 @@
+@use '../abstracts/main' as abstracts;
+
+.primary-button {
+    @include abstracts.flexCenter(flex, center, center);
+    background-color: abstracts.$primary-color;
+    gap: 20px;
+}

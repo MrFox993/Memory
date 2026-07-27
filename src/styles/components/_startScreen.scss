@@ -1,7 +1,7 @@
-@use '../abstracts/mixins' as mixin;
+@use '../abstracts/main' as abstracts;
 
 .start-screen {
-    @include mixin.flexCenter(flex, center, center);
+    @include abstracts.flexCenter(flex, center, center);
     flex-direction: column;
     height: 100vh;
     width: 100vw;
