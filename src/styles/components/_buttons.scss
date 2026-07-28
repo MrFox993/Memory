@@ -7,28 +7,28 @@
     gap: 20px;
     padding: 20px;
     color: abstracts.$primary-font-color;
+    border: none;
+    transition: transform 0.256s ease-out;
 
     img{
-        transition: transform 0.256s ease-in-out;
-    }
-
-    .arrow {
-        font-size: 30px;
-        color: abstracts.$primary-font-color;
+        transition: transform 0.256s ease-out;
     }
 
     p {
         font-family: base.$font-red-rose;
         font-weight: base.$font-weight-bold;
+        font-size: 40px;
     }
 
     &:hover {
+        transform: scale(1.125);
+
         img {
             transform: rotate(-25.77deg) scale(1.125);
         }
 
         .arrow {
-            transform: scale(1.0909);
+            transform: scale(1.125);
         }
     }
 }
