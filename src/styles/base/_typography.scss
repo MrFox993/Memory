@@ -1,0 +1,41 @@
+/*
+  Local font setup
+  Place font files at: public/fonts/
+  Expected file names:
+    - RedRose-Bold.woff2 (optional fallback: RedRose-Bold.woff)
+    - Almarai-Regular.woff2 (optional fallback: Almarai-Regular.woff)
+*/
+
+/* Red Rose — Bold (700) */
+@font-face {
+  font-family: 'Red Rose';
+  src: local('Red Rose Bold'), local('RedRose-Bold'),
+       url('/fonts/RedRose-Bold.woff2') format('woff2'),
+       url('/fonts/RedRose-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Almarai — Regular (400) */
+@font-face {
+  font-family: 'Almarai';
+  src: local('Almarai Regular'), local('Almarai-Regular'),
+       url('/fonts/Almarai-Regular.woff2') format('woff2'),
+       url('/fonts/Almarai-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Sass font-family variables */
+$font-red-rose: 'Red Rose', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-almarai: 'Almarai', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+/* Optional convenience aliases */
+$font-heading: $font-red-rose;
+$font-body: $font-almarai;
+
+/* Weight helpers */
+$font-weight-regular: 400;
+$font-weight-bold: 700;
