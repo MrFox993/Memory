@@ -1,0 +1,22 @@
+@use '../base/main' as base;
+@use '../abstracts/main' as abstracts;
+
+
+.settings-screen {
+    @include abstracts.flexCenter($display:flex, $justify:center, $align:center, $direction:column);
+
+    .heading {
+        width:min-content
+    
+        h1 {
+            font-family: base.$font-red-rose;
+            font-weight: base.$font-weight-bold;
+            font-size: 54px;
+        }
+
+        .heading-underline {
+            width: -webkit-fill-available;
+            border: 4px solid rgba(240, 234, 110, 1) 
+        }
+    }
+}
