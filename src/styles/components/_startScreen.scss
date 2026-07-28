@@ -1,4 +1,5 @@
 @use '../abstracts/main' as abstracts;
+@use '../base/main' as base;
 
 .start-screen {
     @include abstracts.flexCenter(flex, center, center);
@@ -12,4 +13,14 @@
     background-position: left;
     background-position-y: bottom;
     background-repeat: no-repeat;
+
+    h2 {
+        font-family: base.$font_almarai;
+        font-weight: base.$font-weight-regular;
+    }
+
+    h1 {
+        font-family: base.$font_red-rose;
+        font-weight: base.$font-weight-bold;
+    }
 }
