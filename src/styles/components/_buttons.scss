@@ -1,7 +1,33 @@
 @use '../abstracts/main' as abstracts;
+@use '../base/main' as base;
 
 .primary-button {
     @include abstracts.flexCenter(flex, center, center);
-    background-color: abstracts.$primary-color;
+    background-color: abstracts.$primary-button-color;
     gap: 20px;
+    padding: 20px;
+    color: abstracts.$primary-font-color;
+
+    img{
+        transition: transform 0.256s ease-in-out;
+    }
+
+    .arrow {
+        font-size: 30px;
+        color: abstracts.$primary-font-color;
+    }
+
+    p {
+        font-family: base.$font-red-rose;
+    }
+
+    &:hover {
+        img {
+            transform: rotate(-25.77deg) scale(1.125);
+        }
+
+        .arrow {
+            transform: scale(1.0909);
+        }
+    }
 }
