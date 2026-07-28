@@ -2,8 +2,7 @@
 @use '../base/main' as base;
 
 .start-screen {
-    @include abstracts.flexCenter(flex, center, center);
-    flex-direction: column;
+    @include abstracts.flexCenter($display:flex, $justify:center, $align:center, $direction:column);
     height: 100vh;
     width: 100vw;
     background-color: #303131;
@@ -13,6 +12,11 @@
     background-position: left;
     background-position-y: bottom;
     background-repeat: no-repeat;
+
+    &-headlines {
+        @include abstracts.flexCenter($display:flex, $justify:center, $align:flex-start, $direction:column);
+        gap: 20px;
+    }
 
     h2 {
         font-family: base.$font_almarai;
