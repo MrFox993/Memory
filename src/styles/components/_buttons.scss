@@ -2,7 +2,7 @@
 @use '../base/main' as base;
 
 .primary-button {
-    @include abstracts.flexCenter(flex, center, center);
+    @include abstracts.flexContent(flex, center, center);
     background-color: abstracts.$primary-button-color;
     gap: 20px;
     padding: 20px;
