@@ -13,11 +13,6 @@
     background-position-y: bottom;
     background-repeat: no-repeat;
 
-    &-headlines {
-        @include abstracts.flexCenter($display:flex, $justify:center, $align:flex-start, $direction:column);
-        gap: 20px;
-    }
-
     h2 {
         font-family: base.$font_almarai;
         font-weight: base.$font-weight-regular;
