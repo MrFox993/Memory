@@ -22,7 +22,6 @@
         <div class="left-split">
             <div class="heading">
                 <h1>Settings</h1>
-                <!-- <p class="heading-underline"></p> -->
                 <img src="./icons/square_underline.png" alt="heading underline">
             </div>
             <div class="game-themes-selection">
@@ -30,24 +29,22 @@
                     <img src="./icons/palette.png" alt="game theme icon">
                     <h2>Game Themes</h2>
                 </div>
-                <div class="game-theme-options">
+                <div class="game-themes-options">
+                    <div >
+                        <input type="radio" name="game-themes" id="codeVibesTheme" checked>
+                        <label for="codeVibesTheme">Code vibes theme</label>
+                    </div>
                     <div>
-                        <div>
-                            <input type="radio" name="game-themes" id="codeVibesTheme" checked>
-                            <label for="codeVibesTheme">Code vibes theme</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="game-themes" id="gamingTheme">
-                            <label for="gamingTheme">Gaming theme</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="game-themes" id="DAProjectTheme">
-                            <label for="DAProjectTheme">DA project theme</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="game-themes" id="foodsTheme">
-                            <label for="foodsTheme">Foods theme</label>                        
-                        </div>
+                        <input type="radio" name="game-themes" id="gamingTheme">
+                        <label for="gamingTheme">Gaming theme</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="game-themes" id="DAProjectTheme">
+                        <label for="DAProjectTheme">DA project theme</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="game-themes" id="foodsTheme">
+                        <label for="foodsTheme">Foods theme</label>                        
                     </div>
                 </div>
             </div>
@@ -56,13 +53,15 @@
                     <img src="./icons/chess_pawn.png" alt="player icon">
                     <h2>Choose Player</h2>
                 </div>
-                <div>
-                    <input type="radio" name="player-selection" id="bluePlayer">
-                    <label for="bluePlayer">Blue</label>
-                </div>
-                <div>
-                    <input type="radio" name="player-selection" id="orangePlayer">
-                    <label for="orangePlayer">Orange</label>                        
+                <div class="player-selection-options">
+                    <div >
+                        <input type="radio" name="player-selection" id="bluePlayer">
+                        <label for="bluePlayer">Blue</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="player-selection" id="orangePlayer">
+                        <label for="orangePlayer">Orange</label>                        
+                    </div>
                 </div>
             </div>
             <div class="board-size-selection">
@@ -70,17 +69,19 @@
                     <img src="./icons/board_size.png" alt="board size icon">
                     <h2>Board Size</h2>
                 </div>
-                <div>
-                    <input type="radio" name="board-size-selection" id="sizeS">
-                    <label for="sizeS">16 Cards</label>
-                </div>
-                <div>
-                    <input type="radio" name="board-size-selection" id="sizeM">
-                    <label for="sizeM">24 Cards</label>                        
-                </div>
-                <div>
-                    <input type="radio" name="board-size-selection" id="sizeL">
-                    <label for="sizeL">36 Cards</label>                        
+                <div class="board-size-selection-options">
+                    <div>
+                        <input type="radio" name="board-size-selection" id="sizeS">
+                        <label for="sizeS">16 Cards</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="board-size-selection" id="sizeM">
+                        <label for="sizeM">24 Cards</label>                        
+                    </div>
+                    <div>
+                        <input type="radio" name="board-size-selection" id="sizeL">
+                        <label for="sizeL">32 Cards</label>                        
+                    </div>
                 </div>
             </div>
         </div>

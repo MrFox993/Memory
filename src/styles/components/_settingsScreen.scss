@@ -19,6 +19,34 @@
             margin-left: 30px
         }
 
+        h2 {
+            font-family: base.$font-almarai;
+            font-weight: base.$font-weight-bold;
+            font-size: 24px;
+        }
+
+        label {
+            font-family: base.$font-almarai;
+            font-weight: base.$font-weight-regular;
+            font-size: 20px
+        }
+
+        [class$="-selection"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:flex-start, $direction:column);
+            gap: 16px;
+            padding-bottom: 20px;
+        }
+
+        [class$="-headline"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:center, $direction:row);
+            gap: 8px;
+        }
+
+        [class$="-options"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:flex-start, $direction:column);
+            gap: 8px;
+        }
+
     }
 
     .right-split {
