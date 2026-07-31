@@ -24,8 +24,20 @@ function updateSelectionOverview() {
   if (startButton) startButton.disabled = !allGroupsSelected;
 }
 
+function updateThemeOptionSelection() {
+  document.querySelectorAll<HTMLInputElement>('input[name="game-themes"]').forEach((input) => {
+    const parent = input.parentElement;
+    if (!parent) return;
+    parent.classList.toggle('theme-option--selected', input.checked);
+  });
+}
+
 document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach((input) => {
-  input.addEventListener('change', updateSelectionOverview);
+  input.addEventListener('change', () => {
+    updateSelectionOverview();
+    updateThemeOptionSelection();
+  });
 });
 
 updateSelectionOverview();
+updateThemeOptionSelection();
