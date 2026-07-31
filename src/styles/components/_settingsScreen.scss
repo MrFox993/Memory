@@ -9,7 +9,7 @@
     padding: 0 10px;
 
     .left-split {
-        width: 50%;
+        width: 40%;
         height: 100%;
         display: grid;
         align-content: center;
@@ -108,7 +108,7 @@
 
     .right-split {
         @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:column);
-        width: 50%;
+        width: 55%;
         height: 100%;
     }
 
@@ -126,11 +126,25 @@
             font-family: base.$font-almarai;
             font-size: 20px;
             white-space: nowrap;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             &--selected {
                 font-family: base.$font-red-rose;
                 font-weight: base.$font-weight-bold;
             }
+        }
+
+        #selectedTheme {
+            flex: 1 1 220px;
+            max-width: 220px;
+        }
+
+        #selectedPlayer,
+        #selectedBoardSize {
+            flex: 1 1 100px;
+            max-width: 120px;
         }
 
         &__divider {
