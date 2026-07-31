@@ -2,7 +2,7 @@
 @use '../base/main' as base;
 
 .start-screen {
-    @include abstracts.flexCenter($display:flex, $justify:center, $align:center, $direction:column);
+    @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:column);
     height: 100vh;
     width: 100vw;
     background-color: #303131;

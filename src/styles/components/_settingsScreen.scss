@@ -1,0 +1,181 @@
+@use '../base/main' as base;
+@use '../abstracts/main' as abstracts;
+
+
+.settings-screen {
+    @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:row);
+    width: 100vw;
+    height: 100vh;
+    padding: 0 10px;
+
+    .left-split {
+        width: 40%;
+        height: 100%;
+        display: grid;
+        align-content: center;
+        justify-items: start;
+
+        .heading {
+            width: 320px;
+            padding-bottom: 80px;
+        }
+            
+        h1 {
+            font-family: base.$font-red-rose;
+            font-weight: base.$font-weight-bold;
+            font-size: 54px;
+            margin-left: 30px;
+        }
+
+        h2 {
+            font-family: base.$font-almarai;
+            font-weight: base.$font-weight-bold;
+            font-size: 24px;
+        }
+
+        label {
+            font-family: base.$font-almarai;
+            font-weight: base.$font-weight-regular;
+            font-size: 20px;
+        }
+
+        [class$="-selection"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:flex-start, $direction:column);
+            gap: 16px;
+            padding-bottom: 20px;
+        }
+
+        [class$="-headline"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:center, $direction:row);
+            gap: 8px;
+        }
+
+        [class$="-options"] {
+            @include abstracts.flexContent($display: flex, $justify:center, $align:flex-start, $direction:column);
+            gap: 8px;
+
+            div {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding-right: 26px;
+            }
+        }
+
+        .game-themes-options {
+            @include abstracts.flexContent($display: flex, $justify:flex-start, $align:flex-start, $direction:column);
+            gap: 16px;
+
+            div::after {
+                content: '';
+                width: 50px;
+                height: 22px;
+                background-image: url('/icons/theme_preview_line.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            .theme-option--selected {
+                label {
+                    font-weight: base.$font-weight-bold;
+                }
+            }
+
+            .theme-option--selected::after {
+                opacity: 1;
+            }
+
+            input[type="radio"] {
+                position: relative;
+                z-index: 1;
+            }
+
+            label {
+                font-family: base.$font-almarai;
+                font-weight: base.$font-weight-regular;
+                font-size: 20px;
+                cursor: pointer;
+                transition: font-weight 0.2s ease;
+                width: 180px;
+            }
+        }
+
+    }
+
+    .right-split {
+        @include abstracts.flexContent($display:flex, $justify:center, $align:flex-end, $direction:column);
+        width: 55%;
+        height: 100%;
+        gap: 32px;
+    }
+
+    .selection-overview {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: min(90%, 680px);
+        min-height: 84px;
+        padding: 16px 8px;
+        background: #f5f5f5;
+
+        &__item {
+            color: #303131;
+            font-family: base.$font-almarai;
+            font-size: 20px;
+            white-space: nowrap;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &--selected {
+                font-family: base.$font-red-rose;
+                font-weight: base.$font-weight-bold;
+            }
+        }
+
+        #selectedTheme {
+            flex: 1 1 180px;
+            max-width: 220px;
+        }
+
+        #selectedPlayer,
+        #selectedBoardSize {
+            flex: 1 1 100px;
+            max-width: 120px;
+        }
+
+        &__divider {
+            width: 16px;
+            height: 56px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
+        &__start {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            // margin-left: auto;
+            padding: 16px;
+            border: 0;
+            background: abstracts.$primary-button-color;
+            color: abstracts.$primary-font-color;
+            font-family: base.$font-red-rose;
+            font-size: 20px;
+            font-weight: base.$font-weight-bold;
+            cursor: pointer;
+
+            img { width: 22px; }
+
+            &:disabled {
+                background: #d8d8d4;
+                color: #a2a2a2;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
