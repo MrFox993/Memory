@@ -24,6 +24,13 @@ function updateSelectionOverview() {
   if (startButton) startButton.disabled = !allGroupsSelected;
 }
 
+const themePreviewMap: Record<string, string> = {
+  codeVibesTheme: 'assets/code_vibes_theme_preview.png',
+  gamingTheme: 'assets/gaming_theme_preview.png',
+  DAProjectTheme: 'assets/da_projects_theme_preview.png',
+  foodsTheme: 'assets/foods_theme_preview.png',
+};
+
 function updateThemeOptionSelection() {
   document.querySelectorAll<HTMLInputElement>('input[name="game-themes"]').forEach((input) => {
     const parent = input.parentElement;
@@ -32,12 +39,24 @@ function updateThemeOptionSelection() {
   });
 }
 
+function updateThemePreview() {
+  const selected = document.querySelector<HTMLInputElement>('input[name="game-themes"]:checked');
+  const previewImg = document.getElementById('themePreview') as HTMLImageElement;
+  if (!previewImg) return;
+
+  const src = selected ? themePreviewMap[selected.id] : themePreviewMap.codeVibesTheme;
+  previewImg.src = src;
+  previewImg.alt = selected ? `${selected.nextElementSibling?.textContent?.trim() ?? 'Theme'} preview image` : 'theme preview image';
+}
+
 document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach((input) => {
   input.addEventListener('change', () => {
     updateSelectionOverview();
     updateThemeOptionSelection();
+    updateThemePreview();
   });
 });
 
 updateSelectionOverview();
 updateThemeOptionSelection();
+updateThemePreview();
