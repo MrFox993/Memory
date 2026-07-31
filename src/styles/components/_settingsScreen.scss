@@ -107,9 +107,10 @@
     }
 
     .right-split {
-        @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:column);
+        @include abstracts.flexContent($display:flex, $justify:center, $align:flex-end, $direction:column);
         width: 55%;
         height: 100%;
+        gap: 32px;
     }
 
     .selection-overview {
@@ -137,7 +138,7 @@
         }
 
         #selectedTheme {
-            flex: 1 1 220px;
+            flex: 1 1 180px;
             max-width: 220px;
         }
 
