@@ -6,17 +6,25 @@
     @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:row);
     width: 100vw;
     height: 100vh;
+    padding: 0% 10%;
 
     .left-split {
-        @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:column);
         width: 50%;
         height: 100%;
+        display: grid;
+        align-content: center;
+        justify-items: start;
+
+        .heading {
+            width: 320px;
+            padding-bottom: 80px;
+        }
             
         h1 {
             font-family: base.$font-red-rose;
             font-weight: base.$font-weight-bold;
             font-size: 54px;
-            margin-left: 30px
+            margin-left: 30px;
         }
 
         h2 {
@@ -28,7 +36,7 @@
         label {
             font-family: base.$font-almarai;
             font-weight: base.$font-weight-regular;
-            font-size: 20px
+            font-size: 20px;
         }
 
         [class$="-selection"] {
