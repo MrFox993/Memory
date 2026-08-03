@@ -105,16 +105,19 @@
     <section id="gameScreen" class="hide game-screen" aria-label="Memory game">
         <header class="game-header">
             <div class="game-score" aria-label="Player scores">
-                <div id="blueScoreCard" class="game-score__player game-score__player--blue">
-                    <span>Blue</span>
-                    <strong id="blueScore">0</strong>
+                <div id="blueScoreCard" class="game-score__player" aria-label="Blue player score">
+                    <img class="game-score__pawn" src="/icons/blue_player_pawn.png" alt="Blue player">
+                    <strong id="blueScore" class="game-score__value">0</strong>
                 </div>
-                <div id="orangeScoreCard" class="game-score__player game-score__player--orange">
-                    <span>Orange</span>
-                    <strong id="orangeScore">0</strong>
+                <div id="orangeScoreCard" class="game-score__player" aria-label="Orange player score">
+                    <img class="game-score__pawn" src="/icons/orange_player_pawn.png" alt="Orange player">
+                    <strong id="orangeScore" class="game-score__value">0</strong>
                 </div>
             </div>
-            <p id="activePlayerDisplay" class="game-active-player" aria-live="polite">Blue's move</p>
+            <div id="activePlayerDisplay" class="game-active-player" aria-live="polite">
+                <span>Current player:</span>
+                <img id="activePlayerPawn" class="game-active-player__pawn" src="/icons/blue_player_pawn.png" alt="Blue player">
+            </div>
             <button id="exitGameButton" class="game-exit-button" type="button">Exit game</button>
         </header>
         <main class="game-board-wrap">
