@@ -64,6 +64,9 @@ const blueScoreElement = document.querySelector<HTMLElement>('#blueScore');
 const orangeScoreElement = document.querySelector<HTMLElement>('#orangeScore');
 const blueScoreCard = document.querySelector<HTMLElement>('#blueScoreCard');
 const orangeScoreCard = document.querySelector<HTMLElement>('#orangeScoreCard');
+const quitGameDialog = document.querySelector<HTMLElement>('#quitGameDialog');
+const backToGameButton = document.querySelector<HTMLButtonElement>('#backToGameButton');
+const confirmQuitGameButton = document.querySelector<HTMLButtonElement>('#confirmQuitGameButton');
 
 let activePlayer: Player = 'blue';
 let scores: Record<Player, number> = { blue: 0, orange: 0 };
@@ -248,7 +251,18 @@ function startGame() {
   showScreen(gameScreen, settingsScreen);
 }
 
+function openQuitGameDialog() {
+  quitGameDialog?.classList.remove('hide');
+  backToGameButton?.focus();
+}
+
+function closeQuitGameDialog() {
+  quitGameDialog?.classList.add('hide');
+  exitGameButton?.focus();
+}
+
 function exitGame() {
+  closeQuitGameDialog();
   showScreen(settingsScreen, gameScreen);
 }
 
@@ -261,7 +275,15 @@ document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach((inpu
 });
 
 startButton?.addEventListener('click', startGame);
-exitGameButton?.addEventListener('click', exitGame);
+exitGameButton?.addEventListener('click', openQuitGameDialog);
+backToGameButton?.addEventListener('click', closeQuitGameDialog);
+confirmQuitGameButton?.addEventListener('click', exitGame);
+quitGameDialog?.addEventListener('click', (event) => {
+  if (event.target === quitGameDialog) closeQuitGameDialog();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !quitGameDialog?.classList.contains('hide')) closeQuitGameDialog();
+});
 
 updateSelectionOverview();
 updateThemeOptionSelection();
