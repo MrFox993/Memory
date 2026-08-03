@@ -26,49 +26,53 @@
     justify-self: start;
 
     &__player {
+        display: flex;
+        align-items: center;
+        gap: 14px;
         min-width: 120px;
-        padding: 12px 18px;
+        padding: 10px 18px;
         background: #f5f5f5;
         border: 3px solid transparent;
         font-family: base.$font-almarai;
+    }
 
-        span,
-        strong {
-            display: block;
-        }
+    &__pawn {
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+        flex: 0 0 auto;
+    }
 
-        span {
-            font-size: 16px;
-        }
+    &__value {
+        display: block;
+        font-family: base.$font-red-rose;
+        font-size: 32px;
+        line-height: 1;
+    }
 
-        strong {
-            font-family: base.$font-red-rose;
-            font-size: 32px;
-            line-height: 1;
-        }
-
-        &--blue {
-            box-shadow: inset 8px 0 0 #5da9ff;
-        }
-
-        &--orange {
-            box-shadow: inset 8px 0 0 #ff9f43;
-        }
-
-        &--active {
-            border-color: abstracts.$primary-button-color;
-        }
+    &__player--active {
+        border-color: abstracts.$primary-button-color;
     }
 }
 
 .game-active-player {
+    display: flex;
+    align-items: center;
     justify-self: center;
-    padding: 14px 32px;
+    gap: 12px;
+    padding: 10px 28px;
     background: abstracts.$primary-button-color;
     font-family: base.$font-red-rose;
     font-size: 28px;
     font-weight: base.$font-weight-bold;
     text-align: center;
+
+    &__pawn {
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+        flex: 0 0 auto;
+    }
 }
 
 .game-exit-button {
