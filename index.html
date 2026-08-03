@@ -120,6 +120,15 @@
         <main class="game-board-wrap">
             <div id="gameBoard" class="game-board" aria-label="Memory cards"></div>
         </main>
+        <div id="quitGameDialog" class="quit-dialog hide" role="dialog" aria-modal="true" aria-labelledby="quitGameDialogTitle">
+            <div class="quit-dialog__content">
+                <h2 id="quitGameDialogTitle">Are you sure you want to quit the game?</h2>
+                <div class="quit-dialog__actions">
+                    <button id="backToGameButton" class="quit-dialog__button quit-dialog__button--secondary" type="button">Back to game</button>
+                    <button id="confirmQuitGameButton" class="quit-dialog__button quit-dialog__button--primary" type="button">Yes, quit game</button>
+                </div>
+            </div>
+        </div>
         <template id="memoryCardTemplate">
             <button class="memory-card" type="button">
                 <span class="memory-card__inner">
