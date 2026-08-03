@@ -123,8 +123,12 @@
         <template id="memoryCardTemplate">
             <button class="memory-card" type="button">
                 <span class="memory-card__inner">
-                    <span class="memory-card__face memory-card__face--back" aria-hidden="true">?</span>
-                    <span class="memory-card__face memory-card__face--front"></span>
+                    <span class="memory-card__face memory-card__face--back" aria-hidden="true">
+                        <img class="memory-card__image memory-card__image--back" alt="">
+                    </span>
+                    <span class="memory-card__face memory-card__face--front">
+                        <img class="memory-card__image memory-card__image--front" alt="">
+                    </span>
                 </span>
             </button>
         </template>
