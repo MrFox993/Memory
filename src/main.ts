@@ -60,6 +60,7 @@ const gameScreen = document.querySelector<HTMLElement>('#gameScreen');
 const gameBoard = document.querySelector<HTMLDivElement>('#gameBoard');
 const cardTemplate = document.querySelector<HTMLTemplateElement>('#memoryCardTemplate');
 const activePlayerDisplay = document.querySelector<HTMLElement>('#activePlayerDisplay');
+const activePlayerPawn = document.querySelector<HTMLImageElement>('#activePlayerPawn');
 const blueScoreElement = document.querySelector<HTMLElement>('#blueScore');
 const orangeScoreElement = document.querySelector<HTMLElement>('#orangeScore');
 const blueScoreCard = document.querySelector<HTMLElement>('#blueScoreCard');
@@ -154,10 +155,18 @@ function createCards(settings: GameSettings): CardData[] {
   return shuffleCards(cards);
 }
 
+function getPlayerPawnSrc(player: Player) {
+  return getPublicAssetSrc(`icons/${player}_player_pawn.png`);
+}
+
 function updateGameHeader() {
   if (blueScoreElement) blueScoreElement.textContent = String(scores.blue);
   if (orangeScoreElement) orangeScoreElement.textContent = String(scores.orange);
-  if (activePlayerDisplay) activePlayerDisplay.textContent = `${activePlayer === 'blue' ? 'Blue' : 'Orange'}'s move`;
+  if (activePlayerDisplay) activePlayerDisplay.setAttribute('aria-label', `Current player: ${activePlayer}`);
+  if (activePlayerPawn) {
+    activePlayerPawn.src = getPlayerPawnSrc(activePlayer);
+    activePlayerPawn.alt = `${activePlayer === 'blue' ? 'Blue' : 'Orange'} player`;
+  }
 
   blueScoreCard?.classList.toggle('game-score__player--active', activePlayer === 'blue');
   orangeScoreCard?.classList.toggle('game-score__player--active', activePlayer === 'orange');
