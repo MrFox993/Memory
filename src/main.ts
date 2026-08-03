@@ -11,7 +11,15 @@ type GameSettings = {
 type CardData = {
   id: number;
   pairId: number;
-  content: string;
+  frontImageSrc: string;
+  deckImageSrc: string;
+  imageAlt: string;
+};
+
+type ThemeAssetConfig = {
+  directory: string;
+  filePrefix: string;
+  imageCount: number;
 };
 
 const selectionGroups = [
@@ -27,11 +35,11 @@ const themePreviewMap: Record<string, string> = {
   foodsTheme: 'assets/foods_theme_preview.png',
 };
 
-const themeCardContentMap: Record<string, string[]> = {
-  codeVibesTheme: ['</>', '{}', 'TS', 'JS', 'CSS', 'HTML', 'Git', 'API', 'UX', 'DB', 'CLI', 'Bug', 'DOM', 'JSON', 'Sass', 'Vite'],
-  gamingTheme: ['🎮', '🕹️', '👾', '🏆', '⭐', '💎', '🚀', '🛡️', '⚔️', '🧩', '🎲', '🎯', '👑', '🪄', '🔥', '⚡'],
-  DAProjectTheme: ['Kanban', 'Scrum', 'Figma', 'GitHub', 'Review', 'Deploy', 'Sprint', 'Wire', 'Brief', 'Team', 'Demo', 'Retro', 'QA', 'Docs', 'MVP', 'Done'],
-  foodsTheme: ['🍕', '🍔', '🍟', '🌮', '🍣', '🍩', '🍪', '🍓', '🍉', '🥑', '🥨', '🧁', '🍜', '🥐', '🍎', '🧀'],
+const themeAssetMap: Record<string, ThemeAssetConfig> = {
+  codeVibesTheme: { directory: 'code_vibes_theme', filePrefix: 'code_vibes_theme', imageCount: 18 },
+  gamingTheme: { directory: 'games_theme', filePrefix: 'games_theme', imageCount: 18 },
+  DAProjectTheme: { directory: 'da_projects_theme', filePrefix: 'da_projects_theme', imageCount: 18 },
+  foodsTheme: { directory: 'foods_theme', filePrefix: 'foods_theme', imageCount: 18 },
 };
 
 const boardSizeMap: Record<string, number> = {
@@ -114,13 +122,31 @@ function shuffleCards<T>(items: T[]): T[] {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
+function getPublicAssetSrc(path: string) {
+  return `${import.meta.env.BASE_URL}${path}`;
+}
+
+function getThemeImageSrc(theme: ThemeAssetConfig, imageName: string) {
+  return getPublicAssetSrc(`assets/${theme.directory}/${theme.filePrefix}_${imageName}.png`);
+}
+
 function createCards(settings: GameSettings): CardData[] {
   const pairCount = settings.boardSize / 2;
-  const themeCards = themeCardContentMap[settings.themeId].slice(0, pairCount);
-  const cards = themeCards.flatMap((content, pairId) => [
-    { id: pairId * 2, pairId, content },
-    { id: pairId * 2 + 1, pairId, content },
-  ]);
+  const theme = themeAssetMap[settings.themeId];
+  const deckImageSrc = getThemeImageSrc(theme, 'deck');
+  const selectedImageNumbers = shuffleCards(
+    Array.from({ length: theme.imageCount }, (_, index) => index + 1),
+  ).slice(0, pairCount);
+
+  const cards = selectedImageNumbers.flatMap((imageNumber, pairId) => {
+    const frontImageSrc = getThemeImageSrc(theme, String(imageNumber));
+    const imageAlt = `Memory card image ${imageNumber}`;
+
+    return [
+      { id: pairId * 2, pairId, frontImageSrc, deckImageSrc, imageAlt },
+      { id: pairId * 2 + 1, pairId, frontImageSrc, deckImageSrc, imageAlt },
+    ];
+  });
 
   return shuffleCards(cards);
 }
@@ -187,13 +213,16 @@ function renderGameBoard(settings: GameSettings) {
   createCards(settings).forEach((cardData) => {
     const fragment = cardTemplate.content.cloneNode(true) as DocumentFragment;
     const card = fragment.querySelector<HTMLButtonElement>('.memory-card');
-    const front = fragment.querySelector<HTMLElement>('.memory-card__face--front');
+    const backImage = fragment.querySelector<HTMLImageElement>('.memory-card__image--back');
+    const frontImage = fragment.querySelector<HTMLImageElement>('.memory-card__image--front');
 
-    if (!card || !front) return;
+    if (!card || !backImage || !frontImage) return;
 
     card.dataset.pairId = String(cardData.pairId);
     card.setAttribute('aria-label', `Hidden memory card ${cardData.id + 1}`);
-    front.textContent = cardData.content;
+    backImage.src = cardData.deckImageSrc;
+    frontImage.src = cardData.frontImageSrc;
+    frontImage.alt = cardData.imageAlt;
     gameBoard.appendChild(fragment);
 
     card.addEventListener('click', () => handleCardClick(card));
