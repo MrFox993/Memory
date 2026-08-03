@@ -18,7 +18,7 @@
             <img class="arrow" src="/icons/Arrow_right.png" alt="arrow right">
         </button>
     </section>
-    <section id="settingsScreen" class="settings-screen">
+    <section id="settingsScreen" class="hide settings-screen">
         <div class="left-split">
             <div class="heading">
                 <h1>Settings</h1>
@@ -101,6 +101,33 @@
                 </button>
             </div>
         </div>
+    </section>
+    <section id="gameScreen" class="game-screen" aria-label="Memory game">
+        <header class="game-header">
+            <div class="game-score" aria-label="Player scores">
+                <div id="blueScoreCard" class="game-score__player game-score__player--blue">
+                    <span>Blue</span>
+                    <strong id="blueScore">0</strong>
+                </div>
+                <div id="orangeScoreCard" class="game-score__player game-score__player--orange">
+                    <span>Orange</span>
+                    <strong id="orangeScore">0</strong>
+                </div>
+            </div>
+            <p id="activePlayerDisplay" class="game-active-player" aria-live="polite">Blue's move</p>
+            <button id="exitGameButton" class="game-exit-button" type="button">Exit game</button>
+        </header>
+        <main class="game-board-wrap">
+            <div id="gameBoard" class="game-board" aria-label="Memory cards"></div>
+        </main>
+        <template id="memoryCardTemplate">
+            <button class="memory-card" type="button">
+                <span class="memory-card__inner">
+                    <span class="memory-card__face memory-card__face--back" aria-hidden="true">?</span>
+                    <span class="memory-card__face memory-card__face--front"></span>
+                </span>
+            </button>
+        </template>
     </section>
 </body>
 </html>
