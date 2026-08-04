@@ -237,6 +237,17 @@
     color: abstracts.$primary-font-color;
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
+
+    &__confetti {
+        position: absolute;
+        top: 0;
+        z-index: 0;
+        width: 90vw;
+        max-height: 34vh;
+        object-fit: contain;
+        pointer-events: none;
+    }
 
     &__panel {
         @include abstracts.flexContent($display: flex, $justify: center, $align: center, $direction: column);
@@ -248,6 +259,8 @@
         box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
         box-sizing: border-box;
         text-align: center;
+        position: relative;
+        z-index: 1;
 
         &--exit-up {
             animation: fly-up-out 500ms ease-out forwards;
@@ -366,6 +379,10 @@
     }
 
     .end-screen {
+        &__confetti {
+            max-height: 24vh;
+        }
+
         &__panel {
             padding: 36px 20px;
         }
