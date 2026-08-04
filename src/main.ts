@@ -68,11 +68,25 @@ const orangeScoreCard = document.querySelector<HTMLElement>('#orangeScoreCard');
 const quitGameDialog = document.querySelector<HTMLElement>('#quitGameDialog');
 const backToGameButton = document.querySelector<HTMLButtonElement>('#backToGameButton');
 const confirmQuitGameButton = document.querySelector<HTMLButtonElement>('#confirmQuitGameButton');
+const gameOverScreen = document.querySelector<HTMLElement>('#gameOverScreen');
+const gameOverPanel = document.querySelector<HTMLElement>('#gameOverPanel');
+const winnerScreen = document.querySelector<HTMLElement>('#winnerScreen');
+const finalBlueScoreElement = document.querySelector<HTMLElement>('#finalBlueScore');
+const finalOrangeScoreElement = document.querySelector<HTMLElement>('#finalOrangeScore');
+const winnerStatusElement = document.querySelector<HTMLElement>('#winnerStatus');
+const winnerImageElement = document.querySelector<HTMLImageElement>('#winnerImage');
+const backToStartButton = document.querySelector<HTMLButtonElement>('#backToStartButton');
 
 let activePlayer: Player = 'blue';
 let scores: Record<Player, number> = { blue: 0, orange: 0 };
 let flippedCards: HTMLButtonElement[] = [];
 let isBoardLocked = false;
+let currentSettings: GameSettings | null = null;
+let matchedPairs = 0;
+let resetTurnTimeoutId: number | undefined;
+let finishGameTimeoutId: number | undefined;
+let gameOverExitTimeoutId: number | undefined;
+let winnerScreenTimeoutId: number | undefined;
 
 function updateSelectionOverview() {
   const allGroupsSelected = selectionGroups.every(({ name, outputId }) => {
@@ -159,13 +173,39 @@ function getPlayerPawnSrc(player: Player) {
   return getPublicAssetSrc(`icons/${player}_player_pawn.png`);
 }
 
+function getPlayerLabel(player: Player) {
+  return player === 'blue' ? 'Blue' : 'Orange';
+}
+
+function getWinner(): Player | 'draw' {
+  if (scores.blue === scores.orange) return 'draw';
+  return scores.blue > scores.orange ? 'blue' : 'orange';
+}
+
+function clearEndScreenTimers() {
+  [resetTurnTimeoutId, finishGameTimeoutId, gameOverExitTimeoutId, winnerScreenTimeoutId].forEach((timeoutId) => {
+    if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+  });
+
+  resetTurnTimeoutId = undefined;
+  finishGameTimeoutId = undefined;
+  gameOverExitTimeoutId = undefined;
+  winnerScreenTimeoutId = undefined;
+}
+
+function resetEndScreens() {
+  gameOverScreen?.classList.add('hide');
+  winnerScreen?.classList.add('hide');
+  gameOverPanel?.classList.remove('end-screen__panel--exit-up');
+}
+
 function updateGameHeader() {
   if (blueScoreElement) blueScoreElement.textContent = String(scores.blue);
   if (orangeScoreElement) orangeScoreElement.textContent = String(scores.orange);
   if (activePlayerDisplay) activePlayerDisplay.setAttribute('aria-label', `Current player: ${activePlayer}`);
   if (activePlayerPawn) {
     activePlayerPawn.src = getPlayerPawnSrc(activePlayer);
-    activePlayerPawn.alt = `${activePlayer === 'blue' ? 'Blue' : 'Orange'} player`;
+    activePlayerPawn.alt = `${getPlayerLabel(activePlayer)} player`;
   }
 
   blueScoreCard?.classList.toggle('game-score__player--active', activePlayer === 'blue');
@@ -184,15 +224,73 @@ function resetTurn() {
   switchPlayer();
 }
 
+function updateFinalScoreScreen() {
+  if (finalBlueScoreElement) finalBlueScoreElement.textContent = String(scores.blue);
+  if (finalOrangeScoreElement) finalOrangeScoreElement.textContent = String(scores.orange);
+}
+
+function updateWinnerScreen() {
+  const winner = getWinner();
+
+  if (winner === 'draw') {
+    if (winnerStatusElement) winnerStatusElement.textContent = "It's a DRAW";
+    if (winnerImageElement) {
+      winnerImageElement.src = getPublicAssetSrc('icons/Scale_Icon.png');
+      winnerImageElement.alt = 'Draw scale icon';
+    }
+    return;
+  }
+
+  const winnerLabel = getPlayerLabel(winner);
+  if (winnerStatusElement) winnerStatusElement.textContent = `The Winner is ${winnerLabel}`;
+  if (winnerImageElement) {
+    winnerImageElement.src = getPlayerPawnSrc(winner);
+    winnerImageElement.alt = `${winnerLabel} player`;
+  }
+}
+
+function showWinnerScreen() {
+  gameOverScreen?.classList.add('hide');
+  gameOverPanel?.classList.remove('end-screen__panel--exit-up');
+  updateWinnerScreen();
+  winnerScreen?.classList.remove('hide');
+  backToStartButton?.focus();
+}
+
+function showGameOverScreen() {
+  updateFinalScoreScreen();
+  gameScreen?.classList.add('hide');
+  gameOverScreen?.classList.remove('hide');
+
+  gameOverExitTimeoutId = window.setTimeout(() => {
+    gameOverPanel?.classList.add('end-screen__panel--exit-up');
+
+    winnerScreenTimeoutId = window.setTimeout(showWinnerScreen, 500);
+  }, 1200);
+}
+
+function finishGame() {
+  isBoardLocked = true;
+  showGameOverScreen();
+}
+
 function finishMatch() {
   scores[activePlayer] += 1;
+  matchedPairs += 1;
   flippedCards.forEach((card) => {
     card.classList.add('memory-card--matched');
     card.disabled = true;
   });
   flippedCards = [];
-  isBoardLocked = false;
   updateGameHeader();
+
+  if (currentSettings && matchedPairs === currentSettings.boardSize / 2) {
+    isBoardLocked = true;
+    finishGameTimeoutId = window.setTimeout(finishGame, 500);
+    return;
+  }
+
+  isBoardLocked = false;
 }
 
 function handleCardClick(card: HTMLButtonElement) {
@@ -212,7 +310,7 @@ function handleCardClick(card: HTMLButtonElement) {
   }
 
   isBoardLocked = true;
-  window.setTimeout(resetTurn, 900);
+  resetTurnTimeoutId = window.setTimeout(resetTurn, 900);
 }
 
 function renderGameBoard(settings: GameSettings) {
@@ -250,9 +348,13 @@ function startGame() {
   const settings = getSelectedGameSettings();
   if (!settings) return;
 
+  clearEndScreenTimers();
+  resetEndScreens();
+  currentSettings = settings;
   activePlayer = settings.player;
   scores = { blue: 0, orange: 0 };
   flippedCards = [];
+  matchedPairs = 0;
   isBoardLocked = false;
 
   renderGameBoard(settings);
@@ -271,8 +373,20 @@ function closeQuitGameDialog() {
 }
 
 function exitGame() {
+  clearEndScreenTimers();
+  resetEndScreens();
   closeQuitGameDialog();
   showScreen(settingsScreen, gameScreen);
+}
+
+function backToStart() {
+  clearEndScreenTimers();
+  resetEndScreens();
+  currentSettings = null;
+  flippedCards = [];
+  matchedPairs = 0;
+  isBoardLocked = false;
+  showScreen(settingsScreen, winnerScreen);
 }
 
 document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach((input) => {
@@ -287,6 +401,7 @@ startButton?.addEventListener('click', startGame);
 exitGameButton?.addEventListener('click', openQuitGameDialog);
 backToGameButton?.addEventListener('click', closeQuitGameDialog);
 confirmQuitGameButton?.addEventListener('click', exitGame);
+backToStartButton?.addEventListener('click', backToStart);
 quitGameDialog?.addEventListener('click', (event) => {
   if (event.target === quitGameDialog) closeQuitGameDialog();
 });
