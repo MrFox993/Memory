@@ -75,6 +75,7 @@ const finalBlueScoreElement = document.querySelector<HTMLElement>('#finalBlueSco
 const finalOrangeScoreElement = document.querySelector<HTMLElement>('#finalOrangeScore');
 const winnerStatusElement = document.querySelector<HTMLElement>('#winnerStatus');
 const winnerImageElement = document.querySelector<HTMLImageElement>('#winnerImage');
+const winnerConfettiElement = document.querySelector<HTMLImageElement>('#winnerConfetti');
 const backToStartButton = document.querySelector<HTMLButtonElement>('#backToStartButton');
 
 let activePlayer: Player = 'blue';
@@ -196,6 +197,7 @@ function clearEndScreenTimers() {
 function resetEndScreens() {
   gameOverScreen?.classList.add('hide');
   winnerScreen?.classList.add('hide');
+  winnerConfettiElement?.classList.add('hide');
   gameOverPanel?.classList.remove('end-screen__panel--exit-up');
 }
 
@@ -233,6 +235,7 @@ function updateWinnerScreen() {
   const winner = getWinner();
 
   if (winner === 'draw') {
+    winnerConfettiElement?.classList.add('hide');
     if (winnerStatusElement) winnerStatusElement.textContent = "It's a DRAW";
     if (winnerImageElement) {
       winnerImageElement.src = getPublicAssetSrc('icons/Scale_Icon.png');
@@ -241,6 +244,7 @@ function updateWinnerScreen() {
     return;
   }
 
+  winnerConfettiElement?.classList.remove('hide');
   const winnerLabel = getPlayerLabel(winner);
   if (winnerStatusElement) winnerStatusElement.textContent = `The Winner is ${winnerLabel}`;
   if (winnerImageElement) {
