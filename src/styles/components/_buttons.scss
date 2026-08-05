@@ -1,6 +1,10 @@
 @use "../abstracts/main" as abstracts;
 @use "../base/main" as base;
 
+button {
+  cursor: pointer;
+}
+
 .primary-button {
   @include abstracts.flexContent(flex, center, center);
   background-color: abstracts.$primary-button-color;
@@ -30,5 +34,22 @@
     .arrow {
       transform: scale(1.125);
     }
+  }
+}
+
+.secondary-button {
+  @include abstracts.flexContent(flex, center, center);
+  gap: 10px;
+  background-color: abstracts.$secondary-button-color;
+  color: abstracts.$secondary-font-color;
+  font-family: base.$font-red-rose;
+  font-size: 24px;
+  font-weight: base.$font-weight-bold;
+  padding: 16px 24px;
+  border: 1px solid abstracts.$primary-button-color;
+  transition: transform 0.2s ease-out;
+
+  &:hover {
+    border: 3px solid abstracts.$primary-button-color;
   }
 }

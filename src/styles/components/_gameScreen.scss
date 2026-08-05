@@ -77,18 +77,6 @@
 
 .game-exit-button {
   justify-self: end;
-  padding: 14px 22px;
-  border: 0;
-  background: #f5f5f5;
-  color: abstracts.$primary-font-color;
-  font-family: base.$font-red-rose;
-  font-size: 18px;
-  font-weight: base.$font-weight-bold;
-  cursor: pointer;
-
-  &:hover {
-    background: abstracts.$primary-button-color;
-  }
 }
 
 .game-board-wrap {
@@ -225,7 +213,6 @@
     font-family: base.$font-red-rose;
     font-size: 18px;
     font-weight: base.$font-weight-bold;
-    cursor: pointer;
 
     &--primary {
       background: abstracts.$primary-button-color;
@@ -313,7 +300,6 @@
     font-family: base.$font-red-rose;
     font-size: 24px;
     font-weight: base.$font-weight-bold;
-    cursor: pointer;
     transition: transform 0.2s ease-out;
 
     &:hover,
