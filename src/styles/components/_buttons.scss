@@ -1,6 +1,10 @@
 @use "../abstracts/main" as abstracts;
 @use "../base/main" as base;
 
+button {
+  cursor: pointer;
+}
+
 .primary-button {
   @include abstracts.flexContent(flex, center, center);
   background-color: abstracts.$primary-button-color;

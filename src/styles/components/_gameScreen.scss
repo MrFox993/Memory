@@ -77,7 +77,6 @@
 
 .game-exit-button {
   justify-self: end;
-  cursor: pointer;
 }
 
 .game-board-wrap {
@@ -214,7 +213,6 @@
     font-family: base.$font-red-rose;
     font-size: 18px;
     font-weight: base.$font-weight-bold;
-    cursor: pointer;
 
     &--primary {
       background: abstracts.$primary-button-color;
@@ -302,7 +300,6 @@
     font-family: base.$font-red-rose;
     font-size: 24px;
     font-weight: base.$font-weight-bold;
-    cursor: pointer;
     transition: transform 0.2s ease-out;
 
     &:hover,
