@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
 
   pull_request:
 
@@ -16,22 +15,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Node installieren
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.16.0
+          node-version: 22
 
-      - name: Dependencies installieren
+      - name: Install dependencies
         run: npm ci
 
-    #   - name: ESLint
-    #     run: npm run lint
-
-      - name: TypeScript prüfen
+      - name: Type check
         run: npx tsc --noEmit
 
-      - name: SCSS bauen
-        run: npm run build:scss
-
-      - name: Projekt bauen
+      - name: Build
         run: npm run build
