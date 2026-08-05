@@ -69,10 +69,12 @@ const playerMap: Record<string, Player> = {
   orangePlayer: "orange",
 };
 
+const showSettingsButton = document.querySelector<HTMLButtonElement>("#showSettingsButton");
 const startButton =
   document.querySelector<HTMLButtonElement>("#startGameButton");
 const exitGameButton =
   document.querySelector<HTMLButtonElement>("#exitGameButton");
+const startScreen = document.querySelector<HTMLElement>("#")
 const settingsScreen = document.querySelector<HTMLElement>("#settingsScreen");
 const gameScreen = document.querySelector<HTMLElement>("#gameScreen");
 const gameBoard = document.querySelector<HTMLDivElement>("#gameBoard");
@@ -479,6 +481,14 @@ function backToStart() {
   showScreen(settingsScreen, winnerScreen);
 }
 
+function showSettingsScreen() {
+  currentSettings = null;
+  flippedCards = [];
+  matchedPairs = 0;
+  isBoardLocked = false;
+  showScreen(settingsScreen, startScreen);
+}
+
 document
   .querySelectorAll<HTMLInputElement>('input[type="radio"]')
   .forEach((input) => {
@@ -489,6 +499,7 @@ document
     });
   });
 
+showSettingsButton?.addEventListener("click", showSettingsScreen);
 startButton?.addEventListener("click", startGame);
 exitGameButton?.addEventListener("click", openQuitGameDialog);
 backToGameButton?.addEventListener("click", closeQuitGameDialog);
