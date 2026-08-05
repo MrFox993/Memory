@@ -1,34 +1,34 @@
-@use '../abstracts/main' as abstracts;
-@use '../base/main' as base;
+@use "../abstracts/main" as abstracts;
+@use "../base/main" as base;
 
 .primary-button {
-    @include abstracts.flexContent(flex, center, center);
-    background-color: abstracts.$primary-button-color;
-    gap: 20px;
-    padding: 20px;
-    color: abstracts.$primary-font-color;
-    border: none;
+  @include abstracts.flexContent(flex, center, center);
+  background-color: abstracts.$primary-button-color;
+  gap: 20px;
+  padding: 20px;
+  color: abstracts.$primary-font-color;
+  border: none;
+  transition: transform 0.256s ease-out;
+
+  img {
     transition: transform 0.256s ease-out;
+  }
 
-    img{
-        transition: transform 0.256s ease-out;
+  p {
+    font-family: base.$font-red-rose;
+    font-weight: base.$font-weight-bold;
+    font-size: 40px;
+  }
+
+  &:hover {
+    transform: scale(1.125);
+
+    img {
+      transform: rotate(-25.77deg) scale(1.125);
     }
 
-    p {
-        font-family: base.$font-red-rose;
-        font-weight: base.$font-weight-bold;
-        font-size: 40px;
+    .arrow {
+      transform: scale(1.125);
     }
-
-    &:hover {
-        transform: scale(1.125);
-
-        img {
-            transform: rotate(-25.77deg) scale(1.125);
-        }
-
-        .arrow {
-            transform: scale(1.125);
-        }
-    }
+  }
 }

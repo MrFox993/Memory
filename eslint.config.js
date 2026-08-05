@@ -8,7 +8,7 @@ module.exports = [
     files: ["**/*.ts"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "module"
-    }
-  }
+      sourceType: "module",
+    },
+  },
 ];

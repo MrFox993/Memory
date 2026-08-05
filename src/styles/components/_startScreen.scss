@@ -1,27 +1,32 @@
-@use '../abstracts/main' as abstracts;
-@use '../base/main' as base;
+@use "../abstracts/main" as abstracts;
+@use "../base/main" as base;
 
 .start-screen {
-    @include abstracts.flexContent($display:flex, $justify:center, $align:center, $direction:column);
-    height: 100vh;
-    width: 100vw;
-    background-color: #303131;
-    color: white;
-    gap: 40px;
-    background-image: url('./dist/assets/stadia_controller_bg.png');
-    background-position: left;
-    background-position-y: bottom;
-    background-repeat: no-repeat;
+  @include abstracts.flexContent(
+    $display: flex,
+    $justify: center,
+    $align: center,
+    $direction: column
+  );
+  height: 100vh;
+  width: 100vw;
+  background-color: #303131;
+  color: white;
+  gap: 40px;
+  background-image: url("./dist/assets/stadia_controller_bg.png");
+  background-position: left;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
 
-    h2 {
-        font-family: base.$font_almarai;
-        font-weight: base.$font-weight-regular;
-        font-size: 48px;
-    }
+  h2 {
+    font-family: base.$font_almarai;
+    font-weight: base.$font-weight-regular;
+    font-size: 48px;
+  }
 
-    h1 {
-        font-family: base.$font_red-rose;
-        font-weight: base.$font-weight-bold;
-        font-size: 140px;
-    }
+  h1 {
+    font-family: base.$font_red-rose;
+    font-weight: base.$font-weight-bold;
+    font-size: 140px;
+  }
 }

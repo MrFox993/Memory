@@ -15,9 +15,7 @@
   "postCreateCommand": "npm ci",
   "customizations": {
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode"
-      ]
+      "extensions": ["esbenp.prettier-vscode"]
     }
   }
 }
