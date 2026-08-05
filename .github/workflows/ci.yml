@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node installieren
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Dependencies installieren
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: TypeScript prüfen
+        run: npx tsc --noEmit
+
+      - name: SCSS bauen
+        run: npm run build:scss
+
+      - name: Projekt bauen
+        run: npm run build
