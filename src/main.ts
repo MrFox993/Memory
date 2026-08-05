@@ -69,12 +69,14 @@ const playerMap: Record<string, Player> = {
   orangePlayer: "orange",
 };
 
-const showSettingsButton = document.querySelector<HTMLButtonElement>("#showSettingsButton");
+const showSettingsButton = document.querySelector<HTMLButtonElement>(
+  "#showSettingsButton",
+);
 const startButton =
   document.querySelector<HTMLButtonElement>("#startGameButton");
 const exitGameButton =
   document.querySelector<HTMLButtonElement>("#exitGameButton");
-const startScreen = document.querySelector<HTMLElement>("#")
+const startScreen = document.querySelector<HTMLElement>("#startScreen");
 const settingsScreen = document.querySelector<HTMLElement>("#settingsScreen");
 const gameScreen = document.querySelector<HTMLElement>("#gameScreen");
 const gameBoard = document.querySelector<HTMLDivElement>("#gameBoard");
