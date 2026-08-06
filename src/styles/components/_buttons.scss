@@ -24,7 +24,7 @@ button {
     font-size: 40px;
   }
 
-  &:hover {
+  &:hover:enabled {
     transform: scale(1.125);
 
     img {
@@ -49,7 +49,7 @@ button {
   border: 1px solid abstracts.$primary-button-color;
   transition: transform 0.2s ease-out;
 
-  &:hover {
+  &:hover:enabled {
     border: 3px solid abstracts.$primary-button-color;
   }
 }
