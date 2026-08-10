@@ -105,17 +105,17 @@
 
   &:hover:enabled,
   &:focus-visible {
-    background-color: var(--game-theme-accent-hovered-color);
+    background-color: var(--game-theme-accent-hovered-fill-color);
     border-color: var(--game-theme-accent-hovered-color);
     color: var(--game-theme-accent-hovered-text-color);
 
     img {
-      filter: brightness(0) invert(1);
+      filter: invert(1);
     }
 
     svg,
     svg * {
-      fill: var(--game-theme-accent-hovered-fill-color);
+      fill: var(--game-theme-accent-hovered-color);
     }
   }
 }
@@ -287,8 +287,8 @@
 
     &:hover,
     &:focus-visible {
-      background: var(--game-theme-accent-hovered-color);
-      border-color: var(--game-theme-accent-hovered-color);
+      background: var(--game-theme-accent-hovered-fill-color);
+      border: 2px solid var(--game-theme-accent-hovered-color);
       color: var(--game-theme-accent-hovered-text-color);
       transform: translateY(-2px);
 
@@ -390,7 +390,8 @@
 
     &:hover,
     &:focus-visible {
-      background: var(--game-theme-accent-hovered-color);
+      background: var(--game-theme-accent-hovered-fill-color);
+      border: 2px solid var(--game-theme-accent-hovered-color);
       color: var(--game-theme-accent-hovered-text-color);
       transform: translateY(-3px) scale(1.04);
 
