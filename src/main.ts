@@ -25,6 +25,9 @@ type ThemeAssetConfig = {
 type ThemeColorConfig = {
   accentColor: string;
   accentTextColor: string;
+  accentHoveredColor: string;
+  accentHoveredTextColor: string;
+  accentHoveredFillColor: string;
 };
 
 const selectionGroups = [
@@ -66,19 +69,31 @@ const themeAssetMap: Record<string, ThemeAssetConfig> = {
 const themeColorMap: Record<string, ThemeColorConfig> = {
   codeVibesTheme: {
     accentColor: "#4DD5BC",
-    accentTextColor: "#286F62",
+    accentTextColor: "#86E9D624",
+    accentHoveredColor: "#286F62",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#ffffff",
   },
   gamingTheme: {
     accentColor: "#ED1B76",
     accentTextColor: "#ED1B76",
+    accentHoveredColor: "#8F1048",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#ffffff",
   },
   DAProjectTheme: {
     accentColor: "#1E7594",
     accentTextColor: "#1E7594",
+    accentHoveredColor: "#0F4F65",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#ffffff",
   },
   foodsTheme: {
     accentColor: "#F3832D",
     accentTextColor: "#FFAB3E",
+    accentHoveredColor: "#8A4212",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#ffffff",
   },
 };
 
@@ -276,6 +291,18 @@ function applyThemeColors(themeId: string) {
   document.documentElement.style.setProperty(
     "--game-theme-accent-text-color",
     themeColors.accentTextColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-color",
+    themeColors.accentHoveredColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-text-color",
+    themeColors.accentHoveredTextColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-fill-color",
+    themeColors.accentHoveredFillColor,
   );
   gameScreen?.setAttribute("data-theme", themeId);
   gameOverScreen?.setAttribute("data-theme", themeId);
