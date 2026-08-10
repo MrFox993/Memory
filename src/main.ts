@@ -22,6 +22,15 @@ type ThemeAssetConfig = {
   imageCount: number;
 };
 
+type ThemeColorConfig = {
+  accentColor: string;
+  accentTextColor: string;
+  accentFillColor: string;
+  accentHoveredColor: string;
+  accentHoveredTextColor: string;
+  accentHoveredFillColor: string;
+};
+
 const selectionGroups = [
   { name: "game-themes", outputId: "selectedTheme" },
   { name: "player-selection", outputId: "selectedPlayer" },
@@ -55,6 +64,41 @@ const themeAssetMap: Record<string, ThemeAssetConfig> = {
     directory: "foods_theme",
     filePrefix: "foods_theme",
     imageCount: 18,
+  },
+};
+
+const themeColorMap: Record<string, ThemeColorConfig> = {
+  codeVibesTheme: {
+    accentColor: "#4DD5BC",
+    accentTextColor: "#ffffff",
+    accentFillColor: "#303131",
+    accentHoveredColor: "#3ABCA4",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#66CFBCB2",
+  },
+  gamingTheme: {
+    accentColor: "#ED1B76",
+    accentTextColor: "#ffffff",
+    accentFillColor: "#294F60",
+    accentHoveredColor: "#E71C4F",
+    accentHoveredTextColor: "#ED1B76",
+    accentHoveredFillColor: "#ffffff",
+  },
+  DAProjectTheme: {
+    accentColor: "#BFE5F2",
+    accentTextColor: "#1E7594",
+    accentFillColor: "#BFE5F2",
+    accentHoveredColor: "#1E7594",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#1E7594",
+  },
+  foodsTheme: {
+    accentColor: "#F3832D",
+    accentTextColor: "#FFFFFF",
+    accentFillColor: "#FFAB3E",
+    accentHoveredColor: "#F3832D",
+    accentHoveredTextColor: "#ffffff",
+    accentHoveredFillColor: "#F3832D",
   },
 };
 
@@ -240,6 +284,38 @@ function getPlayerLabel(player: Player) {
 function getWinner(): Player | "draw" {
   if (scores.blue === scores.orange) return "draw";
   return scores.blue > scores.orange ? "blue" : "orange";
+}
+
+function applyThemeColors(themeId: string) {
+  const themeColors = themeColorMap[themeId] ?? themeColorMap.codeVibesTheme;
+
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-color",
+    themeColors.accentColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-text-color",
+    themeColors.accentTextColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-fill-color",
+    themeColors.accentFillColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-color",
+    themeColors.accentHoveredColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-text-color",
+    themeColors.accentHoveredTextColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-hovered-fill-color",
+    themeColors.accentHoveredFillColor,
+  );
+  gameScreen?.setAttribute("data-theme", themeId);
+  gameOverScreen?.setAttribute("data-theme", themeId);
+  winnerScreen?.setAttribute("data-theme", themeId);
 }
 
 function clearEndScreenTimers() {
@@ -451,6 +527,7 @@ function startGame() {
   matchedPairs = 0;
   isBoardLocked = false;
 
+  applyThemeColors(settings.themeId);
   renderGameBoard(settings);
   updateGameHeader();
   showScreen(gameScreen, settingsScreen);
