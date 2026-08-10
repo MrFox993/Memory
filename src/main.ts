@@ -69,31 +69,31 @@ const themeAssetMap: Record<string, ThemeAssetConfig> = {
 const themeColorMap: Record<string, ThemeColorConfig> = {
   codeVibesTheme: {
     accentColor: "#4DD5BC",
-    accentTextColor: "#86E9D624",
-    accentHoveredColor: "#286F62",
+    accentTextColor: "#ffffff",
+    accentHoveredColor: "#3ABCA4",
     accentHoveredTextColor: "#ffffff",
-    accentHoveredFillColor: "#ffffff",
+    accentHoveredFillColor: "#66CFBCB2",
   },
   gamingTheme: {
     accentColor: "#ED1B76",
-    accentTextColor: "#ED1B76",
-    accentHoveredColor: "#8F1048",
-    accentHoveredTextColor: "#ffffff",
+    accentTextColor: "#ffffff",
+    accentHoveredColor: "#E71C4F",
+    accentHoveredTextColor: "#ED1B76",
     accentHoveredFillColor: "#ffffff",
   },
   DAProjectTheme: {
-    accentColor: "#1E7594",
+    accentColor: "#BFE5F2",
     accentTextColor: "#1E7594",
-    accentHoveredColor: "#0F4F65",
+    accentHoveredColor: "#1E7594",
     accentHoveredTextColor: "#ffffff",
-    accentHoveredFillColor: "#ffffff",
+    accentHoveredFillColor: "#1E7594",
   },
   foodsTheme: {
     accentColor: "#F3832D",
-    accentTextColor: "#FFAB3E",
-    accentHoveredColor: "#8A4212",
+    accentTextColor: "#F3832D",
+    accentHoveredColor: "#F3832D",
     accentHoveredTextColor: "#ffffff",
-    accentHoveredFillColor: "#ffffff",
+    accentHoveredFillColor: "#F3832D",
   },
 };
 
