@@ -22,6 +22,11 @@ type ThemeAssetConfig = {
   imageCount: number;
 };
 
+type ThemeColorConfig = {
+  accentColor: string;
+  accentTextColor: string;
+};
+
 const selectionGroups = [
   { name: "game-themes", outputId: "selectedTheme" },
   { name: "player-selection", outputId: "selectedPlayer" },
@@ -55,6 +60,25 @@ const themeAssetMap: Record<string, ThemeAssetConfig> = {
     directory: "foods_theme",
     filePrefix: "foods_theme",
     imageCount: 18,
+  },
+};
+
+const themeColorMap: Record<string, ThemeColorConfig> = {
+  codeVibesTheme: {
+    accentColor: "#4DD5BC",
+    accentTextColor: "#286F62",
+  },
+  gamingTheme: {
+    accentColor: "#ED1B76",
+    accentTextColor: "#ED1B76",
+  },
+  DAProjectTheme: {
+    accentColor: "#1E7594",
+    accentTextColor: "#1E7594",
+  },
+  foodsTheme: {
+    accentColor: "#F3832D",
+    accentTextColor: "#FFAB3E",
   },
 };
 
@@ -240,6 +264,22 @@ function getPlayerLabel(player: Player) {
 function getWinner(): Player | "draw" {
   if (scores.blue === scores.orange) return "draw";
   return scores.blue > scores.orange ? "blue" : "orange";
+}
+
+function applyThemeColors(themeId: string) {
+  const themeColors = themeColorMap[themeId] ?? themeColorMap.codeVibesTheme;
+
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-color",
+    themeColors.accentColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-text-color",
+    themeColors.accentTextColor,
+  );
+  gameScreen?.setAttribute("data-theme", themeId);
+  gameOverScreen?.setAttribute("data-theme", themeId);
+  winnerScreen?.setAttribute("data-theme", themeId);
 }
 
 function clearEndScreenTimers() {
@@ -451,6 +491,7 @@ function startGame() {
   matchedPairs = 0;
   isBoardLocked = false;
 
+  applyThemeColors(settings.themeId);
   renderGameBoard(settings);
   updateGameHeader();
   showScreen(gameScreen, settingsScreen);
