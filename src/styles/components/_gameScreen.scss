@@ -4,6 +4,7 @@
 :root {
   --game-theme-accent-color: #{abstracts.$primary-button-color};
   --game-theme-accent-text-color: #{abstracts.$primary-font-color};
+  --game-theme-accent-fill-color: #{abstracts.$primary-font-color};
   --game-theme-accent-hovered-color: #{abstracts.$primary-font-color};
   --game-theme-accent-hovered-text-color: #{abstracts.$secondary-font-color};
   --game-theme-accent-hovered-fill-color: #{abstracts.$secondary-font-color};
@@ -96,6 +97,7 @@
   img,
   svg,
   svg * {
+    fill: var(--game-theme-accent-fill-color);
     transition:
       fill 0.2s ease-out,
       filter 0.2s ease-out;
@@ -267,11 +269,11 @@
     img,
     svg,
     svg * {
+      fill: var(--game-theme-accent-fill-color);
       transition:
         fill 0.2s ease-out,
         filter 0.2s ease-out;
     }
-
 
     &--primary {
       background: var(--game-theme-accent-color);
@@ -298,7 +300,6 @@
       svg * {
         fill: var(--game-theme-accent-hovered-fill-color);
       }
-
     }
   }
 }
@@ -381,11 +382,11 @@
     img,
     svg,
     svg * {
+      fill: var(--game-theme-accent-fill-color);
       transition:
         fill 0.2s ease-out,
         filter 0.2s ease-out;
     }
-
 
     &:hover,
     &:focus-visible {
@@ -401,7 +402,6 @@
       svg * {
         fill: var(--game-theme-accent-hovered-fill-color);
       }
-
     }
   }
 }

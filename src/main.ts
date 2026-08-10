@@ -25,6 +25,7 @@ type ThemeAssetConfig = {
 type ThemeColorConfig = {
   accentColor: string;
   accentTextColor: string;
+  accentFillColor: string;
   accentHoveredColor: string;
   accentHoveredTextColor: string;
   accentHoveredFillColor: string;
@@ -70,6 +71,7 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   codeVibesTheme: {
     accentColor: "#4DD5BC",
     accentTextColor: "#ffffff",
+    accentFillColor: "#303131",
     accentHoveredColor: "#3ABCA4",
     accentHoveredTextColor: "#ffffff",
     accentHoveredFillColor: "#66CFBCB2",
@@ -77,6 +79,7 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   gamingTheme: {
     accentColor: "#ED1B76",
     accentTextColor: "#ffffff",
+    accentFillColor: "#294F60",
     accentHoveredColor: "#E71C4F",
     accentHoveredTextColor: "#ED1B76",
     accentHoveredFillColor: "#ffffff",
@@ -84,6 +87,7 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   DAProjectTheme: {
     accentColor: "#BFE5F2",
     accentTextColor: "#1E7594",
+    accentFillColor: "#BFE5F2",
     accentHoveredColor: "#1E7594",
     accentHoveredTextColor: "#ffffff",
     accentHoveredFillColor: "#1E7594",
@@ -91,6 +95,7 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   foodsTheme: {
     accentColor: "#F3832D",
     accentTextColor: "#F3832D",
+    accentFillColor: "#FFF9F2",
     accentHoveredColor: "#F3832D",
     accentHoveredTextColor: "#ffffff",
     accentHoveredFillColor: "#F3832D",
@@ -291,6 +296,10 @@ function applyThemeColors(themeId: string) {
   document.documentElement.style.setProperty(
     "--game-theme-accent-text-color",
     themeColors.accentTextColor,
+  );
+  document.documentElement.style.setProperty(
+    "--game-theme-accent-fill-color",
+    themeColors.accentFillColor,
   );
   document.documentElement.style.setProperty(
     "--game-theme-accent-hovered-color",
