@@ -156,7 +156,10 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     width: min(
       100%,
-      calc(((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 3) + (3 * var(--card-gap)))
+      calc(
+        ((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 3) +
+          (3 * var(--card-gap))
+      )
     );
   }
 
@@ -164,7 +167,10 @@
     grid-template-columns: repeat(6, minmax(0, 1fr));
     width: min(
       100%,
-      calc(((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 4.5) + (5 * var(--card-gap)))
+      calc(
+        ((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 4.5) +
+          (5 * var(--card-gap))
+      )
     );
   }
 
@@ -172,7 +178,10 @@
     grid-template-columns: repeat(6, minmax(0, 1fr));
     width: min(
       100%,
-      calc(((var(--available-board-height) - (5 * var(--card-gap))) / 6 * 4.5) + (5 * var(--card-gap)))
+      calc(
+        ((var(--available-board-height) - (5 * var(--card-gap))) / 6 * 4.5) +
+          (5 * var(--card-gap))
+      )
     );
   }
 }
