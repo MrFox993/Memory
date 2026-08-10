@@ -94,8 +94,8 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   },
   foodsTheme: {
     accentColor: "#F3832D",
-    accentTextColor: "#F3832D",
-    accentFillColor: "#FFF9F2",
+    accentTextColor: "#FFFFFF",
+    accentFillColor: "#FFAB3E",
     accentHoveredColor: "#F3832D",
     accentHoveredTextColor: "#ffffff",
     accentHoveredFillColor: "#F3832D",
