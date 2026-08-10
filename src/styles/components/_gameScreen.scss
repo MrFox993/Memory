@@ -1,6 +1,11 @@
 @use "../base/main" as base;
 @use "../abstracts/main" as abstracts;
 
+:root {
+  --game-theme-accent-color: #{abstracts.$primary-button-color};
+  --game-theme-accent-text-color: #{abstracts.$primary-font-color};
+}
+
 .game-screen {
   min-height: 100vh;
   width: 100vw;
@@ -51,7 +56,7 @@
   }
 
   &__player--active {
-    border-color: abstracts.$primary-button-color;
+    border-color: var(--game-theme-accent-color);
   }
 }
 
@@ -61,7 +66,8 @@
   justify-self: center;
   gap: 12px;
   padding: 10px 28px;
-  background: abstracts.$primary-button-color;
+  background: var(--game-theme-accent-color);
+  color: var(--game-theme-accent-text-color);
   font-family: base.$font-red-rose;
   font-size: 28px;
   font-weight: base.$font-weight-bold;
@@ -77,6 +83,13 @@
 
 .game-exit-button {
   justify-self: end;
+  border-color: var(--game-theme-accent-color);
+
+  &:hover:enabled,
+  &:focus-visible {
+    border-color: var(--game-theme-accent-color);
+    color: var(--game-theme-accent-color);
+  }
 }
 
 .game-board-wrap {
@@ -163,7 +176,13 @@
 
   &--matched {
     cursor: default;
-    opacity: 0.8;
+    opacity: 0.88;
+
+    .memory-card__face {
+      border-color: var(--game-theme-accent-color);
+      box-shadow: 0 0 0 3px var(--game-theme-accent-color),
+        0 10px 20px rgba(0, 0, 0, 0.24);
+    }
   }
 }
 
@@ -186,7 +205,7 @@
     padding: 40px;
     background: #f5f5f5;
     color: abstracts.$primary-font-color;
-    border: 4px solid abstracts.$primary-button-color;
+    border: 4px solid var(--game-theme-accent-color);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
     text-align: center;
   }
@@ -215,12 +234,13 @@
     font-weight: base.$font-weight-bold;
 
     &--primary {
-      background: abstracts.$primary-button-color;
+      background: var(--game-theme-accent-color);
+      color: var(--game-theme-accent-text-color);
     }
 
     &--secondary {
       background: #ffffff;
-      border: 2px solid abstracts.$primary-font-color;
+      border: 2px solid var(--game-theme-accent-color);
     }
 
     &:hover,
@@ -267,7 +287,7 @@
     width: min(100%, 720px);
     padding: 54px 36px;
     background: #f5f5f5;
-    border: 4px solid abstracts.$primary-button-color;
+    border: 4px solid var(--game-theme-accent-color);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
     box-sizing: border-box;
     text-align: center;
@@ -295,8 +315,8 @@
   &__button {
     padding: 18px 28px;
     border: 0;
-    background: abstracts.$primary-button-color;
-    color: abstracts.$primary-font-color;
+    background: var(--game-theme-accent-color);
+    color: var(--game-theme-accent-text-color);
     font-family: base.$font-red-rose;
     font-size: 24px;
     font-weight: base.$font-weight-bold;
@@ -326,7 +346,7 @@
     min-width: 180px;
     padding: 18px 28px;
     background: #ffffff;
-    border: 3px solid abstracts.$primary-font-color;
+    border: 3px solid var(--game-theme-accent-color);
   }
 
   &__pawn {
