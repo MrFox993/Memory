@@ -208,7 +208,8 @@
 
     .memory-card__face {
       border-color: var(--game-theme-accent-color);
-      box-shadow: 0 0 0 3px var(--game-theme-accent-color),
+      box-shadow:
+        0 0 0 3px var(--game-theme-accent-color),
         0 10px 20px rgba(0, 0, 0, 0.24);
     }
   }
