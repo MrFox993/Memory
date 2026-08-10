@@ -4,6 +4,9 @@
 :root {
   --game-theme-accent-color: #{abstracts.$primary-button-color};
   --game-theme-accent-text-color: #{abstracts.$primary-font-color};
+  --game-theme-accent-hovered-color: #{abstracts.$primary-font-color};
+  --game-theme-accent-hovered-text-color: #{abstracts.$secondary-font-color};
+  --game-theme-accent-hovered-fill-color: #{abstracts.$secondary-font-color};
 }
 
 .game-screen {
@@ -84,11 +87,34 @@
 .game-exit-button {
   justify-self: end;
   border-color: var(--game-theme-accent-color);
+  transition:
+    background-color 0.2s ease-out,
+    border-color 0.2s ease-out,
+    color 0.2s ease-out,
+    transform 0.2s ease-out;
+
+  img,
+  svg,
+  svg * {
+    transition:
+      fill 0.2s ease-out,
+      filter 0.2s ease-out;
+  }
 
   &:hover:enabled,
   &:focus-visible {
-    border-color: var(--game-theme-accent-color);
-    color: var(--game-theme-accent-color);
+    background-color: var(--game-theme-accent-hovered-color);
+    border-color: var(--game-theme-accent-hovered-color);
+    color: var(--game-theme-accent-hovered-text-color);
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+
+    svg,
+    svg * {
+      fill: var(--game-theme-accent-hovered-fill-color);
+    }
   }
 }
 
@@ -232,6 +258,20 @@
     font-family: base.$font-red-rose;
     font-size: 18px;
     font-weight: base.$font-weight-bold;
+    transition:
+      background-color 0.2s ease-out,
+      border-color 0.2s ease-out,
+      color 0.2s ease-out,
+      transform 0.2s ease-out;
+
+    img,
+    svg,
+    svg * {
+      transition:
+        fill 0.2s ease-out,
+        filter 0.2s ease-out;
+    }
+
 
     &--primary {
       background: var(--game-theme-accent-color);
@@ -245,7 +285,20 @@
 
     &:hover,
     &:focus-visible {
+      background: var(--game-theme-accent-hovered-color);
+      border-color: var(--game-theme-accent-hovered-color);
+      color: var(--game-theme-accent-hovered-text-color);
       transform: translateY(-2px);
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+
+      svg,
+      svg * {
+        fill: var(--game-theme-accent-hovered-fill-color);
+      }
+
     }
   }
 }
@@ -320,11 +373,35 @@
     font-family: base.$font-red-rose;
     font-size: 24px;
     font-weight: base.$font-weight-bold;
-    transition: transform 0.2s ease-out;
+    transition:
+      background-color 0.2s ease-out,
+      color 0.2s ease-out,
+      transform 0.2s ease-out;
+
+    img,
+    svg,
+    svg * {
+      transition:
+        fill 0.2s ease-out,
+        filter 0.2s ease-out;
+    }
+
 
     &:hover,
     &:focus-visible {
+      background: var(--game-theme-accent-hovered-color);
+      color: var(--game-theme-accent-hovered-text-color);
       transform: translateY(-3px) scale(1.04);
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+
+      svg,
+      svg * {
+        fill: var(--game-theme-accent-hovered-fill-color);
+      }
+
     }
   }
 }
