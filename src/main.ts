@@ -105,7 +105,7 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
 const boardSizeMap: Record<string, number> = {
   sizeS: 16,
   sizeM: 24,
-  sizeL: 32,
+  sizeL: 36,
 };
 
 const playerMap: Record<string, Player> = {
@@ -256,9 +256,14 @@ function createCards(settings: GameSettings): CardData[] {
   const pairCount = settings.boardSize / 2;
   const theme = themeAssetMap[settings.themeId];
   const deckImageSrc = getThemeImageSrc(theme, "deck");
-  const selectedImageNumbers = shuffleCards(
-    Array.from({ length: theme.imageCount }, (_, index) => index + 1),
-  ).slice(0, pairCount);
+  const repeatedImageNumbers = Array.from(
+    { length: Math.ceil(pairCount / theme.imageCount) },
+    () => Array.from({ length: theme.imageCount }, (_, index) => index + 1),
+  ).flat();
+  const selectedImageNumbers = shuffleCards(repeatedImageNumbers).slice(
+    0,
+    pairCount,
+  );
 
   const cards = selectedImageNumbers.flatMap((imageNumber, pairId) => {
     const frontImageSrc = getThemeImageSrc(theme, String(imageNumber));
