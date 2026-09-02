@@ -14,7 +14,7 @@ A browser-based memory game built with **TypeScript**, **Vite** and modular **SC
   - Foods theme
 - Theme preview that updates when the selected theme changes
 - Two selectable starting players: Blue and Orange
-- Three board sizes: 16 (4x4), 24 (4x6) or 36 (6x6) cards
+- Three board sizes: 16 (4x4), 24 (4x6) or 36 (6x6) cards 
 - Randomized card pairs for every new game
 - Flip-card memory gameplay with match detection
 - Score tracking for both players
