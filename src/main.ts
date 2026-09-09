@@ -31,20 +31,20 @@ type ThemeColorConfig = {
   accentHoveredFillColor: string;
 };
 
-const selectionGroups = [
+const SELECTION_GROUPS = [
   { name: "game-themes", outputId: "selectedTheme" },
   { name: "player-selection", outputId: "selectedPlayer" },
   { name: "board-size-selection", outputId: "selectedBoardSize" },
 ] as const;
 
-const themePreviewMap: Record<string, string> = {
+const THEME_PREVIEW_MAP: Record<string, string> = {
   codeVibesTheme: "assets/code_vibes_theme_preview.png",
   gamingTheme: "assets/gaming_theme_preview.png",
   DAProjectTheme: "assets/da_projects_theme_preview.png",
   foodsTheme: "assets/foods_theme_preview.png",
 };
 
-const themeAssetMap: Record<string, ThemeAssetConfig> = {
+const THEME_ASSET_MAP: Record<string, ThemeAssetConfig> = {
   codeVibesTheme: {
     directory: "code_vibes_theme",
     filePrefix: "code_vibes_theme",
@@ -67,7 +67,7 @@ const themeAssetMap: Record<string, ThemeAssetConfig> = {
   },
 };
 
-const themeColorMap: Record<string, ThemeColorConfig> = {
+const THEME_COLOR_MAP: Record<string, ThemeColorConfig> = {
   codeVibesTheme: {
     accentColor: "#4DD5BC",
     accentTextColor: "#ffffff",
@@ -102,60 +102,62 @@ const themeColorMap: Record<string, ThemeColorConfig> = {
   },
 };
 
-const boardSizeMap: Record<string, number> = {
+const BOARD_SIZE_MAP: Record<string, number> = {
   sizeS: 16,
   sizeM: 24,
   sizeL: 36,
 };
 
-const playerMap: Record<string, Player> = {
+const PLAYER_MAP: Record<string, Player> = {
   bluePlayer: "blue",
   orangePlayer: "orange",
 };
 
-const showSettingsButton = document.querySelector<HTMLButtonElement>(
+const SHOW_SETTINGS_BUTTON = document.querySelector<HTMLButtonElement>(
   "#showSettingsButton",
 );
-const startButton =
+const START_BUTTON =
   document.querySelector<HTMLButtonElement>("#startGameButton");
-const exitGameButton =
+const EXIT_GAME_BUTTON =
   document.querySelector<HTMLButtonElement>("#exitGameButton");
-const startScreen = document.querySelector<HTMLElement>("#startScreen");
-const settingsScreen = document.querySelector<HTMLElement>("#settingsScreen");
-const gameScreen = document.querySelector<HTMLElement>("#gameScreen");
-const gameBoard = document.querySelector<HTMLDivElement>("#gameBoard");
-const cardTemplate = document.querySelector<HTMLTemplateElement>(
+const START_SCREEN = document.querySelector<HTMLElement>("#startScreen");
+const SETTINGS_SCREEN = document.querySelector<HTMLElement>("#settingsScreen");
+const GAME_SCREEN = document.querySelector<HTMLElement>("#gameScreen");
+const GAME_BOARD = document.querySelector<HTMLDivElement>("#gameBoard");
+const CARD_TEMPLATE = document.querySelector<HTMLTemplateElement>(
   "#memoryCardTemplate",
 );
-const activePlayerDisplay = document.querySelector<HTMLElement>(
+const ACTIVE_PLAYER_DISPLAY = document.querySelector<HTMLElement>(
   "#activePlayerDisplay",
 );
-const activePlayerPawn =
+const ACTIVE_PLAYER_PAWN =
   document.querySelector<HTMLImageElement>("#activePlayerPawn");
-const blueScoreElement = document.querySelector<HTMLElement>("#blueScore");
-const orangeScoreElement = document.querySelector<HTMLElement>("#orangeScore");
-const blueScoreCard = document.querySelector<HTMLElement>("#blueScoreCard");
-const orangeScoreCard = document.querySelector<HTMLElement>("#orangeScoreCard");
-const quitGameDialog = document.querySelector<HTMLElement>("#quitGameDialog");
-const backToGameButton =
+const BLUE_SCORE_ELEMENT = document.querySelector<HTMLElement>("#blueScore");
+const ORANGE_SCORE_ELEMENT =
+  document.querySelector<HTMLElement>("#orangeScore");
+const BLUE_SCORE_CARD = document.querySelector<HTMLElement>("#blueScoreCard");
+const ORANGE_SCORE_CARD =
+  document.querySelector<HTMLElement>("#orangeScoreCard");
+const QUIT_GAME_DIALOG = document.querySelector<HTMLElement>("#quitGameDialog");
+const BACK_TO_GAME_BUTTON =
   document.querySelector<HTMLButtonElement>("#backToGameButton");
-const confirmQuitGameButton = document.querySelector<HTMLButtonElement>(
+const CONFIRM_QUIT_GAME_BUTTON = document.querySelector<HTMLButtonElement>(
   "#confirmQuitGameButton",
 );
-const gameOverScreen = document.querySelector<HTMLElement>("#gameOverScreen");
-const gameOverPanel = document.querySelector<HTMLElement>("#gameOverPanel");
-const winnerScreen = document.querySelector<HTMLElement>("#winnerScreen");
-const finalBlueScoreElement =
+const GAME_OVER_SCREEN = document.querySelector<HTMLElement>("#gameOverScreen");
+const GAME_OVER_PANEL = document.querySelector<HTMLElement>("#gameOverPanel");
+const WINNER_SCREEN = document.querySelector<HTMLElement>("#winnerScreen");
+const FINAL_BLUE_SCORE_ELEMENT =
   document.querySelector<HTMLElement>("#finalBlueScore");
-const finalOrangeScoreElement =
+const FINAL_ORANGE_SCORE_ELEMENT =
   document.querySelector<HTMLElement>("#finalOrangeScore");
-const winnerStatusElement =
+const WINNER_STATUS_ELEMENT =
   document.querySelector<HTMLElement>("#winnerStatus");
-const winnerImageElement =
+const WINNER_IMAGE_ELEMENT =
   document.querySelector<HTMLImageElement>("#winnerImage");
-const winnerConfettiElement =
+const WINNER_CONFETTI_ELEMENT =
   document.querySelector<HTMLImageElement>("#winnerConfetti");
-const backToStartButton =
+const BACK_TO_START_BUTTON =
   document.querySelector<HTMLButtonElement>("#backToStartButton");
 
 let activePlayer: Player = "blue";
@@ -170,7 +172,7 @@ let gameOverExitTimeoutId: number | undefined;
 let winnerScreenTimeoutId: number | undefined;
 
 function updateSelectionOverview(): void {
-  const allGroupsSelected = selectionGroups.every(
+  const allGroupsSelected = SELECTION_GROUPS.every(
     ({ name, outputId }): boolean => {
       const selected = document.querySelector<HTMLInputElement>(
         `input[name="${name}"]:checked`,
@@ -189,7 +191,7 @@ function updateSelectionOverview(): void {
     },
   );
 
-  if (startButton) startButton.disabled = !allGroupsSelected;
+  if (START_BUTTON) START_BUTTON.disabled = !allGroupsSelected;
 }
 
 function updateThemeOptionSelection(): void {
@@ -212,8 +214,8 @@ function updateThemePreview(): void {
   if (!previewImg) return;
 
   const src = selected
-    ? themePreviewMap[selected.id]
-    : themePreviewMap.codeVibesTheme;
+    ? THEME_PREVIEW_MAP[selected.id]
+    : THEME_PREVIEW_MAP.codeVibesTheme;
   previewImg.src = src;
   previewImg.alt = selected
     ? `${selected.nextElementSibling?.textContent?.trim() ?? "Theme"} preview image`
@@ -235,8 +237,8 @@ function getSelectedGameSettings(): GameSettings | null {
 
   return {
     themeId: selectedTheme.id,
-    player: playerMap[selectedPlayer.id],
-    boardSize: boardSizeMap[selectedBoardSize.id],
+    player: PLAYER_MAP[selectedPlayer.id],
+    boardSize: BOARD_SIZE_MAP[selectedBoardSize.id],
   };
 }
 
@@ -256,7 +258,7 @@ function getThemeImageSrc(theme: ThemeAssetConfig, imageName: string): string {
 
 function createCards(settings: GameSettings): CardData[] {
   const pairCount = settings.boardSize / 2;
-  const theme = themeAssetMap[settings.themeId];
+  const theme = THEME_ASSET_MAP[settings.themeId];
   const deckImageSrc = getThemeImageSrc(theme, "deck");
   const repeatedImageNumbers = Array.from(
     { length: Math.ceil(pairCount / theme.imageCount) },
@@ -297,7 +299,8 @@ function getWinner(): Player | "draw" {
 }
 
 function applyThemeColors(themeId: string): void {
-  const themeColors = themeColorMap[themeId] ?? themeColorMap.codeVibesTheme;
+  const themeColors =
+    THEME_COLOR_MAP[themeId] ?? THEME_COLOR_MAP.codeVibesTheme;
 
   document.documentElement.style.setProperty(
     "--game-theme-accent-color",
@@ -323,9 +326,9 @@ function applyThemeColors(themeId: string): void {
     "--game-theme-accent-hovered-fill-color",
     themeColors.accentHoveredFillColor,
   );
-  gameScreen?.setAttribute("data-theme", themeId);
-  gameOverScreen?.setAttribute("data-theme", themeId);
-  winnerScreen?.setAttribute("data-theme", themeId);
+  GAME_SCREEN?.setAttribute("data-theme", themeId);
+  GAME_OVER_SCREEN?.setAttribute("data-theme", themeId);
+  WINNER_SCREEN?.setAttribute("data-theme", themeId);
 }
 
 function clearEndScreenTimers(): void {
@@ -345,31 +348,31 @@ function clearEndScreenTimers(): void {
 }
 
 function resetEndScreens(): void {
-  gameOverScreen?.classList.add("hide");
-  winnerScreen?.classList.add("hide");
-  winnerConfettiElement?.classList.add("hide");
-  gameOverPanel?.classList.remove("end-screen__panel--exit-up");
+  GAME_OVER_SCREEN?.classList.add("hide");
+  WINNER_SCREEN?.classList.add("hide");
+  WINNER_CONFETTI_ELEMENT?.classList.add("hide");
+  GAME_OVER_PANEL?.classList.remove("end-screen__panel--exit-up");
 }
 
 function updateGameHeader(): void {
-  if (blueScoreElement) blueScoreElement.textContent = String(scores.blue);
-  if (orangeScoreElement)
-    orangeScoreElement.textContent = String(scores.orange);
-  if (activePlayerDisplay)
-    activePlayerDisplay.setAttribute(
+  if (BLUE_SCORE_ELEMENT) BLUE_SCORE_ELEMENT.textContent = String(scores.blue);
+  if (ORANGE_SCORE_ELEMENT)
+    ORANGE_SCORE_ELEMENT.textContent = String(scores.orange);
+  if (ACTIVE_PLAYER_DISPLAY)
+    ACTIVE_PLAYER_DISPLAY.setAttribute(
       "aria-label",
       `Current player: ${activePlayer}`,
     );
-  if (activePlayerPawn) {
-    activePlayerPawn.src = getPlayerPawnSrc(activePlayer);
-    activePlayerPawn.alt = `${getPlayerLabel(activePlayer)} player`;
+  if (ACTIVE_PLAYER_PAWN) {
+    ACTIVE_PLAYER_PAWN.src = getPlayerPawnSrc(activePlayer);
+    ACTIVE_PLAYER_PAWN.alt = `${getPlayerLabel(activePlayer)} player`;
   }
 
-  blueScoreCard?.classList.toggle(
+  BLUE_SCORE_CARD?.classList.toggle(
     "game-score__player--active",
     activePlayer === "blue",
   );
-  orangeScoreCard?.classList.toggle(
+  ORANGE_SCORE_CARD?.classList.toggle(
     "game-score__player--active",
     activePlayer === "orange",
   );
@@ -390,50 +393,51 @@ function resetTurn(): void {
 }
 
 function updateFinalScoreScreen(): void {
-  if (finalBlueScoreElement)
-    finalBlueScoreElement.textContent = String(scores.blue);
-  if (finalOrangeScoreElement)
-    finalOrangeScoreElement.textContent = String(scores.orange);
+  if (FINAL_BLUE_SCORE_ELEMENT)
+    FINAL_BLUE_SCORE_ELEMENT.textContent = String(scores.blue);
+  if (FINAL_ORANGE_SCORE_ELEMENT)
+    FINAL_ORANGE_SCORE_ELEMENT.textContent = String(scores.orange);
 }
 
 function updateWinnerScreen(): void {
   const winner = getWinner();
 
   if (winner === "draw") {
-    winnerConfettiElement?.classList.add("hide");
-    if (winnerStatusElement) winnerStatusElement.textContent = "It's a DRAW";
-    if (winnerImageElement) {
-      winnerImageElement.src = getPublicAssetSrc("icons/Scale_Icon.png");
-      winnerImageElement.alt = "Draw scale icon";
+    WINNER_CONFETTI_ELEMENT?.classList.add("hide");
+    if (WINNER_STATUS_ELEMENT)
+      WINNER_STATUS_ELEMENT.textContent = "It's a DRAW";
+    if (WINNER_IMAGE_ELEMENT) {
+      WINNER_IMAGE_ELEMENT.src = getPublicAssetSrc("icons/Scale_Icon.png");
+      WINNER_IMAGE_ELEMENT.alt = "Draw scale icon";
     }
     return;
   }
 
-  winnerConfettiElement?.classList.remove("hide");
+  WINNER_CONFETTI_ELEMENT?.classList.remove("hide");
   const winnerLabel = getPlayerLabel(winner);
-  if (winnerStatusElement)
-    winnerStatusElement.textContent = `The Winner is ${winnerLabel}`;
-  if (winnerImageElement) {
-    winnerImageElement.src = getPlayerPawnSrc(winner);
-    winnerImageElement.alt = `${winnerLabel} player`;
+  if (WINNER_STATUS_ELEMENT)
+    WINNER_STATUS_ELEMENT.textContent = `The Winner is ${winnerLabel}`;
+  if (WINNER_IMAGE_ELEMENT) {
+    WINNER_IMAGE_ELEMENT.src = getPlayerPawnSrc(winner);
+    WINNER_IMAGE_ELEMENT.alt = `${winnerLabel} player`;
   }
 }
 
 function showWinnerScreen(): void {
-  gameOverScreen?.classList.add("hide");
-  gameOverPanel?.classList.remove("end-screen__panel--exit-up");
+  GAME_OVER_SCREEN?.classList.add("hide");
+  GAME_OVER_PANEL?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
-  winnerScreen?.classList.remove("hide");
-  backToStartButton?.focus();
+  WINNER_SCREEN?.classList.remove("hide");
+  BACK_TO_START_BUTTON?.focus();
 }
 
 function showGameOverScreen(): void {
   updateFinalScoreScreen();
-  gameScreen?.classList.add("hide");
-  gameOverScreen?.classList.remove("hide");
+  GAME_SCREEN?.classList.add("hide");
+  GAME_OVER_SCREEN?.classList.remove("hide");
 
   gameOverExitTimeoutId = window.setTimeout((): void => {
-    gameOverPanel?.classList.add("end-screen__panel--exit-up");
+    GAME_OVER_PANEL?.classList.add("end-screen__panel--exit-up");
 
     winnerScreenTimeoutId = window.setTimeout(showWinnerScreen, 500);
   }, 1200);
@@ -489,14 +493,14 @@ function handleCardClick(card: HTMLButtonElement): void {
 }
 
 function renderGameBoard(settings: GameSettings): void {
-  if (!gameBoard || !cardTemplate) return;
+  if (!GAME_BOARD || !CARD_TEMPLATE) return;
 
-  gameBoard.innerHTML = "";
-  gameBoard.className = `game-board game-board--${settings.boardSize}`;
-  gameBoard.dataset.theme = settings.themeId;
+  GAME_BOARD.innerHTML = "";
+  GAME_BOARD.className = `game-board game-board--${settings.boardSize}`;
+  GAME_BOARD.dataset.theme = settings.themeId;
 
   createCards(settings).forEach((cardData): void => {
-    const fragment = cardTemplate.content.cloneNode(true) as DocumentFragment;
+    const fragment = CARD_TEMPLATE.content.cloneNode(true) as DocumentFragment;
     const card = fragment.querySelector<HTMLButtonElement>(".memory-card");
     const backImage = fragment.querySelector<HTMLImageElement>(
       ".memory-card__image--back",
@@ -512,7 +516,7 @@ function renderGameBoard(settings: GameSettings): void {
     backImage.src = cardData.deckImageSrc;
     frontImage.src = cardData.frontImageSrc;
     frontImage.alt = cardData.imageAlt;
-    gameBoard.appendChild(fragment);
+    GAME_BOARD.appendChild(fragment);
 
     card.addEventListener("click", (): void => {
       handleCardClick(card);
@@ -544,24 +548,24 @@ function startGame(): void {
   applyThemeColors(settings.themeId);
   renderGameBoard(settings);
   updateGameHeader();
-  showScreen(gameScreen, settingsScreen);
+  showScreen(GAME_SCREEN, SETTINGS_SCREEN);
 }
 
 function openQuitGameDialog(): void {
-  quitGameDialog?.classList.remove("hide");
-  backToGameButton?.focus();
+  QUIT_GAME_DIALOG?.classList.remove("hide");
+  BACK_TO_GAME_BUTTON?.focus();
 }
 
 function closeQuitGameDialog(): void {
-  quitGameDialog?.classList.add("hide");
-  exitGameButton?.focus();
+  QUIT_GAME_DIALOG?.classList.add("hide");
+  EXIT_GAME_BUTTON?.focus();
 }
 
 function exitGame(): void {
   clearEndScreenTimers();
   resetEndScreens();
   closeQuitGameDialog();
-  showScreen(settingsScreen, gameScreen);
+  showScreen(SETTINGS_SCREEN, GAME_SCREEN);
 }
 
 function backToStart(): void {
@@ -571,7 +575,7 @@ function backToStart(): void {
   flippedCards = [];
   matchedPairs = 0;
   isBoardLocked = false;
-  showScreen(settingsScreen, winnerScreen);
+  showScreen(SETTINGS_SCREEN, WINNER_SCREEN);
 }
 
 function showSettingsScreen(): void {
@@ -579,7 +583,7 @@ function showSettingsScreen(): void {
   flippedCards = [];
   matchedPairs = 0;
   isBoardLocked = false;
-  showScreen(settingsScreen, startScreen);
+  showScreen(SETTINGS_SCREEN, START_SCREEN);
 }
 
 document
@@ -592,17 +596,17 @@ document
     });
   });
 
-showSettingsButton?.addEventListener("click", showSettingsScreen);
-startButton?.addEventListener("click", startGame);
-exitGameButton?.addEventListener("click", openQuitGameDialog);
-backToGameButton?.addEventListener("click", closeQuitGameDialog);
-confirmQuitGameButton?.addEventListener("click", exitGame);
-backToStartButton?.addEventListener("click", backToStart);
-quitGameDialog?.addEventListener("click", (event): void => {
-  if (event.target === quitGameDialog) closeQuitGameDialog();
+SHOW_SETTINGS_BUTTON?.addEventListener("click", showSettingsScreen);
+START_BUTTON?.addEventListener("click", startGame);
+EXIT_GAME_BUTTON?.addEventListener("click", openQuitGameDialog);
+BACK_TO_GAME_BUTTON?.addEventListener("click", closeQuitGameDialog);
+CONFIRM_QUIT_GAME_BUTTON?.addEventListener("click", exitGame);
+BACK_TO_START_BUTTON?.addEventListener("click", backToStart);
+QUIT_GAME_DIALOG?.addEventListener("click", (event): void => {
+  if (event.target === QUIT_GAME_DIALOG) closeQuitGameDialog();
 });
 document.addEventListener("keydown", (event): void => {
-  if (event.key === "Escape" && !quitGameDialog?.classList.contains("hide"))
+  if (event.key === "Escape" && !QUIT_GAME_DIALOG?.classList.contains("hide"))
     closeQuitGameDialog();
 });
 
