@@ -169,38 +169,40 @@ let finishGameTimeoutId: number | undefined;
 let gameOverExitTimeoutId: number | undefined;
 let winnerScreenTimeoutId: number | undefined;
 
-function updateSelectionOverview() {
-  const allGroupsSelected = selectionGroups.every(({ name, outputId }) => {
-    const selected = document.querySelector<HTMLInputElement>(
-      `input[name="${name}"]:checked`,
-    );
-    const output = document.querySelector<HTMLOutputElement>(`#${outputId}`);
+function updateSelectionOverview(): void {
+  const allGroupsSelected = selectionGroups.every(
+    ({ name, outputId }): boolean => {
+      const selected = document.querySelector<HTMLInputElement>(
+        `input[name="${name}"]:checked`,
+      );
+      const output = document.querySelector<HTMLOutputElement>(`#${outputId}`);
 
-    if (!output) return false;
+      if (!output) return false;
 
-    output.value = selected?.nextElementSibling?.textContent?.trim() ?? "";
-    output.textContent = output.value || output.dataset.placeholder || "";
-    output.classList.toggle(
-      "selection-overview__item--selected",
-      Boolean(selected),
-    );
-    return Boolean(selected);
-  });
+      output.value = selected?.nextElementSibling?.textContent?.trim() ?? "";
+      output.textContent = output.value || output.dataset.placeholder || "";
+      output.classList.toggle(
+        "selection-overview__item--selected",
+        Boolean(selected),
+      );
+      return Boolean(selected);
+    },
+  );
 
   if (startButton) startButton.disabled = !allGroupsSelected;
 }
 
-function updateThemeOptionSelection() {
+function updateThemeOptionSelection(): void {
   document
     .querySelectorAll<HTMLInputElement>('input[name="game-themes"]')
-    .forEach((input) => {
+    .forEach((input): void => {
       const parent = input.parentElement;
       if (!parent) return;
       parent.classList.toggle("theme-option--selected", input.checked);
     });
 }
 
-function updateThemePreview() {
+function updateThemePreview(): void {
   const selected = document.querySelector<HTMLInputElement>(
     'input[name="game-themes"]:checked',
   );
@@ -239,14 +241,14 @@ function getSelectedGameSettings(): GameSettings | null {
 }
 
 function shuffleCards<T>(items: T[]): T[] {
-  return [...items].sort(() => Math.random() - 0.5);
+  return [...items].sort((): number => Math.random() - 0.5);
 }
 
-function getPublicAssetSrc(path: string) {
+function getPublicAssetSrc(path: string): string {
   return `${import.meta.env.BASE_URL}${path}`;
 }
 
-function getThemeImageSrc(theme: ThemeAssetConfig, imageName: string) {
+function getThemeImageSrc(theme: ThemeAssetConfig, imageName: string): string {
   return getPublicAssetSrc(
     `assets/${theme.directory}/${theme.filePrefix}_${imageName}.png`,
   );
@@ -258,31 +260,34 @@ function createCards(settings: GameSettings): CardData[] {
   const deckImageSrc = getThemeImageSrc(theme, "deck");
   const repeatedImageNumbers = Array.from(
     { length: Math.ceil(pairCount / theme.imageCount) },
-    () => Array.from({ length: theme.imageCount }, (_, index) => index + 1),
+    (): number[] =>
+      Array.from({ length: theme.imageCount }, (_, index): number => index + 1),
   ).flat();
   const selectedImageNumbers = shuffleCards(repeatedImageNumbers).slice(
     0,
     pairCount,
   );
 
-  const cards = selectedImageNumbers.flatMap((imageNumber, pairId) => {
-    const frontImageSrc = getThemeImageSrc(theme, String(imageNumber));
-    const imageAlt = `Memory card image ${imageNumber}`;
+  const cards = selectedImageNumbers.flatMap(
+    (imageNumber, pairId): CardData[] => {
+      const frontImageSrc = getThemeImageSrc(theme, String(imageNumber));
+      const imageAlt = `Memory card image ${imageNumber}`;
 
-    return [
-      { id: pairId * 2, pairId, frontImageSrc, deckImageSrc, imageAlt },
-      { id: pairId * 2 + 1, pairId, frontImageSrc, deckImageSrc, imageAlt },
-    ];
-  });
+      return [
+        { id: pairId * 2, pairId, frontImageSrc, deckImageSrc, imageAlt },
+        { id: pairId * 2 + 1, pairId, frontImageSrc, deckImageSrc, imageAlt },
+      ];
+    },
+  );
 
   return shuffleCards(cards);
 }
 
-function getPlayerPawnSrc(player: Player) {
+function getPlayerPawnSrc(player: Player): string {
   return getPublicAssetSrc(`icons/${player}_player_pawn.png`);
 }
 
-function getPlayerLabel(player: Player) {
+function getPlayerLabel(player: Player): string {
   return player === "blue" ? "Blue" : "Orange";
 }
 
@@ -291,7 +296,7 @@ function getWinner(): Player | "draw" {
   return scores.blue > scores.orange ? "blue" : "orange";
 }
 
-function applyThemeColors(themeId: string) {
+function applyThemeColors(themeId: string): void {
   const themeColors = themeColorMap[themeId] ?? themeColorMap.codeVibesTheme;
 
   document.documentElement.style.setProperty(
@@ -323,13 +328,13 @@ function applyThemeColors(themeId: string) {
   winnerScreen?.setAttribute("data-theme", themeId);
 }
 
-function clearEndScreenTimers() {
+function clearEndScreenTimers(): void {
   [
     resetTurnTimeoutId,
     finishGameTimeoutId,
     gameOverExitTimeoutId,
     winnerScreenTimeoutId,
-  ].forEach((timeoutId) => {
+  ].forEach((timeoutId): void => {
     if (timeoutId !== undefined) window.clearTimeout(timeoutId);
   });
 
@@ -339,14 +344,14 @@ function clearEndScreenTimers() {
   winnerScreenTimeoutId = undefined;
 }
 
-function resetEndScreens() {
+function resetEndScreens(): void {
   gameOverScreen?.classList.add("hide");
   winnerScreen?.classList.add("hide");
   winnerConfettiElement?.classList.add("hide");
   gameOverPanel?.classList.remove("end-screen__panel--exit-up");
 }
 
-function updateGameHeader() {
+function updateGameHeader(): void {
   if (blueScoreElement) blueScoreElement.textContent = String(scores.blue);
   if (orangeScoreElement)
     orangeScoreElement.textContent = String(scores.orange);
@@ -370,26 +375,28 @@ function updateGameHeader() {
   );
 }
 
-function switchPlayer() {
+function switchPlayer(): void {
   activePlayer = activePlayer === "blue" ? "orange" : "blue";
   updateGameHeader();
 }
 
-function resetTurn() {
-  flippedCards.forEach((card) => card.classList.remove("memory-card--flipped"));
+function resetTurn(): void {
+  flippedCards.forEach((card): void => {
+    card.classList.remove("memory-card--flipped");
+  });
   flippedCards = [];
   isBoardLocked = false;
   switchPlayer();
 }
 
-function updateFinalScoreScreen() {
+function updateFinalScoreScreen(): void {
   if (finalBlueScoreElement)
     finalBlueScoreElement.textContent = String(scores.blue);
   if (finalOrangeScoreElement)
     finalOrangeScoreElement.textContent = String(scores.orange);
 }
 
-function updateWinnerScreen() {
+function updateWinnerScreen(): void {
   const winner = getWinner();
 
   if (winner === "draw") {
@@ -412,7 +419,7 @@ function updateWinnerScreen() {
   }
 }
 
-function showWinnerScreen() {
+function showWinnerScreen(): void {
   gameOverScreen?.classList.add("hide");
   gameOverPanel?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
@@ -420,27 +427,27 @@ function showWinnerScreen() {
   backToStartButton?.focus();
 }
 
-function showGameOverScreen() {
+function showGameOverScreen(): void {
   updateFinalScoreScreen();
   gameScreen?.classList.add("hide");
   gameOverScreen?.classList.remove("hide");
 
-  gameOverExitTimeoutId = window.setTimeout(() => {
+  gameOverExitTimeoutId = window.setTimeout((): void => {
     gameOverPanel?.classList.add("end-screen__panel--exit-up");
 
     winnerScreenTimeoutId = window.setTimeout(showWinnerScreen, 500);
   }, 1200);
 }
 
-function finishGame() {
+function finishGame(): void {
   isBoardLocked = true;
   showGameOverScreen();
 }
 
-function finishMatch() {
+function finishMatch(): void {
   scores[activePlayer] += 1;
   matchedPairs += 1;
-  flippedCards.forEach((card) => {
+  flippedCards.forEach((card): void => {
     card.classList.add("memory-card--matched");
     card.disabled = true;
   });
@@ -456,7 +463,7 @@ function finishMatch() {
   isBoardLocked = false;
 }
 
-function handleCardClick(card: HTMLButtonElement) {
+function handleCardClick(card: HTMLButtonElement): void {
   if (
     isBoardLocked ||
     card.classList.contains("memory-card--flipped") ||
@@ -481,14 +488,14 @@ function handleCardClick(card: HTMLButtonElement) {
   resetTurnTimeoutId = window.setTimeout(resetTurn, 900);
 }
 
-function renderGameBoard(settings: GameSettings) {
+function renderGameBoard(settings: GameSettings): void {
   if (!gameBoard || !cardTemplate) return;
 
   gameBoard.innerHTML = "";
   gameBoard.className = `game-board game-board--${settings.boardSize}`;
   gameBoard.dataset.theme = settings.themeId;
 
-  createCards(settings).forEach((cardData) => {
+  createCards(settings).forEach((cardData): void => {
     const fragment = cardTemplate.content.cloneNode(true) as DocumentFragment;
     const card = fragment.querySelector<HTMLButtonElement>(".memory-card");
     const backImage = fragment.querySelector<HTMLImageElement>(
@@ -507,19 +514,21 @@ function renderGameBoard(settings: GameSettings) {
     frontImage.alt = cardData.imageAlt;
     gameBoard.appendChild(fragment);
 
-    card.addEventListener("click", () => handleCardClick(card));
+    card.addEventListener("click", (): void => {
+      handleCardClick(card);
+    });
   });
 }
 
 function showScreen(
   screenToShow: HTMLElement | null,
   screenToHide: HTMLElement | null,
-) {
+): void {
   screenToHide?.classList.add("hide");
   screenToShow?.classList.remove("hide");
 }
 
-function startGame() {
+function startGame(): void {
   const settings = getSelectedGameSettings();
   if (!settings) return;
 
@@ -538,24 +547,24 @@ function startGame() {
   showScreen(gameScreen, settingsScreen);
 }
 
-function openQuitGameDialog() {
+function openQuitGameDialog(): void {
   quitGameDialog?.classList.remove("hide");
   backToGameButton?.focus();
 }
 
-function closeQuitGameDialog() {
+function closeQuitGameDialog(): void {
   quitGameDialog?.classList.add("hide");
   exitGameButton?.focus();
 }
 
-function exitGame() {
+function exitGame(): void {
   clearEndScreenTimers();
   resetEndScreens();
   closeQuitGameDialog();
   showScreen(settingsScreen, gameScreen);
 }
 
-function backToStart() {
+function backToStart(): void {
   clearEndScreenTimers();
   resetEndScreens();
   currentSettings = null;
@@ -565,7 +574,7 @@ function backToStart() {
   showScreen(settingsScreen, winnerScreen);
 }
 
-function showSettingsScreen() {
+function showSettingsScreen(): void {
   currentSettings = null;
   flippedCards = [];
   matchedPairs = 0;
@@ -575,8 +584,8 @@ function showSettingsScreen() {
 
 document
   .querySelectorAll<HTMLInputElement>('input[type="radio"]')
-  .forEach((input) => {
-    input.addEventListener("change", () => {
+  .forEach((input): void => {
+    input.addEventListener("change", (): void => {
       updateSelectionOverview();
       updateThemeOptionSelection();
       updateThemePreview();
@@ -589,10 +598,10 @@ exitGameButton?.addEventListener("click", openQuitGameDialog);
 backToGameButton?.addEventListener("click", closeQuitGameDialog);
 confirmQuitGameButton?.addEventListener("click", exitGame);
 backToStartButton?.addEventListener("click", backToStart);
-quitGameDialog?.addEventListener("click", (event) => {
+quitGameDialog?.addEventListener("click", (event): void => {
   if (event.target === quitGameDialog) closeQuitGameDialog();
 });
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", (event): void => {
   if (event.key === "Escape" && !quitGameDialog?.classList.contains("hide"))
     closeQuitGameDialog();
 });
