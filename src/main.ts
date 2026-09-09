@@ -31,6 +31,16 @@ type ThemeColorConfig = {
   accentHoveredFillColor: string;
 };
 
+const CARDS_PER_PAIR = 2;
+const DISPLAY_NUMBER_OFFSET = 1;
+const FIRST_IMAGE_NUMBER = 1;
+const FINISH_GAME_DELAY_MS = 500;
+const GAME_OVER_EXIT_DELAY_MS = 1200;
+const NEXT_CARD_ID_OFFSET = 1;
+const RESET_TURN_DELAY_MS = 900;
+const SHUFFLE_RANDOM_OFFSET = 0.5;
+const WINNER_SCREEN_DELAY_MS = 500;
+
 const SELECTION_GROUPS = [
   { name: "game-themes", outputId: "selectedTheme" },
   { name: "player-selection", outputId: "selectedPlayer" },
@@ -243,7 +253,7 @@ function getSelectedGameSettings(): GameSettings | null {
 }
 
 function shuffleCards<T>(items: T[]): T[] {
-  return [...items].sort((): number => Math.random() - 0.5);
+  return [...items].sort((): number => Math.random() - SHUFFLE_RANDOM_OFFSET);
 }
 
 function getPublicAssetSrc(path: string): string {
@@ -257,13 +267,16 @@ function getThemeImageSrc(theme: ThemeAssetConfig, imageName: string): string {
 }
 
 function createCards(settings: GameSettings): CardData[] {
-  const pairCount = settings.boardSize / 2;
+  const pairCount = settings.boardSize / CARDS_PER_PAIR;
   const theme = THEME_ASSET_MAP[settings.themeId];
   const deckImageSrc = getThemeImageSrc(theme, "deck");
   const repeatedImageNumbers = Array.from(
     { length: Math.ceil(pairCount / theme.imageCount) },
     (): number[] =>
-      Array.from({ length: theme.imageCount }, (_, index): number => index + 1),
+      Array.from(
+        { length: theme.imageCount },
+        (_, index): number => index + FIRST_IMAGE_NUMBER,
+      ),
   ).flat();
   const selectedImageNumbers = shuffleCards(repeatedImageNumbers).slice(
     0,
@@ -276,8 +289,20 @@ function createCards(settings: GameSettings): CardData[] {
       const imageAlt = `Memory card image ${imageNumber}`;
 
       return [
-        { id: pairId * 2, pairId, frontImageSrc, deckImageSrc, imageAlt },
-        { id: pairId * 2 + 1, pairId, frontImageSrc, deckImageSrc, imageAlt },
+        {
+          id: pairId * CARDS_PER_PAIR,
+          pairId,
+          frontImageSrc,
+          deckImageSrc,
+          imageAlt,
+        },
+        {
+          id: pairId * CARDS_PER_PAIR + NEXT_CARD_ID_OFFSET,
+          pairId,
+          frontImageSrc,
+          deckImageSrc,
+          imageAlt,
+        },
       ];
     },
   );
@@ -439,8 +464,11 @@ function showGameOverScreen(): void {
   gameOverExitTimeoutId = window.setTimeout((): void => {
     GAME_OVER_PANEL?.classList.add("end-screen__panel--exit-up");
 
-    winnerScreenTimeoutId = window.setTimeout(showWinnerScreen, 500);
-  }, 1200);
+    winnerScreenTimeoutId = window.setTimeout(
+      showWinnerScreen,
+      WINNER_SCREEN_DELAY_MS,
+    );
+  }, GAME_OVER_EXIT_DELAY_MS);
 }
 
 function finishGame(): void {
@@ -458,9 +486,12 @@ function finishMatch(): void {
   flippedCards = [];
   updateGameHeader();
 
-  if (currentSettings && matchedPairs === currentSettings.boardSize / 2) {
+  if (
+    currentSettings &&
+    matchedPairs === currentSettings.boardSize / CARDS_PER_PAIR
+  ) {
     isBoardLocked = true;
-    finishGameTimeoutId = window.setTimeout(finishGame, 500);
+    finishGameTimeoutId = window.setTimeout(finishGame, FINISH_GAME_DELAY_MS);
     return;
   }
 
@@ -478,7 +509,7 @@ function handleCardClick(card: HTMLButtonElement): void {
   card.classList.add("memory-card--flipped");
   flippedCards.push(card);
 
-  if (flippedCards.length !== 2) return;
+  if (flippedCards.length !== CARDS_PER_PAIR) return;
 
   const [firstCard, secondCard] = flippedCards;
   const isMatch = firstCard.dataset.pairId === secondCard.dataset.pairId;
@@ -489,7 +520,7 @@ function handleCardClick(card: HTMLButtonElement): void {
   }
 
   isBoardLocked = true;
-  resetTurnTimeoutId = window.setTimeout(resetTurn, 900);
+  resetTurnTimeoutId = window.setTimeout(resetTurn, RESET_TURN_DELAY_MS);
 }
 
 function renderGameBoard(settings: GameSettings): void {
@@ -512,7 +543,10 @@ function renderGameBoard(settings: GameSettings): void {
     if (!card || !backImage || !frontImage) return;
 
     card.dataset.pairId = String(cardData.pairId);
-    card.setAttribute("aria-label", `Hidden memory card ${cardData.id + 1}`);
+    card.setAttribute(
+      "aria-label",
+      `Hidden memory card ${cardData.id + DISPLAY_NUMBER_OFFSET}`,
+    );
     backImage.src = cardData.deckImageSrc;
     frontImage.src = cardData.frontImageSrc;
     frontImage.alt = cardData.imageAlt;
