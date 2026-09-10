@@ -30,7 +30,7 @@ function updateSelectionOutput(
   selected: HTMLInputElement | null,
 ): void {
   output.value = selected?.nextElementSibling?.textContent?.trim() ?? "";
-  output.textContent = output.value || output.dataset.placeholder || "";
+  output.textContent = output.value ?? output.dataset.placeholder ?? "";
   output.classList.toggle(
     "selection-overview__item--selected",
     Boolean(selected),
@@ -46,7 +46,9 @@ function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
   const selected = getSelectedRadioInput(name);
   const output = document.querySelector<HTMLOutputElement>(`#${outputId}`);
 
-  if (!output) return false;
+  if (!output) {
+    return false;
+  }
 
   updateSelectionOutput(output, selected);
   return Boolean(selected);
@@ -56,7 +58,9 @@ function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
 export function updateSelectionOverview(): void {
   const allGroupsSelected = SELECTION_GROUPS.every(updateSelectionGroup);
 
-  if (START_BUTTON) START_BUTTON.disabled = !allGroupsSelected;
+  if (START_BUTTON) {
+    START_BUTTON.disabled = !allGroupsSelected;
+  }
 }
 
 /** Updates the selected visual state of all theme radio options. */
@@ -65,7 +69,9 @@ export function updateThemeOptionSelection(): void {
     .querySelectorAll<HTMLInputElement>('input[name="game-themes"]')
     .forEach((input): void => {
       const parent = input.parentElement;
-      if (!parent) return;
+      if (!parent) {
+        return;
+      }
       parent.classList.toggle("theme-option--selected", input.checked);
     });
 }
@@ -78,7 +84,9 @@ export function updateThemePreview(): void {
   const previewImg = document.getElementById(
     "themePreview",
   ) as HTMLImageElement;
-  if (!previewImg) return;
+  if (!previewImg) {
+    return;
+  }
 
   const src = selected
     ? THEME_PREVIEW_MAP[selected.id]
@@ -105,7 +113,9 @@ export function getSelectedGameSettings(): GameSettings | null {
     'input[name="board-size-selection"]:checked',
   );
 
-  if (!selectedTheme || !selectedPlayer || !selectedBoardSize) return null;
+  if (!selectedTheme || !selectedPlayer || !selectedBoardSize) {
+    return null;
+  }
 
   return {
     themeId: selectedTheme.id,
