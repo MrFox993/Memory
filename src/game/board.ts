@@ -10,7 +10,9 @@ import { handleCardClick } from "./game-logic";
  * @param settings - Settings of the current game round.
  */
 function resetGameBoardElement(settings: GameSettings): void {
-  if (!GAME_BOARD) return;
+  if (!GAME_BOARD) {
+    return;
+  }
 
   GAME_BOARD.innerHTML = "";
   GAME_BOARD.className = `game-board game-board--${settings.boardSize}`;
@@ -34,7 +36,9 @@ function getMemoryCardElements(
     ".memory-card__image--front",
   );
 
-  if (!card || !backImage || !frontImage) return null;
+  if (!card || !backImage || !frontImage) {
+    return null;
+  }
   return { card, backImage, frontImage };
 }
 
@@ -64,11 +68,15 @@ function configureMemoryCard(
  * @param cardData - Generated data for the memory card.
  */
 function appendMemoryCard(cardData: CardData): void {
-  if (!GAME_BOARD || !CARD_TEMPLATE) return;
+  if (!GAME_BOARD || !CARD_TEMPLATE) {
+    return;
+  }
 
   const fragment = CARD_TEMPLATE.content.cloneNode(true) as DocumentFragment;
   const elements = getMemoryCardElements(fragment);
-  if (!elements) return;
+  if (!elements) {
+    return;
+  }
 
   configureMemoryCard(elements, cardData);
   elements.card.addEventListener("click", (): void => {
@@ -83,7 +91,9 @@ function appendMemoryCard(cardData: CardData): void {
  * @param settings - Settings that define the board size and theme.
  */
 export function renderGameBoard(settings: GameSettings): void {
-  if (!GAME_BOARD || !CARD_TEMPLATE) return;
+  if (!GAME_BOARD || !CARD_TEMPLATE) {
+    return;
+  }
 
   resetGameBoardElement(settings);
   createCards(settings).forEach(appendMemoryCard);

@@ -26,7 +26,9 @@ export function setGameTimer(name: TimerName, timeoutId: number): void {
 /** Clears all registered game and end-screen timers. */
 export function clearEndScreenTimers(): void {
   Object.values(timers).forEach((timeoutId): void => {
-    if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    if (timeoutId !== undefined) {
+      window.clearTimeout(timeoutId);
+    }
   });
 
   timers.resetTurn = undefined;

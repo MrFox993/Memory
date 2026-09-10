@@ -33,7 +33,9 @@ import { applyThemeColors } from "./ui/theme";
 /** Starts a new game with the currently selected settings. */
 function startGame(): void {
   const settings = getSelectedGameSettings();
-  if (!settings) return;
+  if (!settings) {
+    return;
+  }
 
   clearEndScreenTimers();
   resetEndScreens();
@@ -89,13 +91,16 @@ function handleSettingsSelectionChange(): void {
 
 /** Closes the quit dialog when the dialog backdrop is clicked. */
 function handleQuitDialogBackdropClick(event: MouseEvent): void {
-  if (event.target === QUIT_GAME_DIALOG) closeQuitGameDialog();
+  if (event.target === QUIT_GAME_DIALOG) {
+    closeQuitGameDialog();
+  }
 }
 
 /** Closes the quit dialog when Escape is pressed while the dialog is visible. */
 function handleEscapeKey(event: KeyboardEvent): void {
-  if (event.key === "Escape" && !QUIT_GAME_DIALOG?.classList.contains("hide"))
+  if (event.key === "Escape" && !QUIT_GAME_DIALOG?.classList.contains("hide")) {
     closeQuitGameDialog();
+  }
 }
 
 /** Registers all DOM event listeners used by the application. */

@@ -12,10 +12,12 @@ import { getPlayerLabel } from "../utils/players";
 
 /** Updates the visible score values for both players. */
 function updateScoreDisplay(): void {
-  if (BLUE_SCORE_ELEMENT)
+  if (BLUE_SCORE_ELEMENT) {
     BLUE_SCORE_ELEMENT.textContent = String(gameState.scores.blue);
-  if (ORANGE_SCORE_ELEMENT)
+  }
+  if (ORANGE_SCORE_ELEMENT) {
     ORANGE_SCORE_ELEMENT.textContent = String(gameState.scores.orange);
+  }
 }
 
 /** Updates the accessible label for the current player display. */
@@ -28,7 +30,9 @@ function updateActivePlayerDisplay(): void {
 
 /** Updates the pawn image that represents the active player. */
 function updateActivePlayerPawn(): void {
-  if (!ACTIVE_PLAYER_PAWN) return;
+  if (!ACTIVE_PLAYER_PAWN) {
+    return;
+  }
 
   ACTIVE_PLAYER_PAWN.src = getPlayerPawnSrc(gameState.activePlayer);
   ACTIVE_PLAYER_PAWN.alt = `${getPlayerLabel(gameState.activePlayer)} player`;

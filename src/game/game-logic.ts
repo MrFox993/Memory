@@ -112,16 +112,23 @@ function handleNonMatchingCards(): void {
  * @param card - Card button selected by the player.
  */
 export function handleCardClick(card: HTMLButtonElement): void {
-  if (isCardUnavailable(card)) return;
+  if (isCardUnavailable(card)) {
+    return;
+  }
 
   card.classList.add("memory-card--flipped");
   gameState.flippedCards.push(card);
 
-  if (gameState.flippedCards.length !== CARDS_PER_PAIR) return;
+  if (gameState.flippedCards.length !== CARDS_PER_PAIR) {
+    return;
+  }
 
   const [firstCard, secondCard] = gameState.flippedCards;
   const isMatch = firstCard.dataset.pairId === secondCard.dataset.pairId;
 
-  if (isMatch) finishMatch();
-  else handleNonMatchingCards();
+  if (isMatch) {
+    finishMatch();
+  } else {
+    handleNonMatchingCards();
+  }
 }
