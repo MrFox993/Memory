@@ -19,12 +19,12 @@ module.exports = [
       sourceType: "module",
     },
     rules: {
-      "curly": ["error", "all"],
-      "eqeqeq": ["error", "always"],
+      curly: ["error", "all"],
+      eqeqeq: ["error", "always"],
       "no-console": "warn",
       "no-var": "error",
       "prefer-const": "error",
-      "semi": ["error", "always"],
+      semi: ["error", "always"],
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/consistent-type-imports": [
         "error",
