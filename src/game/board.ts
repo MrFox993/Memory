@@ -4,6 +4,11 @@ import type { CardData, GameSettings, MemoryCardElements } from "../types/game";
 import { createCards } from "./card-factory";
 import { handleCardClick } from "./game-logic";
 
+/**
+ * Clears the game board and applies board-size and theme metadata.
+ *
+ * @param settings - Settings of the current game round.
+ */
 function resetGameBoardElement(settings: GameSettings): void {
   if (!GAME_BOARD) return;
 
@@ -12,6 +17,12 @@ function resetGameBoardElement(settings: GameSettings): void {
   GAME_BOARD.dataset.theme = settings.themeId;
 }
 
+/**
+ * Reads the required card elements from a cloned template fragment.
+ *
+ * @param fragment - Cloned memory card template content.
+ * @returns Card elements or null if the template is incomplete.
+ */
 function getMemoryCardElements(
   fragment: DocumentFragment,
 ): MemoryCardElements | null {
@@ -27,6 +38,12 @@ function getMemoryCardElements(
   return { card, backImage, frontImage };
 }
 
+/**
+ * Applies card data to the DOM elements of one memory card.
+ *
+ * @param elements - DOM elements of the card template clone.
+ * @param cardData - Generated data for the memory card.
+ */
 function configureMemoryCard(
   elements: MemoryCardElements,
   cardData: CardData,
@@ -41,6 +58,11 @@ function configureMemoryCard(
   elements.frontImage.alt = cardData.imageAlt;
 }
 
+/**
+ * Creates, configures and appends one memory card to the board.
+ *
+ * @param cardData - Generated data for the memory card.
+ */
 function appendMemoryCard(cardData: CardData): void {
   if (!GAME_BOARD || !CARD_TEMPLATE) return;
 
@@ -55,6 +77,11 @@ function appendMemoryCard(cardData: CardData): void {
   GAME_BOARD.appendChild(fragment);
 }
 
+/**
+ * Renders a new memory board for the current game settings.
+ *
+ * @param settings - Settings that define the board size and theme.
+ */
 export function renderGameBoard(settings: GameSettings): void {
   if (!GAME_BOARD || !CARD_TEMPLATE) return;
 

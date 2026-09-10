@@ -8,6 +8,12 @@ import type { CardData, GameSettings, ThemeAssetConfig } from "../types/game";
 import { getThemeImageSrc } from "../utils/assets";
 import { shuffleCards } from "../utils/shuffle";
 
+/**
+ * Creates all available image numbers for the provided theme.
+ *
+ * @param theme - Asset configuration of the selected theme.
+ * @returns Consecutive image numbers available for card fronts.
+ */
 function createThemeImageNumbers(theme: ThemeAssetConfig): number[] {
   return Array.from(
     { length: theme.imageCount },
@@ -15,6 +21,13 @@ function createThemeImageNumbers(theme: ThemeAssetConfig): number[] {
   );
 }
 
+/**
+ * Repeats theme image numbers until there are enough for all pairs.
+ *
+ * @param pairCount - Number of card pairs needed for the board.
+ * @param theme - Asset configuration of the selected theme.
+ * @returns Image numbers with enough entries for the requested pairs.
+ */
 function createRepeatedImageNumbers(
   pairCount: number,
   theme: ThemeAssetConfig,
@@ -25,6 +38,15 @@ function createRepeatedImageNumbers(
   ).flat();
 }
 
+/**
+ * Creates the two matching card data objects for one image.
+ *
+ * @param imageNumber - Theme image number used for both cards.
+ * @param pairId - Shared pair identifier for both generated cards.
+ * @param theme - Asset configuration of the selected theme.
+ * @param deckImageSrc - Image source used for the card back.
+ * @returns Two card data objects with the same pair id.
+ */
 function createCardPair(
   imageNumber: number,
   pairId: number,
@@ -52,6 +74,12 @@ function createCardPair(
   ];
 }
 
+/**
+ * Creates a shuffled set of memory cards for the selected settings.
+ *
+ * @param settings - Settings that define theme and board size.
+ * @returns Shuffled card data for rendering the game board.
+ */
 export function createCards(settings: GameSettings): CardData[] {
   const pairCount = settings.boardSize / CARDS_PER_PAIR;
   const theme = THEME_ASSET_MAP[settings.themeId];

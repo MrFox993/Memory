@@ -5,16 +5,32 @@ import {
   WINNER_SCREEN,
 } from "../dom/dom-elements";
 
+/**
+ * Sets a CSS custom property on the document root.
+ *
+ * @param name - CSS custom property name.
+ * @param value - CSS custom property value.
+ */
 function setGameThemeVariable(name: string, value: string): void {
   document.documentElement.style.setProperty(name, value);
 }
 
+/**
+ * Applies the selected theme id to all game-related screens.
+ *
+ * @param themeId - Selected theme identifier.
+ */
 function updateThemedScreens(themeId: string): void {
   GAME_SCREEN?.setAttribute("data-theme", themeId);
   GAME_OVER_SCREEN?.setAttribute("data-theme", themeId);
   WINNER_SCREEN?.setAttribute("data-theme", themeId);
 }
 
+/**
+ * Applies CSS custom properties and screen metadata for the selected theme.
+ *
+ * @param themeId - Selected theme identifier.
+ */
 export function applyThemeColors(themeId: string): void {
   const themeColors =
     THEME_COLOR_MAP[themeId] ?? THEME_COLOR_MAP.codeVibesTheme;

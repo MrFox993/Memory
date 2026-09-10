@@ -10,6 +10,7 @@ import { gameState } from "../game/game-state";
 import { getPlayerPawnSrc } from "../utils/assets";
 import { getPlayerLabel } from "../utils/players";
 
+/** Updates the visible score values for both players. */
 function updateScoreDisplay(): void {
   if (BLUE_SCORE_ELEMENT)
     BLUE_SCORE_ELEMENT.textContent = String(gameState.scores.blue);
@@ -17,6 +18,7 @@ function updateScoreDisplay(): void {
     ORANGE_SCORE_ELEMENT.textContent = String(gameState.scores.orange);
 }
 
+/** Updates the accessible label for the current player display. */
 function updateActivePlayerDisplay(): void {
   ACTIVE_PLAYER_DISPLAY?.setAttribute(
     "aria-label",
@@ -24,6 +26,7 @@ function updateActivePlayerDisplay(): void {
   );
 }
 
+/** Updates the pawn image that represents the active player. */
 function updateActivePlayerPawn(): void {
   if (!ACTIVE_PLAYER_PAWN) return;
 
@@ -31,6 +34,7 @@ function updateActivePlayerPawn(): void {
   ACTIVE_PLAYER_PAWN.alt = `${getPlayerLabel(gameState.activePlayer)} player`;
 }
 
+/** Applies the active-player visual state to the score cards. */
 function updateActiveScoreCards(): void {
   BLUE_SCORE_CARD?.classList.toggle(
     "game-score__player--active",
@@ -42,6 +46,7 @@ function updateActiveScoreCards(): void {
   );
 }
 
+/** Refreshes all game header values for the current state. */
 export function updateGameHeader(): void {
   updateScoreDisplay();
   updateActivePlayerDisplay();

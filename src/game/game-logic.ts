@@ -12,12 +12,14 @@ import { updateGameHeader } from "../ui/game-header";
 import { gameState } from "./game-state";
 import { setGameTimer } from "./timers";
 
+/** Switches the active player and refreshes the game header. */
 function switchPlayer(): void {
   gameState.activePlayer =
     gameState.activePlayer === "blue" ? "orange" : "blue";
   updateGameHeader();
 }
 
+/** Flips non-matching cards back and passes the turn to the next player. */
 function resetTurn(): void {
   gameState.flippedCards.forEach((card): void => {
     card.classList.remove("memory-card--flipped");
@@ -27,6 +29,7 @@ function resetTurn(): void {
   switchPlayer();
 }
 
+/** Locks the board and starts the transition from game to winner screens. */
 function finishGame(): void {
   gameState.isBoardLocked = true;
   showGameOverScreen();
@@ -42,6 +45,11 @@ function finishGame(): void {
   setGameTimer("gameOverExit", gameOverExitTimeoutId);
 }
 
+/**
+ * Checks whether all pairs on the current board have been matched.
+ *
+ * @returns True when the current game has no unmatched pairs left.
+ */
 function isGameComplete(): boolean {
   return Boolean(
     gameState.currentSettings &&
@@ -50,6 +58,7 @@ function isGameComplete(): boolean {
   );
 }
 
+/** Marks the currently flipped cards as permanently matched. */
 function markMatchedCards(): void {
   gameState.flippedCards.forEach((card): void => {
     card.classList.add("memory-card--matched");
@@ -57,6 +66,7 @@ function markMatchedCards(): void {
   });
 }
 
+/** Awards the active player and either unlocks or finishes the game. */
 function finishMatch(): void {
   gameState.scores[gameState.activePlayer] += DISPLAY_NUMBER_OFFSET;
   gameState.matchedPairs += DISPLAY_NUMBER_OFFSET;
@@ -76,6 +86,12 @@ function finishMatch(): void {
   );
 }
 
+/**
+ * Checks whether a card may not be selected right now.
+ *
+ * @param card - Card button that the player tried to select.
+ * @returns True when the board is locked or the card is already unavailable.
+ */
 function isCardUnavailable(card: HTMLButtonElement): boolean {
   return (
     gameState.isBoardLocked ||
@@ -84,11 +100,17 @@ function isCardUnavailable(card: HTMLButtonElement): boolean {
   );
 }
 
+/** Locks the board and schedules non-matching cards to flip back. */
 function handleNonMatchingCards(): void {
   gameState.isBoardLocked = true;
   setGameTimer("resetTurn", window.setTimeout(resetTurn, RESET_TURN_DELAY_MS));
 }
 
+/**
+ * Handles selection, match checking and turn flow for a clicked memory card.
+ *
+ * @param card - Card button selected by the player.
+ */
 export function handleCardClick(card: HTMLButtonElement): void {
   if (isCardUnavailable(card)) return;
 

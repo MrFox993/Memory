@@ -7,12 +7,24 @@ import {
 import { START_BUTTON } from "../dom/dom-elements";
 import type { GameSettings, SelectionGroup } from "../types/game";
 
+/**
+ * Finds the selected radio input for a given group name.
+ *
+ * @param name - Radio group name to search for.
+ * @returns Selected radio input or null when no option is selected.
+ */
 function getSelectedRadioInput(name: string): HTMLInputElement | null {
   return document.querySelector<HTMLInputElement>(
     `input[name="${name}"]:checked`,
   );
 }
 
+/**
+ * Updates one selection overview output from a selected radio input.
+ *
+ * @param output - Output element that displays the selected value.
+ * @param selected - Selected radio input or null when the group is incomplete.
+ */
 function updateSelectionOutput(
   output: HTMLOutputElement,
   selected: HTMLInputElement | null,
@@ -25,6 +37,11 @@ function updateSelectionOutput(
   );
 }
 
+/**
+ * Updates one selection overview group and reports whether it is complete.
+ *
+ * @returns True when the radio group has a selected option.
+ */
 function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
   const selected = getSelectedRadioInput(name);
   const output = document.querySelector<HTMLOutputElement>(`#${outputId}`);
@@ -35,12 +52,14 @@ function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
   return Boolean(selected);
 }
 
+/** Updates all selected setting labels and enables the start button if complete. */
 export function updateSelectionOverview(): void {
   const allGroupsSelected = SELECTION_GROUPS.every(updateSelectionGroup);
 
   if (START_BUTTON) START_BUTTON.disabled = !allGroupsSelected;
 }
 
+/** Updates the selected visual state of all theme radio options. */
 export function updateThemeOptionSelection(): void {
   document
     .querySelectorAll<HTMLInputElement>('input[name="game-themes"]')
@@ -51,6 +70,7 @@ export function updateThemeOptionSelection(): void {
     });
 }
 
+/** Updates the theme preview image and its alternative text. */
 export function updateThemePreview(): void {
   const selected = document.querySelector<HTMLInputElement>(
     'input[name="game-themes"]:checked',
@@ -69,6 +89,11 @@ export function updateThemePreview(): void {
     : "theme preview image";
 }
 
+/**
+ * Reads the currently selected game settings from the form controls.
+ *
+ * @returns Selected settings or null if a required selection is missing.
+ */
 export function getSelectedGameSettings(): GameSettings | null {
   const selectedTheme = document.querySelector<HTMLInputElement>(
     'input[name="game-themes"]:checked',
