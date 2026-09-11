@@ -2,3 +2,12 @@ $primary-button-color: #f0ea6e;
 $secondary-button-color: #303131;
 $primary-font-color: #303131;
 $secondary-font-color: #ffffff;
+
+$breakpoints: (
+  xs: 360px,
+  sm: 576px,
+  md: 768px,
+  lg: 900px,
+  xl: 1200px,
+  xxl: 1440px,
+);
