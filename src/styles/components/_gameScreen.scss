@@ -489,6 +489,32 @@
   }
 }
 
+@include abstracts.respond-below(xl) {
+  .game-score {
+    gap: 12px;
+
+    &__player {
+      min-width: 104px;
+      padding: 8px 14px;
+    }
+
+    &__value {
+      font-size: 28px;
+    }
+  }
+
+  .game-active-player {
+    padding: 8px 20px;
+    font-size: 24px;
+  }
+
+  .memory-card {
+    &__face {
+      border-radius: 12px;
+    }
+  }
+}
+
 @include abstracts.respond-below(lg) {
   :root {
     --game-header-height: clamp(150px, 24vh, 230px);
@@ -504,9 +530,14 @@
     justify-self: stretch;
   }
 
+  .game-score,
   .game-active-player,
   .game-exit-button {
     justify-content: center;
+  }
+
+  .game-active-player,
+  .game-exit-button {
     text-align: center;
   }
 
@@ -544,6 +575,219 @@
 
     &__player {
       width: 100%;
+    }
+  }
+}
+
+@include abstracts.respond-below(md) {
+  :root {
+    --game-screen-padding-x: 14px;
+    --game-screen-padding-y: 10px;
+    --game-header-height: clamp(140px, 22vh, 205px);
+  }
+
+  .game-header {
+    gap: 10px;
+  }
+
+  .game-score {
+    gap: 10px;
+
+    &__player {
+      flex: 1 1 0;
+      min-width: 0;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 10px;
+    }
+
+    &__pawn {
+      width: 34px;
+      height: 34px;
+    }
+
+    &__value {
+      font-size: 24px;
+    }
+  }
+
+  .game-active-player {
+    gap: 10px;
+    padding: 6px 12px;
+    font-size: 22px;
+
+    &__pawn {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  .game-board {
+    --card-gap: clamp(4px, 1.4vw, 10px);
+  }
+
+  .memory-card {
+    &__face {
+      border-width: 3px;
+      border-radius: 10px;
+    }
+  }
+
+  .quit-dialog {
+    padding: 18px;
+  }
+}
+
+@include abstracts.respond-below(sm) {
+  :root {
+    --game-screen-padding-x: 10px;
+    --game-screen-padding-y: 8px;
+    --game-header-height: clamp(128px, 20vh, 180px);
+  }
+
+  .game-header {
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  .game-score {
+    gap: 8px;
+
+    &__player {
+      gap: 8px;
+      padding: 6px 8px;
+      border-width: 2px;
+    }
+
+    &__pawn {
+      width: 28px;
+      height: 28px;
+    }
+
+    &__value {
+      font-size: 22px;
+    }
+  }
+
+  .game-active-player {
+    gap: 8px;
+    font-size: 18px;
+
+    &__pawn {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .game-board {
+    --card-gap: 5px;
+  }
+
+  .memory-card {
+    &__face {
+      border-width: 2px;
+      border-radius: 8px;
+    }
+  }
+
+  .quit-dialog {
+    padding: 14px;
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 22px;
+    }
+  }
+
+  .end-screen {
+    padding: 18px;
+
+    &__panel {
+      gap: 24px;
+      padding: 30px 16px;
+    }
+  }
+
+  .final-score {
+    gap: 16px;
+
+    &__player {
+      min-width: 0;
+      gap: 14px;
+      padding: 14px 18px;
+    }
+
+    &__pawn {
+      width: 56px;
+      height: 56px;
+    }
+
+    &__value {
+      font-size: 44px;
+    }
+  }
+}
+
+@include abstracts.respond-below(xs) {
+  :root {
+    --game-screen-padding-x: 8px;
+    --game-screen-padding-y: 6px;
+    --game-header-height: clamp(116px, 19vh, 160px);
+  }
+
+  .game-score {
+    &__player {
+      gap: 6px;
+      padding: 5px 6px;
+    }
+
+    &__pawn {
+      width: 24px;
+      height: 24px;
+    }
+
+    &__value {
+      font-size: 20px;
+    }
+  }
+
+  .game-active-player {
+    font-size: 16px;
+
+    &__pawn {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .game-board {
+    --card-gap: 4px;
+  }
+
+  .memory-card {
+    &__face {
+      border-radius: 6px;
+    }
+  }
+
+  .quit-dialog {
+    h2 {
+      font-size: 20px;
+    }
+
+    &__button {
+      font-size: 16px;
+    }
+  }
+
+  .final-score {
+    &__pawn {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__value {
+      font-size: 38px;
     }
   }
 }
