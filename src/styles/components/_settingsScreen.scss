@@ -67,6 +67,7 @@
         $direction: row
       );
       gap: 8px;
+      padding-bottom: 8px;
     }
 
     [class$="-options"] {
@@ -297,6 +298,7 @@
     justify-content: flex-start;
     height: auto;
     overflow-y: auto;
+    gap: 0;
 
     .left-split,
     .right-split {
@@ -319,19 +321,18 @@
     }
 
     .right-split {
-      align-items: center;
+      align-items: flex-start;
     }
 
-    .game-theme-preview,
-    .selection-overview {
-      width: 100%;
+    .selection-overview__item {
+      flex: none !important;
     }
   }
 }
 
 @include abstracts.respond-below(sm) {
   .settings-screen {
-    padding: 24px 16px;
+    padding: 24px 4px;
 
     .left-split {
       .heading {
