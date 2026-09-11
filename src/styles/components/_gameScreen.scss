@@ -489,7 +489,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include abstracts.respond-below(lg) {
   :root {
     --game-header-height: clamp(150px, 24vh, 230px);
   }
