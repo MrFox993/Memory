@@ -30,3 +30,25 @@
     font-size: 140px;
   }
 }
+
+@include abstracts.respond-below(sm) {
+  .start-screen {
+    padding-left: 20px;
+
+    h1 {
+      font-size: 80px;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+  }
+}
+
+@include abstracts.respond-below(xs) {
+  .start-screen {
+    h1 {
+      font-size: 60px;
+    }
+  }
+}
