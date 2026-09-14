@@ -7,21 +7,22 @@ button {
 
 .primary-button {
   @include abstracts.flexContent(flex, center, center);
-  background-color: abstracts.$primary-button-color;
   gap: 20px;
   padding: 20px;
-  color: abstracts.$primary-font-color;
   border: none;
+  background-color: abstracts.$primary-button-color;
+  color: abstracts.$primary-font-color;
   transition: transform 0.256s ease-out;
 
   img {
     transition: transform 0.256s ease-out;
   }
 
-  p {
+  p,
+  span {
     font-family: base.$font-red-rose;
-    font-weight: base.$font-weight-bold;
     font-size: 40px;
+    font-weight: base.$font-weight-bold;
   }
 
   &:hover:enabled {
@@ -40,16 +41,96 @@ button {
 .secondary-button {
   @include abstracts.flexContent(flex, center, center);
   gap: 10px;
+  padding: 16px 24px;
+  border: 1px solid abstracts.$primary-button-color;
   background-color: abstracts.$secondary-button-color;
   color: abstracts.$secondary-font-color;
   font-family: base.$font-red-rose;
   font-size: 24px;
   font-weight: base.$font-weight-bold;
-  padding: 16px 24px;
-  border: 1px solid abstracts.$primary-button-color;
   transition: transform 0.2s ease-out;
 
   &:hover:enabled {
     border: 3px solid abstracts.$primary-button-color;
+  }
+}
+
+@include abstracts.respond-below(lg) {
+  .primary-button {
+    gap: 16px;
+    padding: 18px;
+
+    p,
+    span {
+      font-size: 34px;
+    }
+  }
+
+  .secondary-button {
+    padding: 14px 20px;
+    font-size: 22px;
+  }
+}
+
+@include abstracts.respond-below(md) {
+  .primary-button {
+    gap: 14px;
+    padding: 16px;
+
+    img {
+      max-width: 40px;
+    }
+
+    p,
+    span {
+      font-size: 30px;
+    }
+  }
+
+  .secondary-button {
+    padding: 12px 18px;
+    font-size: 20px;
+  }
+}
+
+@include abstracts.respond-below(sm) {
+  .primary-button {
+    max-width: 320px;
+    gap: 12px;
+    padding: 14px;
+
+    img {
+      max-width: 34px;
+    }
+
+    p,
+    span {
+      font-size: 26px;
+    }
+  }
+
+  .secondary-button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+}
+
+@include abstracts.respond-below(xs) {
+  .primary-button {
+    max-width: 280px;
+
+    img {
+      max-width: 30px;
+    }
+
+    p,
+    span {
+      font-size: 22px;
+    }
+  }
+
+  .secondary-button {
+    font-size: 16px;
   }
 }

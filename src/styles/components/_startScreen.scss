@@ -8,25 +8,98 @@
     $align: center,
     $direction: column
   );
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+  padding: 40px;
   background-color: #303131;
   color: white;
   gap: 40px;
   background-image: url("../assets/stadia_controller_bg.png");
-  background-position: left;
-  background-position-y: bottom;
+  background-position: left bottom;
   background-repeat: no-repeat;
+  box-sizing: border-box;
 
   h2 {
-    font-family: base.$font_almarai;
+    font-family: base.$font-almarai;
     font-weight: base.$font-weight-regular;
     font-size: 48px;
   }
 
   h1 {
-    font-family: base.$font_red-rose;
+    font-family: base.$font-red-rose;
     font-weight: base.$font-weight-bold;
     font-size: 140px;
+    line-height: 1;
+  }
+}
+
+@include abstracts.respond-below(xl) {
+  .start-screen {
+    background-size: 360px auto;
+
+    h1 {
+      font-size: 116px;
+    }
+  }
+}
+
+@include abstracts.respond-below(lg) {
+  .start-screen {
+    gap: 32px;
+    background-size: 300px auto;
+
+    h1 {
+      font-size: 96px;
+    }
+
+    h2 {
+      font-size: 40px;
+    }
+  }
+}
+
+@include abstracts.respond-below(md) {
+  .start-screen {
+    padding: 32px 24px;
+    background-size: 240px auto;
+
+    h1 {
+      font-size: 84px;
+    }
+
+    h2 {
+      font-size: 34px;
+    }
+  }
+}
+
+@include abstracts.respond-below(sm) {
+  .start-screen {
+    padding: 28px 20px;
+    gap: 28px;
+    background-size: 190px auto;
+
+    h1 {
+      font-size: 72px;
+    }
+
+    h2 {
+      font-size: 30px;
+    }
+  }
+}
+
+@include abstracts.respond-below(xs) {
+  .start-screen {
+    padding: 24px 16px;
+    background-size: 150px auto;
+
+    h1 {
+      font-size: 56px;
+    }
+
+    h2 {
+      font-size: 26px;
+    }
   }
 }
