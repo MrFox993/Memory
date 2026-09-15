@@ -21,6 +21,7 @@ function getSelectedRadioInput(name: string): HTMLInputElement | null {
 
 /**
  * Updates one selection overview output from a selected radio input.
+ * Keeps the configured placeholder visible until the group has a selection.
  *
  * @param output - Output element that displays the selected value.
  * @param selected - Selected radio input or null when the group is incomplete.
@@ -29,8 +30,10 @@ function updateSelectionOutput(
   output: HTMLOutputElement,
   selected: HTMLInputElement | null,
 ): void {
-  output.value = selected?.nextElementSibling?.textContent?.trim() ?? "";
-  output.textContent = output.value ?? output.dataset.placeholder ?? "";
+  const selectedText = selected?.nextElementSibling?.textContent?.trim() ?? "";
+
+  output.value = selectedText;
+  output.textContent = (selectedText || output.dataset.placeholder) ?? "";
   output.classList.toggle(
     "selection-overview__item--selected",
     Boolean(selected),
@@ -54,9 +57,12 @@ function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
   return Boolean(selected);
 }
 
-/** Updates all selected setting labels and enables the start button if complete. */
+/**
+ * Updates every setting label independently and enables the start button when complete.
+ */
 export function updateSelectionOverview(): void {
-  const allGroupsSelected = SELECTION_GROUPS.every(updateSelectionGroup);
+  const groupCompletionStates = SELECTION_GROUPS.map(updateSelectionGroup);
+  const allGroupsSelected = groupCompletionStates.every(Boolean);
 
   if (START_BUTTON) {
     START_BUTTON.disabled = !allGroupsSelected;
