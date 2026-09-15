@@ -130,14 +130,14 @@ The app is available by default at `http://localhost:5173`.
 
 ## Available Scripts
 
-| Script                 | Description                                                                                   |
-| ---------------------- | --------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Starts the Vite development server.                                                           |
-| `npm run build`        | Runs TypeScript with `tsc --noEmit` and then creates the production build with Vite.          |
-| `npm run preview`      | Starts a local preview of the production build.                                                |
-| `npm run lint`         | Checks the TypeScript files in the `src` folder with ESLint.                                  |
-| `npm run format`       | Formats the project with Prettier.                                                            |
-| `npm run format:check` | Checks whether the project is already formatted according to Prettier.                         |
+| Script                 | Description                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------ |
+| `npm run dev`          | Starts the Vite development server.                                                  |
+| `npm run build`        | Runs TypeScript with `tsc --noEmit` and then creates the production build with Vite. |
+| `npm run preview`      | Starts a local preview of the production build.                                      |
+| `npm run lint`         | Checks the TypeScript files in the `src` folder with ESLint.                         |
+| `npm run format`       | Formats the project with Prettier.                                                   |
+| `npm run format:check` | Checks whether the project is already formatted according to Prettier.               |
 
 ## Quality Assurance
 
