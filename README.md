@@ -37,9 +37,9 @@ A browser-based memory game built with **TypeScript**, **Vite** and modular **SC
 - GitHub Actions
 - Dev Container with Node.js 22
 
-## Projektstruktur
+## Project Structure
 
-Die ursprüngliche Spiellogik wurde aus `src/main.ts` in fokussierte Module ausgelagert. `main.ts` dient jetzt vor allem als Einstiegspunkt: Styles importieren, UI initialisieren und Event Listener registrieren.
+The original game logic has been extracted from `src/main.ts` into focused modules. `main.ts` now mainly acts as the application entry point: importing styles, initializing the UI and registering event listeners.
 
 ```text
 .
@@ -94,54 +94,54 @@ Die ursprüngliche Spiellogik wurde aus `src/main.ts` in fokussierte Module ausg
 └── vite.config.ts                 # Vite base path and dev server configuration
 ```
 
-## Architekturüberblick
+## Architecture Overview
 
-- **`src/main.ts`** startet die Anwendung, verbindet die Screens miteinander und registriert globale Events.
-- **`src/game/`** enthält die eigentliche Spiellogik: Kartenerzeugung, Board-Rendering, Match-Prüfung, Punktestand und Timer.
-- **`src/ui/`** kapselt UI-Aktualisierungen wie Settings-Übersicht, Theme-Vorschau, Header, Game-over- und Winner-Screens.
-- **`src/constants/game-config.ts`** bündelt Kartenanzahlen, Theme-Assets, Theme-Farben, Player-Mapping und Timing-Werte.
-- **`src/utils/assets.ts`** erzeugt Asset-Pfade über `import.meta.env.BASE_URL`, damit Assets lokal und auf GitHub Pages korrekt geladen werden.
-- **`src/styles/`** folgt einer SCSS-Teilstruktur aus `abstracts`, `base` und `components`.
+- **`src/main.ts`** starts the application, connects the screens and registers global events.
+- **`src/game/`** contains the core game logic: card creation, board rendering, match checking, scoring and timers.
+- **`src/ui/`** encapsulates UI updates such as the settings overview, theme preview, header, game-over screen and winner screen.
+- **`src/constants/game-config.ts`** centralizes card counts, theme assets, theme colors, player mapping and timing values.
+- **`src/utils/assets.ts`** builds asset paths with `import.meta.env.BASE_URL`, so assets load correctly both locally and on GitHub Pages.
+- **`src/styles/`** follows an SCSS partial structure with `abstracts`, `base` and `components`.
 
-## Entwicklung mit Dev Container
+## Development with Dev Container
 
-Voraussetzung ist Docker Desktop sowie VS Code mit der Erweiterung **Dev Containers**.
+Docker Desktop and VS Code with the **Dev Containers** extension are required.
 
-1. Repository in VS Code öffnen.
-2. Über die Benachrichtigung oder die Befehlspalette `Dev Containers: Reopen in Container` auswählen.
-3. Nach dem automatischen Setup den Entwicklungsserver starten:
+1. Open the repository in VS Code.
+2. Select `Dev Containers: Reopen in Container` from the notification or the command palette.
+3. After the automatic setup has finished, start the development server:
 
    ```bash
    npm run dev
    ```
 
-Der Container verwendet Node.js 22 und installiert die im `package-lock.json` festgelegten TypeScript-, Vite- und Sass-Versionen mit `npm ci`. Vite ist über Port 5173 erreichbar und wird von VS Code automatisch weitergeleitet.
+The container uses Node.js 22 and installs the TypeScript, Vite and Sass versions locked in `package-lock.json` via `npm ci`. Vite is available on port 5173 and is forwarded automatically by VS Code.
 
-## Lokale Entwicklung ohne Dev Container
+## Local Development without Dev Container
 
-Voraussetzung ist eine aktuelle Node.js-Version. Danach können die Abhängigkeiten installiert und der Entwicklungsserver gestartet werden:
+A current Node.js version is required. Then install the dependencies and start the development server:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Die App ist standardmäßig unter `http://localhost:5173` erreichbar.
+The app is available by default at `http://localhost:5173`.
 
-## Verfügbare Scripts
+## Available Scripts
 
-| Script                 | Beschreibung                                                                                  |
+| Script                 | Description                                                                                   |
 | ---------------------- | --------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Startet den Vite-Entwicklungsserver.                                                          |
-| `npm run build`        | Prüft TypeScript mit `tsc --noEmit` und erstellt anschließend den Produktions-Build mit Vite. |
-| `npm run preview`      | Startet eine lokale Vorschau des Produktions-Builds.                                          |
-| `npm run lint`         | Prüft die TypeScript-Dateien im `src`-Ordner mit ESLint.                                      |
-| `npm run format`       | Formatiert das Projekt mit Prettier.                                                          |
-| `npm run format:check` | Prüft, ob das Projekt bereits nach Prettier formatiert ist.                                   |
+| `npm run dev`          | Starts the Vite development server.                                                           |
+| `npm run build`        | Runs TypeScript with `tsc --noEmit` and then creates the production build with Vite.          |
+| `npm run preview`      | Starts a local preview of the production build.                                                |
+| `npm run lint`         | Checks the TypeScript files in the `src` folder with ESLint.                                  |
+| `npm run format`       | Formats the project with Prettier.                                                            |
+| `npm run format:check` | Checks whether the project is already formatted according to Prettier.                         |
 
-## Qualitätssicherung
+## Quality Assurance
 
-Vor einem Commit oder einer Abgabe sollten mindestens diese Befehle erfolgreich laufen:
+Before committing or submitting the project, at least these commands should run successfully:
 
 ```bash
 npm run lint
@@ -149,22 +149,22 @@ npm run format:check
 npm run build
 ```
 
-Die CI-Pipeline in `.github/workflows/ci.yml` führt zusätzlich Linting, Format-Check, Type-Check und Build auf Node.js 22 aus.
+The CI pipeline in `.github/workflows/ci.yml` additionally runs linting, a format check, a type check and the build on Node.js 22.
 
-## Build und Deployment
+## Build and Deployment
 
-Der Produktions-Build wird mit folgendem Befehl erstellt:
+Create the production build with:
 
 ```bash
 npm run build
 ```
 
-Die generierten Dateien liegen anschließend im Ordner `dist/`. In `vite.config.ts` ist für Produktions-Builds die Base-URL `/Memory/` konfiguriert, damit die App z. B. auf GitHub Pages unter einem Repository-Pfad ausgeliefert werden kann.
+The generated files are written to the `dist/` folder. In `vite.config.ts`, the production base URL is configured as `/Memory/`, so the app can be served from a repository path, for example on GitHub Pages.
 
-Das Deployment nach GitHub Pages ist über `.github/workflows/deploy.yml` vorbereitet. Bei einem Push auf `main` werden Dependencies installiert, das Projekt gelintet, gebaut und der Inhalt von `dist/` als Pages-Artefakt veröffentlicht.
+Deployment to GitHub Pages is prepared in `.github/workflows/deploy.yml`. On every push to `main`, dependencies are installed, the project is linted and built, and the contents of `dist/` are published as a Pages artifact.
 
-## Hinweise zur Erweiterung
+## Extension Notes
 
-- Neue Themes werden in `public/assets/<theme-folder>/` abgelegt und anschließend in `THEME_ASSET_MAP`, `THEME_PREVIEW_MAP` und `THEME_COLOR_MAP` ergänzt.
-- Neue Board-Größen können über `BOARD_SIZE_MAP` ergänzt werden. Die Anzahl sollte gerade sein, da immer Kartenpaare erzeugt werden.
-- Neue UI-Elemente sollten zentral in `src/dom/dom-elements.ts` registriert werden, damit andere Module keine doppelten DOM-Queries benötigen.
+- Add new themes to `public/assets/<theme-folder>/`, then register them in `THEME_ASSET_MAP`, `THEME_PREVIEW_MAP` and `THEME_COLOR_MAP`.
+- Add new board sizes via `BOARD_SIZE_MAP`. The card count should be even because the game always creates card pairs.
+- Register new UI elements centrally in `src/dom/dom-elements.ts` so other modules do not need duplicate DOM queries.
