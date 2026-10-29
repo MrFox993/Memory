@@ -1,10 +1,10 @@
 import {
-  ACTIVE_PLAYER_DISPLAY,
-  ACTIVE_PLAYER_PAWN,
-  BLUE_SCORE_CARD,
-  BLUE_SCORE_ELEMENT,
-  ORANGE_SCORE_CARD,
-  ORANGE_SCORE_ELEMENT,
+  activePlayerDisplay,
+  activePlayerPawn,
+  blueScoreCard,
+  blueScoreElement,
+  orangeScoreCard,
+  orangeScoreElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";
 import { getPlayerPawnSrc } from "../utils/assets";
@@ -12,17 +12,19 @@ import { getPlayerLabel } from "../utils/players";
 
 /** Updates the visible score values for both players. */
 function updateScoreDisplay(): void {
-  if (BLUE_SCORE_ELEMENT) {
-    BLUE_SCORE_ELEMENT.textContent = String(gameState.scores.blue);
+  const blue = blueScoreElement();
+  const orange = orangeScoreElement();
+  if (blue) {
+    blue.textContent = String(gameState.scores.blue);
   }
-  if (ORANGE_SCORE_ELEMENT) {
-    ORANGE_SCORE_ELEMENT.textContent = String(gameState.scores.orange);
+  if (orange) {
+    orange.textContent = String(gameState.scores.orange);
   }
 }
 
 /** Updates the accessible label for the current player display. */
 function updateActivePlayerDisplay(): void {
-  ACTIVE_PLAYER_DISPLAY?.setAttribute(
+  activePlayerDisplay()?.setAttribute(
     "aria-label",
     `Current player: ${gameState.activePlayer}`,
   );
@@ -30,21 +32,22 @@ function updateActivePlayerDisplay(): void {
 
 /** Updates the pawn image that represents the active player. */
 function updateActivePlayerPawn(): void {
-  if (!ACTIVE_PLAYER_PAWN) {
+  const pawn = activePlayerPawn();
+  if (!pawn) {
     return;
   }
 
-  ACTIVE_PLAYER_PAWN.src = getPlayerPawnSrc(gameState.activePlayer);
-  ACTIVE_PLAYER_PAWN.alt = `${getPlayerLabel(gameState.activePlayer)} player`;
+  pawn.src = getPlayerPawnSrc(gameState.activePlayer);
+  pawn.alt = `${getPlayerLabel(gameState.activePlayer)} player`;
 }
 
 /** Applies the active-player visual state to the score cards. */
 function updateActiveScoreCards(): void {
-  BLUE_SCORE_CARD?.classList.toggle(
+  blueScoreCard()?.classList.toggle(
     "game-score__player--active",
     gameState.activePlayer === "blue",
   );
-  ORANGE_SCORE_CARD?.classList.toggle(
+  orangeScoreCard()?.classList.toggle(
     "game-score__player--active",
     gameState.activePlayer === "orange",
   );

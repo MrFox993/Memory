@@ -1,5 +1,5 @@
 import { DISPLAY_NUMBER_OFFSET } from "../constants/game-config";
-import { CARD_TEMPLATE, GAME_BOARD } from "../dom/dom-elements";
+import { cardTemplate, gameBoard } from "../dom/dom-elements";
 import type { CardData, GameSettings, MemoryCardElements } from "../types/game";
 import { createCards } from "./card-factory";
 import { handleCardClick } from "./game-logic";
@@ -10,13 +10,14 @@ import { handleCardClick } from "./game-logic";
  * @param settings - Settings of the current game round.
  */
 function resetGameBoardElement(settings: GameSettings): void {
-  if (!GAME_BOARD) {
+  const board = gameBoard();
+  if (!board) {
     return;
   }
 
-  GAME_BOARD.innerHTML = "";
-  GAME_BOARD.className = `game-board game-board--${settings.boardSize}`;
-  GAME_BOARD.dataset.theme = settings.themeId;
+  board.innerHTML = "";
+  board.className = `game-board game-board--${settings.boardSize}`;
+  board.dataset.theme = settings.themeId;
 }
 
 /**
@@ -68,11 +69,13 @@ function configureMemoryCard(
  * @param cardData - Generated data for the memory card.
  */
 function appendMemoryCard(cardData: CardData): void {
-  if (!GAME_BOARD || !CARD_TEMPLATE) {
+  const board = gameBoard();
+  const template = cardTemplate();
+  if (!board || !template) {
     return;
   }
 
-  const fragment = CARD_TEMPLATE.content.cloneNode(true) as DocumentFragment;
+  const fragment = template.content.cloneNode(true) as DocumentFragment;
   const elements = getMemoryCardElements(fragment);
   if (!elements) {
     return;
@@ -82,7 +85,7 @@ function appendMemoryCard(cardData: CardData): void {
   elements.card.addEventListener("click", (): void => {
     handleCardClick(elements.card);
   });
-  GAME_BOARD.appendChild(fragment);
+  board.appendChild(fragment);
 }
 
 /**
@@ -91,7 +94,7 @@ function appendMemoryCard(cardData: CardData): void {
  * @param settings - Settings that define the board size and theme.
  */
 export function renderGameBoard(settings: GameSettings): void {
-  if (!GAME_BOARD || !CARD_TEMPLATE) {
+  if (!gameBoard() || !cardTemplate()) {
     return;
   }
 

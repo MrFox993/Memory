@@ -1,14 +1,14 @@
 import {
-  BACK_TO_START_BUTTON,
-  FINAL_BLUE_SCORE_ELEMENT,
-  FINAL_ORANGE_SCORE_ELEMENT,
-  GAME_OVER_PANEL,
-  GAME_OVER_SCREEN,
-  GAME_SCREEN,
-  WINNER_CONFETTI_ELEMENT,
-  WINNER_IMAGE_ELEMENT,
-  WINNER_SCREEN,
-  WINNER_STATUS_ELEMENT,
+  backToStartButton,
+  finalBlueScoreElement,
+  finalOrangeScoreElement,
+  gameOverPanel,
+  gameOverScreen,
+  gameScreen,
+  winnerConfettiElement,
+  winnerImageElement,
+  winnerScreen,
+  winnerStatusElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";
 import type { Player } from "../types/game";
@@ -31,10 +31,10 @@ export function showScreen(
 
 /** Resets all end-screen elements to their initial hidden state. */
 export function resetEndScreens(): void {
-  GAME_OVER_SCREEN?.classList.add("hide");
-  WINNER_SCREEN?.classList.add("hide");
-  WINNER_CONFETTI_ELEMENT?.classList.add("hide");
-  GAME_OVER_PANEL?.classList.remove("end-screen__panel--exit-up");
+  gameOverScreen()?.classList.add("hide");
+  winnerScreen()?.classList.add("hide");
+  winnerConfettiElement()?.classList.add("hide");
+  gameOverPanel()?.classList.remove("end-screen__panel--exit-up");
 }
 
 /**
@@ -51,26 +51,30 @@ function getWinner(): Player | "draw" {
 
 /** Copies the current score values into the game-over screen. */
 function updateFinalScoreScreen(): void {
-  if (FINAL_BLUE_SCORE_ELEMENT) {
-    FINAL_BLUE_SCORE_ELEMENT.textContent = String(gameState.scores.blue);
+  const blue = finalBlueScoreElement();
+  const orange = finalOrangeScoreElement();
+  if (blue) {
+    blue.textContent = String(gameState.scores.blue);
   }
-  if (FINAL_ORANGE_SCORE_ELEMENT) {
-    FINAL_ORANGE_SCORE_ELEMENT.textContent = String(gameState.scores.orange);
+  if (orange) {
+    orange.textContent = String(gameState.scores.orange);
   }
 }
 
 /** Displays the draw state on the winner screen. */
 function showDrawResult(): void {
-  WINNER_CONFETTI_ELEMENT?.classList.add("hide");
-  if (WINNER_STATUS_ELEMENT) {
-    WINNER_STATUS_ELEMENT.textContent = "It's a DRAW";
+  winnerConfettiElement()?.classList.add("hide");
+  const status = winnerStatusElement();
+  if (status) {
+    status.textContent = "It's a DRAW";
   }
-  if (!WINNER_IMAGE_ELEMENT) {
+  const image = winnerImageElement();
+  if (!image) {
     return;
   }
 
-  WINNER_IMAGE_ELEMENT.src = getPublicAssetSrc("icons/Scale_Icon.png");
-  WINNER_IMAGE_ELEMENT.alt = "Draw scale icon";
+  image.src = getPublicAssetSrc("icons/Scale_Icon.png");
+  image.alt = "Draw scale icon";
 }
 
 /**
@@ -81,16 +85,18 @@ function showDrawResult(): void {
 function showPlayerWinnerResult(winner: Player): void {
   const winnerLabel = getPlayerLabel(winner);
 
-  WINNER_CONFETTI_ELEMENT?.classList.remove("hide");
-  if (WINNER_STATUS_ELEMENT) {
-    WINNER_STATUS_ELEMENT.textContent = `The Winner is ${winnerLabel}`;
+  winnerConfettiElement()?.classList.remove("hide");
+  const status = winnerStatusElement();
+  if (status) {
+    status.textContent = `The Winner is ${winnerLabel}`;
   }
-  if (!WINNER_IMAGE_ELEMENT) {
+  const image = winnerImageElement();
+  if (!image) {
     return;
   }
 
-  WINNER_IMAGE_ELEMENT.src = getPlayerPawnSrc(winner);
-  WINNER_IMAGE_ELEMENT.alt = `${winnerLabel} player`;
+  image.src = getPlayerPawnSrc(winner);
+  image.alt = `${winnerLabel} player`;
 }
 
 /** Updates winner-screen content based on the current final score. */
@@ -107,16 +113,16 @@ function updateWinnerScreen(): void {
 
 /** Shows the final winner screen and moves focus to its action button. */
 export function showWinnerScreen(): void {
-  GAME_OVER_SCREEN?.classList.add("hide");
-  GAME_OVER_PANEL?.classList.remove("end-screen__panel--exit-up");
+  gameOverScreen()?.classList.add("hide");
+  gameOverPanel()?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
-  WINNER_SCREEN?.classList.remove("hide");
-  BACK_TO_START_BUTTON?.focus();
+  winnerScreen()?.classList.remove("hide");
+  backToStartButton()?.focus();
 }
 
 /** Shows the intermediate game-over screen with the final score. */
 export function showGameOverScreen(): void {
   updateFinalScoreScreen();
-  GAME_SCREEN?.classList.add("hide");
-  GAME_OVER_SCREEN?.classList.remove("hide");
+  gameScreen()?.classList.add("hide");
+  gameOverScreen()?.classList.remove("hide");
 }

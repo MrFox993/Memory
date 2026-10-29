@@ -1,8 +1,8 @@
 import { THEME_COLOR_MAP } from "../constants/game-config";
 import {
-  GAME_OVER_SCREEN,
-  GAME_SCREEN,
-  WINNER_SCREEN,
+  gameOverScreen,
+  gameScreen,
+  winnerScreen,
 } from "../dom/dom-elements";
 
 /**
@@ -21,9 +21,9 @@ function setGameThemeVariable(name: string, value: string): void {
  * @param themeId - Selected theme identifier.
  */
 function updateThemedScreens(themeId: string): void {
-  GAME_SCREEN?.setAttribute("data-theme", themeId);
-  GAME_OVER_SCREEN?.setAttribute("data-theme", themeId);
-  WINNER_SCREEN?.setAttribute("data-theme", themeId);
+  gameScreen()?.setAttribute("data-theme", themeId);
+  gameOverScreen()?.setAttribute("data-theme", themeId);
+  winnerScreen()?.setAttribute("data-theme", themeId);
 }
 
 /**

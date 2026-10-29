@@ -4,7 +4,7 @@ import {
   SELECTION_GROUPS,
   THEME_PREVIEW_MAP,
 } from "../constants/game-config";
-import { START_BUTTON } from "../dom/dom-elements";
+import { startButton } from "../dom/dom-elements";
 import type { GameSettings, SelectionGroup } from "../types/game";
 
 /**
@@ -64,8 +64,9 @@ export function updateSelectionOverview(): void {
   const groupCompletionStates = SELECTION_GROUPS.map(updateSelectionGroup);
   const allGroupsSelected = groupCompletionStates.every(Boolean);
 
-  if (START_BUTTON) {
-    START_BUTTON.disabled = !allGroupsSelected;
+  const button = startButton();
+  if (button) {
+    button.disabled = !allGroupsSelected;
   }
 }
 
