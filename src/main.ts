@@ -1,17 +1,17 @@
 import "./styles/main.scss";
 
 import {
-  BACK_TO_GAME_BUTTON,
-  BACK_TO_START_BUTTON,
-  CONFIRM_QUIT_GAME_BUTTON,
-  EXIT_GAME_BUTTON,
-  GAME_SCREEN,
-  QUIT_GAME_DIALOG,
-  SETTINGS_SCREEN,
-  SHOW_SETTINGS_BUTTON,
-  START_BUTTON,
-  START_SCREEN,
-  WINNER_SCREEN,
+  backToGameButton,
+  backToStartButton,
+  confirmQuitGameButton,
+  exitGameButton,
+  gameScreen,
+  quitGameDialog,
+  settingsScreen,
+  showSettingsButton,
+  startButton,
+  startScreen,
+  winnerScreen,
 } from "./dom/dom-elements";
 import { renderGameBoard } from "./game/board";
 import {
@@ -28,7 +28,11 @@ import {
   updateThemePreview,
 } from "./ui/selection";
 import { resetEndScreens, showScreen } from "./ui/screens";
+import { loadScreen } from "./ui/screen-loader";
 import { applyThemeColors } from "./ui/theme";
+
+/** Flag that ensures settings-screen listeners are bound at most once. */
+let settingsInitialized = false;
 
 /** Starts a new game with the currently selected settings. */
 function startGame(): void {
@@ -43,19 +47,19 @@ function startGame(): void {
   applyThemeColors(settings.themeId);
   renderGameBoard(settings);
   updateGameHeader();
-  showScreen(GAME_SCREEN, SETTINGS_SCREEN);
+  showScreen(gameScreen(), settingsScreen());
 }
 
 /** Opens the quit confirmation dialog and moves focus into it. */
 function openQuitGameDialog(): void {
-  QUIT_GAME_DIALOG?.classList.remove("hide");
-  BACK_TO_GAME_BUTTON?.focus();
+  quitGameDialog()?.classList.remove("hide");
+  backToGameButton()?.focus();
 }
 
 /** Closes the quit confirmation dialog and restores focus to the exit button. */
 function closeQuitGameDialog(): void {
-  QUIT_GAME_DIALOG?.classList.add("hide");
-  EXIT_GAME_BUTTON?.focus();
+  quitGameDialog()?.classList.add("hide");
+  exitGameButton()?.focus();
 }
 
 /** Leaves the current game and returns to the settings screen. */
@@ -63,7 +67,7 @@ function exitGame(): void {
   clearEndScreenTimers();
   resetEndScreens();
   closeQuitGameDialog();
-  showScreen(SETTINGS_SCREEN, GAME_SCREEN);
+  showScreen(settingsScreen(), gameScreen());
 }
 
 /** Resets the finished game and shows the settings screen again. */
@@ -72,14 +76,36 @@ function backToStart(): void {
   resetEndScreens();
   gameState.currentSettings = null;
   resetGameProgress();
-  showScreen(SETTINGS_SCREEN, WINNER_SCREEN);
+  showScreen(settingsScreen(), winnerScreen());
+}
+
+/** Binds the settings screen listeners (radios + start button). */
+function bindSettingsListeners(): void {
+  document
+    .querySelectorAll<HTMLInputElement>('input[type="radio"]')
+    .forEach((input): void => {
+      input.addEventListener("change", handleSettingsSelectionChange);
+    });
+  startButton()?.addEventListener("click", startGame);
+}
+
+/** Lazy-loads the settings screen and binds its listeners on first use. */
+async function ensureSettingsScreenReady(): Promise<void> {
+  await loadScreen("settings");
+  if (settingsInitialized) {
+    return;
+  }
+  bindSettingsListeners();
+  initializeSettingsView();
+  settingsInitialized = true;
 }
 
 /** Moves from the start screen to the settings screen. */
-function showSettingsScreen(): void {
+async function showSettingsScreen(): Promise<void> {
   gameState.currentSettings = null;
   resetGameProgress();
-  showScreen(SETTINGS_SCREEN, START_SCREEN);
+  await ensureSettingsScreenReady();
+  showScreen(settingsScreen(), startScreen());
 }
 
 /** Updates all settings-related UI elements after a radio selection changes. */
@@ -91,33 +117,29 @@ function handleSettingsSelectionChange(): void {
 
 /** Closes the quit dialog when the dialog backdrop is clicked. */
 function handleQuitDialogBackdropClick(event: MouseEvent): void {
-  if (event.target === QUIT_GAME_DIALOG) {
+  if (event.target === quitGameDialog()) {
     closeQuitGameDialog();
   }
 }
 
 /** Closes the quit dialog when Escape is pressed while the dialog is visible. */
 function handleEscapeKey(event: KeyboardEvent): void {
-  if (event.key === "Escape" && !QUIT_GAME_DIALOG?.classList.contains("hide")) {
+  const dialog = quitGameDialog();
+  if (event.key === "Escape" && dialog && !dialog.classList.contains("hide")) {
     closeQuitGameDialog();
   }
 }
 
-/** Registers all DOM event listeners used by the application. */
-function registerEventListeners(): void {
-  document
-    .querySelectorAll<HTMLInputElement>('input[type="radio"]')
-    .forEach((input): void => {
-      input.addEventListener("change", handleSettingsSelectionChange);
-    });
-
-  SHOW_SETTINGS_BUTTON?.addEventListener("click", showSettingsScreen);
-  START_BUTTON?.addEventListener("click", startGame);
-  EXIT_GAME_BUTTON?.addEventListener("click", openQuitGameDialog);
-  BACK_TO_GAME_BUTTON?.addEventListener("click", closeQuitGameDialog);
-  CONFIRM_QUIT_GAME_BUTTON?.addEventListener("click", exitGame);
-  BACK_TO_START_BUTTON?.addEventListener("click", backToStart);
-  QUIT_GAME_DIALOG?.addEventListener("click", handleQuitDialogBackdropClick);
+/** Registers the global listeners that must exist from app start. */
+function registerGlobalListeners(): void {
+  showSettingsButton()?.addEventListener("click", (): void => {
+    void showSettingsScreen();
+  });
+  exitGameButton()?.addEventListener("click", openQuitGameDialog);
+  backToGameButton()?.addEventListener("click", closeQuitGameDialog);
+  confirmQuitGameButton()?.addEventListener("click", exitGame);
+  backToStartButton()?.addEventListener("click", backToStart);
+  quitGameDialog()?.addEventListener("click", handleQuitDialogBackdropClick);
   document.addEventListener("keydown", handleEscapeKey);
 }
 
@@ -128,5 +150,4 @@ function initializeSettingsView(): void {
   updateThemePreview();
 }
 
-registerEventListeners();
-initializeSettingsView();
+registerGlobalListeners();
