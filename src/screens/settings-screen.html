@@ -1,0 +1,121 @@
+<section id="settingsScreen" class="hide settings-screen">
+  <div class="left-split">
+    <div class="heading">
+      <h1>Settings</h1>
+      <img src="/icons/square_underline.png" aria-hidden="true" />
+    </div>
+    <fieldset class="game-themes-selection">
+      <legend class="game-theme-headline">
+        <img src="/icons/palette.png" aria-hidden="true" />
+        <h2>Game Themes</h2>
+      </legend>
+      <div class="game-themes-options">
+        <div>
+          <input
+            type="radio"
+            name="game-themes"
+            id="codeVibesTheme"
+            checked
+          />
+          <label for="codeVibesTheme">Code vibes theme</label>
+        </div>
+        <div>
+          <input type="radio" name="game-themes" id="gamingTheme" />
+          <label for="gamingTheme">Gaming theme</label>
+        </div>
+        <div>
+          <input type="radio" name="game-themes" id="DAProjectTheme" />
+          <label for="DAProjectTheme">DA project theme</label>
+        </div>
+        <div>
+          <input type="radio" name="game-themes" id="foodsTheme" />
+          <label for="foodsTheme">Foods theme</label>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="player-selection">
+      <legend class="player-selection-headline">
+        <img src="/icons/chess_pawn.png" aria-hidden="true" />
+        <h2>Choose Player</h2>
+      </legend>
+      <div class="player-selection-options">
+        <div>
+          <input type="radio" name="player-selection" id="bluePlayer" />
+          <label for="bluePlayer">Blue</label>
+        </div>
+        <div>
+          <input type="radio" name="player-selection" id="orangePlayer" />
+          <label for="orangePlayer">Orange</label>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="board-size-selection">
+      <legend class="board-size-selection-headline">
+        <img src="/icons/board_size.png" aria-hidden="true" />
+        <h2>Board Size</h2>
+      </legend>
+      <div class="board-size-selection-options">
+        <div>
+          <input type="radio" name="board-size-selection" id="sizeS" />
+          <label for="sizeS">16 Cards</label>
+        </div>
+        <div>
+          <input type="radio" name="board-size-selection" id="sizeM" />
+          <label for="sizeM">24 Cards</label>
+        </div>
+        <div>
+          <input type="radio" name="board-size-selection" id="sizeL" />
+          <label for="sizeL">36 Cards</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="right-split">
+    <div class="game-theme-preview">
+      <img
+        id="themePreview"
+        src="/assets/code_vibes_theme_preview.png"
+        alt=""
+      />
+    </div>
+    <div class="selection-overview" aria-label="Chosen settings">
+      <output
+        id="selectedTheme"
+        class="selection-overview__item"
+        data-placeholder="Theme"
+        >Theme</output
+      >
+      <img
+        class="selection-overview__divider"
+        src="/icons/diagonale_line.png"
+        alt=""
+      />
+      <output
+        id="selectedPlayer"
+        class="selection-overview__item"
+        data-placeholder="Player"
+        >Player</output
+      >
+      <img
+        class="selection-overview__divider"
+        src="/icons/diagonale_line.png"
+        alt=""
+      />
+      <output
+        id="selectedBoardSize"
+        class="selection-overview__item"
+        data-placeholder="Board size"
+        >Board size</output
+      >
+      <button
+        id="startGameButton"
+        class="selection-overview__start primary-button"
+        type="button"
+        disabled
+      >
+        <img src="/icons/start_game_icon.png" alt="" aria-hidden="true" />
+        Start
+      </button>
+    </div>
+  </div>
+</section>

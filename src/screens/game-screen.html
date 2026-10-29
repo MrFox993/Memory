@@ -1,0 +1,104 @@
+<section id="gameScreen" class="hide game-screen" aria-label="Memory game">
+  <header class="game-header">
+    <div class="game-score" aria-label="Player scores">
+      <div
+        id="blueScoreCard"
+        class="game-score__player"
+        aria-label="Blue player score"
+      >
+        <img
+          class="game-score__pawn"
+          src="/icons/blue_player_pawn.png"
+          alt="Blue player"
+        />
+        <strong id="blueScore" class="game-score__value">0</strong>
+      </div>
+      <div
+        id="orangeScoreCard"
+        class="game-score__player"
+        aria-label="Orange player score"
+      >
+        <img
+          class="game-score__pawn"
+          src="/icons/orange_player_pawn.png"
+          alt="Orange player"
+        />
+        <strong id="orangeScore" class="game-score__value">0</strong>
+      </div>
+    </div>
+    <div
+      id="activePlayerDisplay"
+      class="game-active-player"
+      aria-live="polite"
+    >
+      <span>Current player:</span>
+      <img
+        id="activePlayerPawn"
+        class="game-active-player__pawn"
+        src="/icons/blue_player_pawn.png"
+        alt="Blue player"
+      />
+    </div>
+    <button
+      id="exitGameButton"
+      class="game-exit-button secondary-button"
+      type="button"
+    >
+      <img src="/icons/exit_icon.png" aria-hidden="true" />
+      <span>Exit game</span>
+    </button>
+  </header>
+  <section class="game-board-wrap">
+    <div id="gameBoard" class="game-board" aria-label="Memory cards"></div>
+  </section>
+  <div
+    id="quitGameDialog"
+    class="quit-dialog hide"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="quitGameDialogTitle"
+  >
+    <div class="quit-dialog__content">
+      <h2 id="quitGameDialogTitle">
+        Are you sure you want to quit the game?
+      </h2>
+      <div class="quit-dialog__actions">
+        <button
+          id="backToGameButton"
+          class="quit-dialog__button quit-dialog__button--secondary"
+          type="button"
+        >
+          Back to game
+        </button>
+        <button
+          id="confirmQuitGameButton"
+          class="quit-dialog__button quit-dialog__button--primary"
+          type="button"
+        >
+          Yes, quit game
+        </button>
+      </div>
+    </div>
+  </div>
+  <template id="memoryCardTemplate">
+    <button class="memory-card" type="button">
+      <span class="memory-card__inner">
+        <span
+          class="memory-card__face memory-card__face--back"
+          aria-hidden="true"
+        >
+          <img
+            class="memory-card__image memory-card__image--back"
+            aria-hidden="true"
+          />
+        </span>
+        <span class="memory-card__face memory-card__face--front">
+          <img
+            class="memory-card__image memory-card__image--front"
+            aria-hidden="true"
+          />
+        </span>
+      </span>
+    </button>
+  </template>
+</section>
