@@ -27,7 +27,11 @@ import {
   updateThemeOptionSelection,
   updateThemePreview,
 } from "./ui/selection";
-import { resetEndScreens, showScreen } from "./ui/screens";
+import {
+  registerWinnerInitCallback,
+  resetEndScreens,
+  showScreen,
+} from "./ui/screens";
 import { loadScreen } from "./ui/screen-loader";
 import { applyThemeColors } from "./ui/theme";
 
@@ -154,12 +158,16 @@ function handleEscapeKey(event: KeyboardEvent): void {
   }
 }
 
+/** Binds the winner screen listeners after it has been loaded. */
+function bindWinnerListeners(): void {
+  backToStartButton()?.addEventListener("click", backToStart);
+}
+
 /** Registers the global listeners that must exist from app start. */
 function registerGlobalListeners(): void {
   showSettingsButton()?.addEventListener("click", (): void => {
     void showSettingsScreen();
   });
-  backToStartButton()?.addEventListener("click", backToStart);
   document.addEventListener("keydown", handleEscapeKey);
 }
 
@@ -170,4 +178,5 @@ function initializeSettingsView(): void {
   updateThemePreview();
 }
 
+registerWinnerInitCallback(bindWinnerListeners);
 registerGlobalListeners();
