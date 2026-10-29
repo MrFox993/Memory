@@ -34,13 +34,35 @@ import { applyThemeColors } from "./ui/theme";
 /** Flag that ensures settings-screen listeners are bound at most once. */
 let settingsInitialized = false;
 
+/** Flag that ensures game-screen listeners are bound at most once. */
+let gameInitialized = false;
+
+/** Binds the game screen listeners (exit button and quit dialog). */
+function bindGameListeners(): void {
+  exitGameButton()?.addEventListener("click", openQuitGameDialog);
+  backToGameButton()?.addEventListener("click", closeQuitGameDialog);
+  confirmQuitGameButton()?.addEventListener("click", exitGame);
+  quitGameDialog()?.addEventListener("click", handleQuitDialogBackdropClick);
+}
+
+/** Lazy-loads the game screen and binds its listeners on first use. */
+async function ensureGameScreenReady(): Promise<void> {
+  await loadScreen("game");
+  if (gameInitialized) {
+    return;
+  }
+  bindGameListeners();
+  gameInitialized = true;
+}
+
 /** Starts a new game with the currently selected settings. */
-function startGame(): void {
+async function startGame(): Promise<void> {
   const settings = getSelectedGameSettings();
   if (!settings) {
     return;
   }
 
+  await ensureGameScreenReady();
   clearEndScreenTimers();
   resetEndScreens();
   resetGameState(settings);
@@ -86,7 +108,9 @@ function bindSettingsListeners(): void {
     .forEach((input): void => {
       input.addEventListener("change", handleSettingsSelectionChange);
     });
-  startButton()?.addEventListener("click", startGame);
+  startButton()?.addEventListener("click", (): void => {
+    void startGame();
+  });
 }
 
 /** Lazy-loads the settings screen and binds its listeners on first use. */
@@ -135,11 +159,7 @@ function registerGlobalListeners(): void {
   showSettingsButton()?.addEventListener("click", (): void => {
     void showSettingsScreen();
   });
-  exitGameButton()?.addEventListener("click", openQuitGameDialog);
-  backToGameButton()?.addEventListener("click", closeQuitGameDialog);
-  confirmQuitGameButton()?.addEventListener("click", exitGame);
   backToStartButton()?.addEventListener("click", backToStart);
-  quitGameDialog()?.addEventListener("click", handleQuitDialogBackdropClick);
   document.addEventListener("keydown", handleEscapeKey);
 }
 
