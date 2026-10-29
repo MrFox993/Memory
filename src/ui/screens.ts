@@ -14,6 +14,24 @@ import { gameState } from "../game/game-state";
 import type { Player } from "../types/game";
 import { getPlayerPawnSrc, getPublicAssetSrc } from "../utils/assets";
 import { getPlayerLabel } from "../utils/players";
+import { loadScreen } from "./screen-loader";
+
+/** One-shot callback invoked after the winner screen has been loaded. */
+let winnerInitCallback: (() => void) | null = null;
+
+/** Flag that ensures the winner init callback is invoked at most once. */
+let winnerInitialized = false;
+
+/**
+ * Registers a callback that is invoked exactly once after the winner
+ * screen fragment has been injected into the DOM. Used by `main.ts`
+ * to bind listeners (e.g. the back-to-start button) lazily.
+ *
+ * @param callback - Function to invoke after the first winner load.
+ */
+export function registerWinnerInitCallback(callback: () => void): void {
+  winnerInitCallback = callback;
+}
 
 /**
  * Shows one screen and hides another by toggling the hide utility class.
@@ -111,8 +129,19 @@ function updateWinnerScreen(): void {
   showPlayerWinnerResult(winner);
 }
 
+/** Lazy-loads the winner screen fragment and runs the init callback once. */
+async function ensureWinnerScreenReady(): Promise<void> {
+  await loadScreen("winner");
+  if (winnerInitialized) {
+    return;
+  }
+  winnerInitCallback?.();
+  winnerInitialized = true;
+}
+
 /** Shows the final winner screen and moves focus to its action button. */
-export function showWinnerScreen(): void {
+export async function showWinnerScreen(): Promise<void> {
+  await ensureWinnerScreenReady();
   gameOverScreen()?.classList.add("hide");
   gameOverPanel()?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
@@ -121,7 +150,8 @@ export function showWinnerScreen(): void {
 }
 
 /** Shows the intermediate game-over screen with the final score. */
-export function showGameOverScreen(): void {
+export async function showGameOverScreen(): Promise<void> {
+  await loadScreen("gameOver");
   updateFinalScoreScreen();
   gameScreen()?.classList.add("hide");
   gameOverScreen()?.classList.remove("hide");

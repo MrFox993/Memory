@@ -25,6 +25,14 @@ const SCREEN_HTML_LOADERS: Record<ScreenName, ScreenHtmlLoader> = {
 /** Id of the DOM mount point that screens are injected into. */
 const APP_MOUNT_ID = "app";
 
+/**
+ * Matches absolute `src="/..."` and `href="/..."` attribute values that
+ * reference files from the `public/` directory. These must be rewritten
+ * to include the Vite base URL (e.g. `/Memory/`) in production builds,
+ * because raw HTML fragments bypass Vite's HTML transformation.
+ */
+const PUBLIC_ASSET_ATTRIBUTE_PATTERN = /(src|href)="\/(?!\/)/g;
+
 /** Set of already loaded screens, prevents duplicate injection. */
 const loadedScreens = new Set<ScreenName>();
 
@@ -43,6 +51,22 @@ function getAppMount(): HTMLElement {
 }
 
 /**
+ * Rewrites absolute public-asset paths (`src="/..."`, `href="/..."`) so
+ * that they include the Vite base URL. This is required for production
+ * builds that are deployed under a sub-path (e.g. GitHub Pages).
+ *
+ * @param html - Raw HTML of the screen fragment.
+ * @returns HTML with asset paths rewritten to include the base URL.
+ */
+function rewriteAssetPaths(html: string): string {
+  const base = import.meta.env.BASE_URL;
+  if (base === "/") {
+    return html;
+  }
+  return html.replace(PUBLIC_ASSET_ATTRIBUTE_PATTERN, `$1="${base}`);
+}
+
+/**
  * Appends the given HTML fragment to the end of the mount point.
  *
  * @param html - Raw HTML of the screen fragment.
@@ -50,7 +74,7 @@ function getAppMount(): HTMLElement {
 function injectScreenHtml(html: string): void {
   const mount = getAppMount();
   const template = document.createElement("template");
-  template.innerHTML = html.trim();
+  template.innerHTML = rewriteAssetPaths(html.trim());
   mount.append(template.content);
 }
 

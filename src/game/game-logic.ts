@@ -32,13 +32,15 @@ function resetTurn(): void {
 /** Locks the board and starts the transition from game to winner screens. */
 function finishGame(): void {
   gameState.isBoardLocked = true;
-  showGameOverScreen();
+  void showGameOverScreen();
 
   const gameOverExitTimeoutId = window.setTimeout((): void => {
     gameOverPanel()?.classList.add("end-screen__panel--exit-up");
     setGameTimer(
       "winnerScreen",
-      window.setTimeout(showWinnerScreen, WINNER_SCREEN_DELAY_MS),
+      window.setTimeout((): void => {
+        void showWinnerScreen();
+      }, WINNER_SCREEN_DELAY_MS),
     );
   }, GAME_OVER_EXIT_DELAY_MS);
 
