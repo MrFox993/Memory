@@ -6,7 +6,7 @@ import {
   RESET_TURN_DELAY_MS,
   WINNER_SCREEN_DELAY_MS,
 } from "../constants/game-config";
-import { GAME_OVER_PANEL } from "../dom/dom-elements";
+import { gameOverPanel } from "../dom/dom-elements";
 import { showGameOverScreen, showWinnerScreen } from "../ui/screens";
 import { updateGameHeader } from "../ui/game-header";
 import { gameState } from "./game-state";
@@ -32,13 +32,15 @@ function resetTurn(): void {
 /** Locks the board and starts the transition from game to winner screens. */
 function finishGame(): void {
   gameState.isBoardLocked = true;
-  showGameOverScreen();
+  void showGameOverScreen();
 
   const gameOverExitTimeoutId = window.setTimeout((): void => {
-    GAME_OVER_PANEL?.classList.add("end-screen__panel--exit-up");
+    gameOverPanel()?.classList.add("end-screen__panel--exit-up");
     setGameTimer(
       "winnerScreen",
-      window.setTimeout(showWinnerScreen, WINNER_SCREEN_DELAY_MS),
+      window.setTimeout((): void => {
+        void showWinnerScreen();
+      }, WINNER_SCREEN_DELAY_MS),
     );
   }, GAME_OVER_EXIT_DELAY_MS);
 
