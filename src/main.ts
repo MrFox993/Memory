@@ -13,10 +13,7 @@ import {
   startScreen,
   winnerScreen,
 } from "./dom/dom-elements";
-import {
-  gameState,
-  resetGameProgress,
-} from "./game/game-state";
+import { gameState, resetGameProgress } from "./game/game-state";
 import { loadScreen } from "./ui/screen-loader";
 
 /* ---------------------------------------------------------------- */

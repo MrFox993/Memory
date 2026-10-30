@@ -1,9 +1,5 @@
 import { THEME_COLOR_MAP } from "../constants/game-config";
-import {
-  gameOverScreen,
-  gameScreen,
-  winnerScreen,
-} from "../dom/dom-elements";
+import { gameOverScreen, gameScreen, winnerScreen } from "../dom/dom-elements";
 
 /**
  * Sets a CSS custom property on the document root.

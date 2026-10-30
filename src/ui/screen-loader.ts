@@ -5,11 +5,7 @@
  */
 
 /** Identifier of a lazy-loadable screen. */
-export type ScreenName =
-  | "settings"
-  | "game"
-  | "gameOver"
-  | "winner";
+export type ScreenName = "settings" | "game" | "gameOver" | "winner";
 
 /** Loader function that asynchronously resolves to the raw HTML of a screen. */
 type ScreenHtmlLoader = () => Promise<{ default: string }>;
