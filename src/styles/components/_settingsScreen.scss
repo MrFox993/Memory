@@ -17,6 +17,7 @@
     display: grid;
     align-content: center;
     justify-items: start;
+    justify-content: center;
     width: 40%;
     min-height: 100%;
 
@@ -94,6 +95,7 @@
       label {
         cursor: pointer;
         transition: font-weight 0.2s ease;
+        width: 180px;
       }
 
       .player-option--selected label,
@@ -143,7 +145,7 @@
     @include abstracts.flexContent(
       $display: flex,
       $justify: center,
-      $align: flex-end,
+      $align: center,
       $direction: column
     );
     width: 55%;
