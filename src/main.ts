@@ -239,10 +239,14 @@ async function handleSettingsSelectionChange(): Promise<void> {
   const {
     updateSelectionOverview,
     updateThemeOptionSelection,
+    updatePlayerOptionSelection,
+    updateBoardSizeOptionSelection,
     updateThemePreview,
   } = await getSelectionModule();
   updateSelectionOverview();
   updateThemeOptionSelection();
+  updatePlayerOptionSelection();
+  updateBoardSizeOptionSelection();
   updateThemePreview();
 }
 

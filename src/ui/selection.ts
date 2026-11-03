@@ -70,17 +70,37 @@ export function updateSelectionOverview(): void {
   }
 }
 
-/** Updates the selected visual state of all theme radio options. */
-export function updateThemeOptionSelection(): void {
+/**
+ * Updates the selected visual state of all radio options in a group.
+ *
+ * @param groupName - Radio group name to iterate over.
+ * @param selectedClass - CSS class applied to the parent of the checked input.
+ */
+function updateOptionSelection(groupName: string, selectedClass: string): void {
   document
-    .querySelectorAll<HTMLInputElement>('input[name="game-themes"]')
+    .querySelectorAll<HTMLInputElement>(`input[name="${groupName}"]`)
     .forEach((input): void => {
       const parent = input.parentElement;
       if (!parent) {
         return;
       }
-      parent.classList.toggle("theme-option--selected", input.checked);
+      parent.classList.toggle(selectedClass, input.checked);
     });
+}
+
+/** Updates the selected visual state of all theme radio options. */
+export function updateThemeOptionSelection(): void {
+  updateOptionSelection("game-themes", "theme-option--selected");
+}
+
+/** Updates the selected visual state of all player radio options. */
+export function updatePlayerOptionSelection(): void {
+  updateOptionSelection("player-selection", "player-option--selected");
+}
+
+/** Updates the selected visual state of all board-size radio options. */
+export function updateBoardSizeOptionSelection(): void {
+  updateOptionSelection("board-size-selection", "board-size-option--selected");
 }
 
 /** Updates the theme preview image and its alternative text. */
