@@ -93,6 +93,13 @@
 
       label {
         cursor: pointer;
+        transition: font-weight 0.2s ease;
+      }
+
+      .player-option--selected label,
+      .board-size-option--selected label,
+      .theme-option--selected label {
+        font-weight: base.$font-weight-bold;
       }
     }
 
@@ -117,12 +124,6 @@
         transition: opacity 0.2s ease;
       }
 
-      .theme-option--selected {
-        label {
-          font-weight: base.$font-weight-bold;
-        }
-      }
-
       .theme-option--selected::after {
         opacity: 1;
       }
@@ -134,7 +135,6 @@
 
       label {
         width: 180px;
-        transition: font-weight 0.2s ease;
       }
     }
   }
