@@ -1,6 +1,12 @@
 @use "../abstracts/main" as abstracts;
 @use "../base/main" as base;
 
+// Match the gutter color (body background outside $max-content-width)
+// to the start-screen's dark background.
+body:has(.start-screen:not(.hide)) {
+  background-color: abstracts.$surface-dark;
+}
+
 .start-screen {
   @include abstracts.flexContent(
     $display: flex,
@@ -8,6 +14,7 @@
     $align: center,
     $direction: column
   );
+  @include abstracts.screenContentConstraint;
   min-height: 100vh;
   width: 100%;
   padding: 40px;

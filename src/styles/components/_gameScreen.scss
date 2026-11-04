@@ -1,6 +1,13 @@
 @use "../base/main" as base;
 @use "../abstracts/main" as abstracts;
 
+// Match the gutter color (body background outside $max-content-width)
+// to the dark background used by both the game-screen and the end-screen.
+body:has(.game-screen:not(.hide)),
+body:has(.end-screen:not(.hide)) {
+  background-color: abstracts.$surface-dark;
+}
+
 :root {
   --game-theme-accent-color: #{abstracts.$primary-button-color};
   --game-theme-accent-text-color: #{abstracts.$primary-font-color};
@@ -14,6 +21,7 @@
 }
 
 .game-screen {
+  @include abstracts.screenContentConstraint;
   height: 100dvh;
   min-height: 100vh;
   width: 100%;
@@ -348,6 +356,7 @@
     $align: center,
     $direction: column
   );
+  @include abstracts.screenContentConstraint;
   min-height: 100vh;
   width: 100%;
   padding: 24px;

@@ -1,6 +1,12 @@
 @use "../base/main" as base;
 @use "../abstracts/main" as abstracts;
 
+// Match the gutter color (body background outside $max-content-width)
+// to the settings-screen's light background.
+body:has(.settings-screen:not(.hide)) {
+  background-color: abstracts.$surface-light;
+}
+
 .settings-screen {
   @include abstracts.flexContent(
     $display: flex,
@@ -8,6 +14,7 @@
     $align: center,
     $direction: row
   );
+  @include abstracts.screenContentConstraint;
   width: 100%;
   min-height: 100vh;
   padding: 32px 24px;

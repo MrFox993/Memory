@@ -1,3 +1,5 @@
+@use "../abstracts/main" as abstracts;
+
 *,
 *::before,
 *::after {
@@ -9,6 +11,15 @@
 html,
 body {
   min-width: 320px;
+}
+
+body {
+  // Default gutter color used on viewports wider than $max-content-width.
+  // Individual screens override this via `body:has(.<screen>:not(.hide))`
+  // in their own SCSS files so the gutter always matches the active
+  // screen's background.
+  background-color: abstracts.$surface-dark;
+  transition: background-color 0.2s ease;
 }
 
 img {
