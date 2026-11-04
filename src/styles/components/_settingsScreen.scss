@@ -8,6 +8,7 @@
     $align: center,
     $direction: row
   );
+  @include abstracts.screenContentConstraint;
   width: 100%;
   min-height: 100vh;
   padding: 32px 24px;

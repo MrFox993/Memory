@@ -14,6 +14,7 @@
 }
 
 .game-screen {
+  @include abstracts.screenContentConstraint;
   height: 100dvh;
   min-height: 100vh;
   width: 100%;
@@ -348,6 +349,7 @@
     $align: center,
     $direction: column
   );
+  @include abstracts.screenContentConstraint;
   min-height: 100vh;
   width: 100%;
   padding: 24px;
