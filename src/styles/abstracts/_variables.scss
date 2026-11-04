@@ -8,6 +8,12 @@ $secondary-font-color: #ffffff;
 // on ultra-wide displays.
 $max-content-width: 1920px;
 
+// Surface colors used for the "gutter" area that appears on viewports
+// wider than $max-content-width. Each screen opts in to the color that
+// matches its own background so the gutters blend seamlessly.
+$surface-dark: #303131;
+$surface-light: #ffffff;
+
 $breakpoints: (
   xs: 360px,
   sm: 576px,
