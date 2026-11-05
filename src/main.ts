@@ -13,25 +13,18 @@ import {
   startScreen,
   winnerScreen,
 } from "./dom/dom-elements";
-import { gameState, resetGameProgress } from "./game/game-state";
+import {
+  gameState,
+  resetGameProgress,
+  resetGameState,
+} from "./game/game-state";
 import { loadScreen } from "./ui/screen-loader";
-
-/* ---------------------------------------------------------------- */
-/* Lazy module loaders                                                */
-/* ---------------------------------------------------------------- */
-/*                                                                    */
-/* Screen-specific modules are imported dynamically so that the       */
-/* initial bundle stays as small as possible. Each loader caches the  */
-/* resolved module to prevent repeated network/parse costs.           */
-/* ---------------------------------------------------------------- */
-
 import type * as SelectionNamespace from "./ui/selection";
 import type * as ScreensNamespace from "./ui/screens";
 import type * as BoardNamespace from "./game/board";
 import type * as GameHeaderNamespace from "./ui/game-header";
 import type * as ThemeNamespace from "./ui/theme";
 import type * as TimersNamespace from "./game/timers";
-import type * as GameStateNamespace from "./game/game-state";
 
 type SelectionModule = typeof SelectionNamespace;
 type ScreensModule = typeof ScreensNamespace;
@@ -39,7 +32,6 @@ type BoardModule = typeof BoardNamespace;
 type GameHeaderModule = typeof GameHeaderNamespace;
 type ThemeModule = typeof ThemeNamespace;
 type TimersModule = typeof TimersNamespace;
-type GameStateModule = typeof GameStateNamespace;
 
 let selectionModule: SelectionModule | null = null;
 let screensModule: ScreensModule | null = null;
@@ -47,7 +39,6 @@ let boardModule: BoardModule | null = null;
 let gameHeaderModule: GameHeaderModule | null = null;
 let themeModule: ThemeModule | null = null;
 let timersModule: TimersModule | null = null;
-let gameStateModule: GameStateModule | null = null;
 
 /** Loads the settings-screen UI module on demand. */
 async function getSelectionModule(): Promise<SelectionModule> {
@@ -85,12 +76,6 @@ async function getTimersModule(): Promise<TimersModule> {
   return timersModule;
 }
 
-/** Loads the game-state module on demand (for mutations only). */
-async function getGameStateModule(): Promise<GameStateModule> {
-  gameStateModule ??= await import("./game/game-state");
-  return gameStateModule;
-}
-
 /** Clears end-screen timers if the timers module has already been loaded. */
 function clearEndScreenTimersIfLoaded(): void {
   timersModule?.clearEndScreenTimers();
@@ -103,30 +88,18 @@ function resetEndScreensIfLoaded(): void {
 
 /**
  * Toggles screen visibility, loading the screens module only if needed.
- *
- * @param screenToShow - Screen element that should become visible.
+/** Flag that ensures settings-screen listeners are bound at most once. */
  * @param screenToHide - Screen element that should become hidden.
- */
-async function showScreenLazy(
+
+/** Flag that ensures game-screen listeners are bound at most once. */
   screenToShow: HTMLElement | null,
-  screenToHide: HTMLElement | null,
-): Promise<void> {
+
+/** Flag that ensures the winner init callback is registered at most once. */
   const { showScreen } = await getScreensModule();
   showScreen(screenToShow, screenToHide);
 }
 
-/** Flag that ensures settings-screen listeners are bound at most once. */
-let settingsInitialized = false;
-
-/** Flag that ensures game-screen listeners are bound at most once. */
-let gameInitialized = false;
-
-/** Flag that ensures the winner init callback is registered at most once. */
-let winnerCallbackRegistered = false;
-
-/** Binds the game screen listeners (exit button and quit dialog). */
-function bindGameListeners(): void {
-  exitGameButton()?.addEventListener("click", openQuitGameDialog);
+itGameDialog);
   backToGameButton()?.addEventListener("click", closeQuitGameDialog);
   confirmQuitGameButton()?.addEventListener("click", (): void => {
     void exitGame();
@@ -152,14 +125,13 @@ async function startGame(): Promise<void> {
     return;
   }
 
-  const [, boardMod, headerMod, themeMod, timersMod, stateMod, screensMod] =
+  const [, boardMod, headerMod, themeMod, timersMod, screensMod] =
     await Promise.all([
       ensureGameScreenReady(),
       getBoardModule(),
       getGameHeaderModule(),
       getThemeModule(),
       getTimersModule(),
-      getGameStateModule(),
       getScreensModule(),
     ]);
 
@@ -170,7 +142,7 @@ async function startGame(): Promise<void> {
 
   timersMod.clearEndScreenTimers();
   screensMod.resetEndScreens();
-  stateMod.resetGameState(settings);
+  resetGameState(settings);
   themeMod.applyThemeColors(settings.themeId);
   boardMod.renderGameBoard(settings);
   headerMod.updateGameHeader();
