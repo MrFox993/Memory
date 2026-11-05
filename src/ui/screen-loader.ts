@@ -7,10 +7,10 @@
 /** Identifier of a lazy-loadable screen. */
 export type ScreenName = "settings" | "game" | "gameOver" | "winner";
 
-/** Loader function that asynchronously resolves to the raw HTML of a screen. */
 type ScreenHtmlLoader = () => Promise<{ default: string }>;
 
-/** Mapping from screen name to the dynamic import of its HTML fragment. */
+/* Screen registry and mount point ------------------------------- */
+
 const SCREEN_HTML_LOADERS: Record<ScreenName, ScreenHtmlLoader> = {
   settings: () => import("../screens/settings-screen.html?raw"),
   game: () => import("../screens/game-screen.html?raw"),
@@ -18,8 +18,8 @@ const SCREEN_HTML_LOADERS: Record<ScreenName, ScreenHtmlLoader> = {
   winner: () => import("../screens/winner-screen.html?raw"),
 };
 
-/** Id of the DOM mount point that screens are injected into. */
 const APP_MOUNT_ID = "app";
+const loadedScreens = new Set<ScreenName>();
 
 /**
  * Matches absolute `src="/..."` and `href="/..."` attribute values that
@@ -28,9 +28,6 @@ const APP_MOUNT_ID = "app";
  * because raw HTML fragments bypass Vite's HTML transformation.
  */
 const PUBLIC_ASSET_ATTRIBUTE_PATTERN = /(src|href)="\/(?!\/)/g;
-
-/** Set of already loaded screens, prevents duplicate injection. */
-const loadedScreens = new Set<ScreenName>();
 
 /**
  * Resolves the application mount point from the DOM.
