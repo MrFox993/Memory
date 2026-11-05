@@ -1,8 +1,6 @@
 @use "../base/main" as base;
 @use "../abstracts/main" as abstracts;
 
-// Match the gutter color (body background outside $max-content-width)
-// to the dark background used by both the game-screen and the end-screen.
 body:has(.game-screen:not(.hide)),
 body:has(.end-screen:not(.hide)) {
   background-color: abstracts.$surface-dark;
@@ -17,13 +15,12 @@ body:has(.end-screen:not(.hide)) {
   --game-theme-accent-hovered-fill-color: #{abstracts.$secondary-font-color};
   --game-screen-padding-x: clamp(12px, 2.5vw, 36px);
   --game-screen-padding-y: clamp(10px, 2vh, 24px);
-  --game-header-height: clamp(66px, 10vh, 96px);
 }
 
 .game-screen {
   @include abstracts.screenContentConstraint;
   height: 100dvh;
-  min-height: 100vh;
+  max-height: 100dvh;
   width: 100%;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
@@ -40,6 +37,7 @@ body:has(.end-screen:not(.hide)) {
   align-items: center;
   gap: clamp(10px, 1.8vw, 24px);
   width: 100%;
+  min-width: 0;
   padding-bottom: clamp(8px, 1.4vh, 16px);
   box-sizing: border-box;
 }
@@ -48,12 +46,13 @@ body:has(.end-screen:not(.hide)) {
   display: flex;
   gap: 16px;
   justify-self: start;
+  min-width: 0;
 
   &__player {
     display: flex;
     align-items: center;
     gap: 14px;
-    min-width: 120px;
+    min-width: 0;
     padding: 10px 18px;
     background: #f5f5f5;
     border: 3px solid transparent;
@@ -142,6 +141,7 @@ body:has(.end-screen:not(.hide)) {
     $direction: row
   );
   width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
@@ -149,54 +149,38 @@ body:has(.end-screen:not(.hide)) {
 
 .game-board {
   --card-gap: clamp(4px, min(1vw, 1vh), 14px);
-  --available-board-height: calc(
-    100dvh - var(--game-header-height) - (var(--game-screen-padding-y) * 2)
-  );
 
   display: grid;
-  width: 100%;
+  height: 100%;
+  width: auto;
   max-width: 100%;
   max-height: 100%;
   gap: var(--card-gap);
-  margin: auto;
 
   &--16 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    width: min(
-      100%,
-      calc(
-        ((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 3) +
-          (3 * var(--card-gap))
-      )
-    );
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    aspect-ratio: 3 / 4;
   }
 
   &--24 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    width: min(
-      100%,
-      calc(
-        ((var(--available-board-height) - (3 * var(--card-gap))) / 4 * 4.5) +
-          (5 * var(--card-gap))
-      )
-    );
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    aspect-ratio: 9 / 8;
   }
 
   &--36 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    width: min(
-      100%,
-      calc(
-        ((var(--available-board-height) - (5 * var(--card-gap))) / 6 * 4.5) +
-          (5 * var(--card-gap))
-      )
-    );
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    aspect-ratio: 3 / 4;
   }
 }
 
 .memory-card {
-  aspect-ratio: 3 / 4;
   min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
   border: 0;
   background: transparent;
   perspective: 900px;
@@ -205,8 +189,8 @@ body:has(.end-screen:not(.hide)) {
   &__inner {
     position: relative;
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
     transition: transform 0.45s ease;
     transform-style: preserve-3d;
   }
@@ -220,7 +204,6 @@ body:has(.end-screen:not(.hide)) {
     );
     position: absolute;
     inset: 0;
-    border: 4px solid #f5f5f5;
     border-radius: 14px;
     backface-visibility: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.24);
@@ -525,10 +508,6 @@ body:has(.end-screen:not(.hide)) {
 }
 
 @include abstracts.respond-below(lg) {
-  :root {
-    --game-header-height: clamp(150px, 24vh, 230px);
-  }
-
   .game-header {
     grid-template-columns: 1fr;
   }
@@ -592,7 +571,6 @@ body:has(.end-screen:not(.hide)) {
   :root {
     --game-screen-padding-x: 14px;
     --game-screen-padding-y: 10px;
-    --game-header-height: clamp(140px, 22vh, 205px);
   }
 
   .game-header {
@@ -651,7 +629,6 @@ body:has(.end-screen:not(.hide)) {
   :root {
     --game-screen-padding-x: 10px;
     --game-screen-padding-y: 8px;
-    --game-header-height: clamp(128px, 20vh, 180px);
   }
 
   .game-header {
@@ -741,7 +718,6 @@ body:has(.end-screen:not(.hide)) {
   :root {
     --game-screen-padding-x: 8px;
     --game-screen-padding-y: 6px;
-    --game-header-height: clamp(116px, 19vh, 160px);
   }
 
   .game-score {
@@ -797,6 +773,79 @@ body:has(.end-screen:not(.hide)) {
 
     &__value {
       font-size: 38px;
+    }
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --game-screen-padding-x: 10px;
+    --game-screen-padding-y: 6px;
+  }
+
+  .game-header {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+
+  .game-score {
+    gap: 8px;
+    justify-self: start;
+    justify-content: flex-start;
+
+    &__player {
+      flex: 0 0 auto;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 4px 10px;
+      border-width: 2px;
+    }
+
+    &__pawn {
+      width: 26px;
+      height: 26px;
+    }
+
+    &__value {
+      font-size: 20px;
+    }
+  }
+
+  .game-active-player {
+    justify-self: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 12px;
+    font-size: 18px;
+    text-align: center;
+
+    &__pawn {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  .game-exit-button {
+    justify-self: end;
+    width: auto;
+    padding: 6px 12px;
+    font-size: 16px;
+    text-align: center;
+
+    img {
+      max-width: 20px;
+    }
+  }
+
+  .game-board {
+    --card-gap: clamp(3px, 0.8vh, 8px);
+  }
+
+  .memory-card {
+    &__face {
+      border-width: 2px;
+      border-radius: 8px;
     }
   }
 }

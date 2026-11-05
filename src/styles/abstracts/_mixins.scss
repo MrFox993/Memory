@@ -2,9 +2,6 @@
 
 @use "variables" as variables;
 
-/// Caps a screen root's content at the configured maximum width
-/// and centers it horizontally. Apply this to every top-level screen
-/// element so the layout stays consistent on ultra-wide displays.
 @mixin screenContentConstraint {
   max-width: variables.$max-content-width;
   margin-inline: auto;
