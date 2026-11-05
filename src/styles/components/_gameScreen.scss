@@ -1,8 +1,6 @@
 @use "../base/main" as base;
 @use "../abstracts/main" as abstracts;
 
-// Match the gutter color (body background outside $max-content-width)
-// to the dark background used by both the game-screen and the end-screen.
 body:has(.game-screen:not(.hide)),
 body:has(.end-screen:not(.hide)) {
   background-color: abstracts.$surface-dark;
@@ -20,18 +18,7 @@ body:has(.end-screen:not(.hide)) {
 }
 
 .game-screen {
-  // Important: `screenContentConstraint` sets `max-width: $max-content-width`
-  // (1920px) to cap the content on ultra-wide displays. Do NOT declare
-  // another `max-width` on this element afterwards (e.g. `max-width: 100%`),
-  // because that would override the cap and let the screen stretch across
-  // the entire viewport on 4K/ultra-wide monitors.
   @include abstracts.screenContentConstraint;
-  // Use the dynamic viewport height so the screen fits exactly inside
-  // the visible area even when mobile browsers show/hide their URL bar.
-  // We deliberately avoid `min-height: 100vh` here because `100vh` can
-  // be larger than `100dvh` on mobile (when the URL bar is visible),
-  // which would force the screen to overflow and produce a vertical
-  // scrollbar.
   height: 100dvh;
   max-height: 100dvh;
   width: 100%;
@@ -160,21 +147,6 @@ body:has(.end-screen:not(.hide)) {
   overflow: hidden;
 }
 
-// The board sits inside `.game-board-wrap` which is the second row of
-// the `.game-screen` grid (`minmax(0, 1fr)`). The wrapper provides the
-// *real* available width and height, independent of any viewport-based
-// estimate.
-//
-// To make the board fill the wrapper while preserving a fixed aspect
-// ratio (so cards keep a 3:4 ratio), we use the classic
-// "max-sized aspect-ratio box" pattern:
-//   - the board is sized at `height: 100%` first
-//   - its own `aspect-ratio` derives the matching width
-//   - `max-width: 100%` kicks in if the wrapper is narrower than tall,
-//     causing the browser to recompute height from width via
-//     `aspect-ratio` instead.
-// This way the board always fills whichever dimension is the tighter
-// constraint without ever overflowing.
 .game-board {
   --card-gap: clamp(4px, min(1vw, 1vh), 14px);
 
@@ -185,8 +157,6 @@ body:has(.end-screen:not(.hide)) {
   max-height: 100%;
   gap: var(--card-gap);
 
-  // Aspect ratios are derived from (columns * 3) : (rows * 4) because
-  // each card has an aspect ratio of 3:4.
   &--16 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(0, 1fr));
@@ -207,10 +177,6 @@ body:has(.end-screen:not(.hide)) {
 }
 
 .memory-card {
-  // The card's aspect ratio is enforced by the board's grid rows/columns
-  // (both are `minmax(0, 1fr)` with a fixed aspect-ratio on the board).
-  // Keeping an explicit aspect-ratio here would fight the grid and can
-  // cause overflow, so we rely on the grid cells instead.
   min-width: 0;
   min-height: 0;
   width: 100%;
@@ -238,7 +204,6 @@ body:has(.end-screen:not(.hide)) {
     );
     position: absolute;
     inset: 0;
-    // border: 4px solid #f5f5f5;
     border-radius: 14px;
     backface-visibility: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.24);
@@ -812,20 +777,12 @@ body:has(.end-screen:not(.hide)) {
   }
 }
 
-// Phones in landscape have a wide but very short viewport. Even though
-// the viewport may be narrower than the `lg` breakpoint (e.g. iPhone SE
-// at 667x375 or iPhone 16 at ~874x402), stacking the header into three
-// rows wastes most of the vertical space. Force the header back into a
-// single row and shrink its visual components so the board can use the
-// remaining height.
 @media (orientation: landscape) and (max-height: 500px) {
   :root {
     --game-screen-padding-x: 10px;
     --game-screen-padding-y: 6px;
   }
 
-  // Undo the single-column stacking from `respond-below(lg)` so the
-  // header stays on one row even on narrow landscape phones.
   .game-header {
     grid-template-columns: 1fr auto 1fr;
     gap: 10px;
@@ -869,9 +826,6 @@ body:has(.end-screen:not(.hide)) {
     }
   }
 
-  // Override the default .secondary-button paddings/font-size so the
-  // exit button does not blow up the header row on short landscape
-  // viewports. Also realign it to the right edge again.
   .game-exit-button {
     justify-self: end;
     width: auto;
@@ -895,5 +849,3 @@ body:has(.end-screen:not(.hide)) {
     }
   }
 }
-
-
