@@ -101,7 +101,12 @@ function resetEndScreensIfLoaded(): void {
   screensModule?.resetEndScreens();
 }
 
-/** Toggles screen visibility, loading the screens module only if needed. */
+/**
+ * Toggles screen visibility, loading the screens module only if needed.
+ *
+ * @param screenToShow - Screen element that should become visible.
+ * @param screenToHide - Screen element that should become hidden.
+ */
 async function showScreenLazy(
   screenToShow: HTMLElement | null,
   screenToHide: HTMLElement | null,
@@ -250,14 +255,22 @@ async function handleSettingsSelectionChange(): Promise<void> {
   updateThemePreview();
 }
 
-/** Closes the quit dialog when the dialog backdrop is clicked. */
+/**
+ * Closes the quit dialog when the dialog backdrop is clicked.
+ *
+ * @param event - Mouse event dispatched by the dialog overlay.
+ */
 function handleQuitDialogBackdropClick(event: MouseEvent): void {
   if (event.target === quitGameDialog()) {
     closeQuitGameDialog();
   }
 }
 
-/** Closes the quit dialog when Escape is pressed while the dialog is visible. */
+/**
+ * Closes the quit dialog when Escape is pressed while the dialog is visible.
+ *
+ * @param event - Keyboard event dispatched on the document.
+ */
 function handleEscapeKey(event: KeyboardEvent): void {
   const dialog = quitGameDialog();
   if (event.key === "Escape" && dialog && !dialog.classList.contains("hide")) {

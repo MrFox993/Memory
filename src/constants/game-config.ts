@@ -5,32 +5,27 @@ import type {
   ThemeColorConfig,
 } from "../types/game";
 
-/** Number of cards that form one matching pair. */
+/* Numeric game constants ---------------------------------------- */
+/* Low-level helper values used by card generation, scoring and     */
+/* timing. Individual constants are self-explanatory via their      */
+/* identifiers and are therefore not documented separately.         */
+
 export const CARDS_PER_PAIR = 2;
-
-/** Offset used when converting zero-based values to visible display numbers. */
 export const DISPLAY_NUMBER_OFFSET = 1;
-
-/** First available image number in the theme asset folders. */
 export const FIRST_IMAGE_NUMBER = 1;
-
-/** Delay before the game-over transition starts after the final match. */
-export const FINISH_GAME_DELAY_MS = 500;
-
-/** Delay before the game-over panel exits and the winner screen appears. */
-export const GAME_OVER_EXIT_DELAY_MS = 1200;
-
-/** Offset used to generate the second card id of a pair. */
 export const NEXT_CARD_ID_OFFSET = 1;
-
-/** Delay before non-matching cards are flipped back. */
-export const RESET_TURN_DELAY_MS = 900;
-
-/** Random offset used by the simple shuffle comparator. */
 export const SHUFFLE_RANDOM_OFFSET = 0.5;
 
-/** Delay between the game-over panel exit and winner screen display. */
+/* Timing constants (milliseconds) ------------------------------- */
+/* Durations that control the end-of-game screen transitions and    */
+/* the delay before non-matching cards flip back.                   */
+
+export const RESET_TURN_DELAY_MS = 900;
+export const FINISH_GAME_DELAY_MS = 500;
+export const GAME_OVER_EXIT_DELAY_MS = 1200;
 export const WINNER_SCREEN_DELAY_MS = 500;
+
+/* Selection and theme configuration maps ------------------------ */
 
 /** Radio groups that must be selected before the game can start. */
 export const SELECTION_GROUPS: readonly SelectionGroup[] = [

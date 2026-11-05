@@ -43,6 +43,7 @@ function updateSelectionOutput(
 /**
  * Updates one selection overview group and reports whether it is complete.
  *
+ * @param group - Selection group with the radio name and overview output id.
  * @returns True when the radio group has a selected option.
  */
 function updateSelectionGroup({ name, outputId }: SelectionGroup): boolean {
