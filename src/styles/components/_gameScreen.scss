@@ -20,6 +20,11 @@ body:has(.end-screen:not(.hide)) {
 }
 
 .game-screen {
+  // Important: `screenContentConstraint` sets `max-width: $max-content-width`
+  // (1920px) to cap the content on ultra-wide displays. Do NOT declare
+  // another `max-width` on this element afterwards (e.g. `max-width: 100%`),
+  // because that would override the cap and let the screen stretch across
+  // the entire viewport on 4K/ultra-wide monitors.
   @include abstracts.screenContentConstraint;
   // Use the dynamic viewport height so the screen fits exactly inside
   // the visible area even when mobile browsers show/hide their URL bar.
@@ -30,7 +35,6 @@ body:has(.end-screen:not(.hide)) {
   height: 100dvh;
   max-height: 100dvh;
   width: 100%;
-  max-width: 100%;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   background: #303131;
