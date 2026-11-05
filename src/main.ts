@@ -88,18 +88,26 @@ function resetEndScreensIfLoaded(): void {
 
 /**
  * Toggles screen visibility, loading the screens module only if needed.
-/** Flag that ensures settings-screen listeners are bound at most once. */
+ *
+ * @param screenToShow - Screen element that should become visible.
  * @param screenToHide - Screen element that should become hidden.
-
-/** Flag that ensures game-screen listeners are bound at most once. */
+ */
+async function showScreenLazy(
   screenToShow: HTMLElement | null,
-
-/** Flag that ensures the winner init callback is registered at most once. */
+  screenToHide: HTMLElement | null,
+): Promise<void> {
   const { showScreen } = await getScreensModule();
   showScreen(screenToShow, screenToHide);
 }
 
-itGameDialog);
+/* One-time initialization flags for lazy-loaded screens. */
+let settingsInitialized = false;
+let gameInitialized = false;
+let winnerCallbackRegistered = false;
+
+/** Binds the game screen listeners (exit button and quit dialog). */
+function bindGameListeners(): void {
+  exitGameButton()?.addEventListener("click", openQuitGameDialog);
   backToGameButton()?.addEventListener("click", closeQuitGameDialog);
   confirmQuitGameButton()?.addEventListener("click", (): void => {
     void exitGame();

@@ -1,22 +1,15 @@
 import type { GameSettings, Player } from "../types/game";
 
-/** Stores the mutable runtime state of the current memory game. */
+/** Mutable runtime state of the current memory game. */
 export type GameState = {
-  /** Player whose turn is currently active. */
   activePlayer: Player;
-  /** Current score for each player. */
   scores: Record<Player, number>;
-  /** Cards currently flipped during the active turn. */
   flippedCards: HTMLButtonElement[];
-  /** Prevents card interaction while animations or checks are running. */
   isBoardLocked: boolean;
-  /** Settings of the current game or null before a game starts. */
   currentSettings: GameSettings | null;
-  /** Number of pairs that have already been matched. */
   matchedPairs: number;
 };
 
-/** Shared mutable state used by the game modules. */
 export const gameState: GameState = {
   activePlayer: "blue",
   scores: { blue: 0, orange: 0 },

@@ -16,10 +16,8 @@ import { getPlayerPawnSrc, getPublicAssetSrc } from "../utils/assets";
 import { getPlayerLabel } from "../utils/players";
 import { loadScreen } from "./screen-loader";
 
-/** One-shot callback invoked after the winner screen has been loaded. */
+/* One-time initialization state for the winner screen. */
 let winnerInitCallback: (() => void) | null = null;
-
-/** Flag that ensures the winner init callback is invoked at most once. */
 let winnerInitialized = false;
 
 /**
