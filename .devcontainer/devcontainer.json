@@ -12,7 +12,8 @@
   "mounts": [
     "source=memoryapp-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
   ],
-  "postCreateCommand": "npm ci",
+  "updateRemoteUserUID": true,
+  "postCreateCommand": "sudo chown node:node node_modules && npm ci",
   "customizations": {
     "vscode": {
       "extensions": ["esbenp.prettier-vscode"]
