@@ -84,6 +84,7 @@ body:has(.settings-screen:not(.hide)) {
         $direction: column
       );
       gap: 8px;
+      padding-left: 32px;
 
       div {
         position: relative;
