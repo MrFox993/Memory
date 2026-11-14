@@ -187,7 +187,8 @@ async function backToStart(): Promise<void> {
 }
 
 /** Binds the settings screen listeners (radios + start button). */
-function bindSettingsListeners(): void {
+async function bindSettingsListeners(): Promise<void> {
+  const { updateThemePreview } = await getSelectionModule();
   document
     .querySelectorAll<HTMLInputElement>('input[type="radio"]')
     .forEach((input): void => {
@@ -195,6 +196,17 @@ function bindSettingsListeners(): void {
         void handleSettingsSelectionChange();
       });
     });
+  const themeOptions = document.querySelector(".game-themes-options");
+  themeOptions
+    ?.querySelectorAll<HTMLInputElement>('input[name="game-themes"]')
+    .forEach((input): void => {
+      input.parentElement?.addEventListener("pointerenter", (): void => {
+        updateThemePreview(input);
+      });
+    });
+  themeOptions?.addEventListener("pointerleave", (): void => {
+    updateThemePreview();
+  });
   startButton()?.addEventListener("click", (): void => {
     void startGame();
   });
@@ -206,7 +218,7 @@ async function ensureSettingsScreenReady(): Promise<void> {
   if (settingsInitialized) {
     return;
   }
-  bindSettingsListeners();
+  await bindSettingsListeners();
   await initializeSettingsView();
   settingsInitialized = true;
 }

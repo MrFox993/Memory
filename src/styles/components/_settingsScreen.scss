@@ -132,7 +132,8 @@ body:has(.settings-screen:not(.hide)) {
         transition: opacity 0.2s ease;
       }
 
-      .theme-option--selected::after {
+      div:hover::after,
+      &:not(:hover) .theme-option--selected::after {
         opacity: 1;
       }
 

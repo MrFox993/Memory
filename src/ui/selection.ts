@@ -105,10 +105,13 @@ export function updateBoardSizeOptionSelection(): void {
 }
 
 /** Updates the theme preview image and its alternative text. */
-export function updateThemePreview(): void {
+export function updateThemePreview(
+  previewTheme: HTMLInputElement | null = null,
+): void {
   const selected = document.querySelector<HTMLInputElement>(
     'input[name="game-themes"]:checked',
   );
+  const theme = previewTheme ?? selected;
   const previewImg = document.getElementById(
     "themePreview",
   ) as HTMLImageElement;
@@ -116,12 +119,12 @@ export function updateThemePreview(): void {
     return;
   }
 
-  const src = selected
-    ? THEME_PREVIEW_MAP[selected.id]
+  const src = theme
+    ? THEME_PREVIEW_MAP[theme.id]
     : THEME_PREVIEW_MAP.codeVibesTheme;
   previewImg.src = src;
-  previewImg.alt = selected
-    ? `${selected.nextElementSibling?.textContent?.trim() ?? "Theme"} preview image`
+  previewImg.alt = theme
+    ? `${theme.nextElementSibling?.textContent?.trim() ?? "Theme"} preview image`
     : "theme preview image";
 }
 
