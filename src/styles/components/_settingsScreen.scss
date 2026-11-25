@@ -206,11 +206,9 @@ body:has(.settings-screen:not(.hide)) {
 
     &__item {
       min-width: 0;
-      overflow: hidden;
       color: #303131;
       font-family: base.$font-almarai;
       font-size: 20px;
-      text-overflow: ellipsis;
       white-space: nowrap;
 
       &--selected {
@@ -337,7 +335,6 @@ body:has(.settings-screen:not(.hide)) {
     flex-direction: column;
     justify-content: flex-start;
     height: auto;
-    overflow-y: auto;
     gap: 0;
 
     .left-split,
