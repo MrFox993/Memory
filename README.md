@@ -135,7 +135,7 @@ Docker Desktop and VS Code with the **Dev Containers** extension are required.
    npm run dev
    ```
 
-The container uses Node.js 22 and installs the TypeScript, Vite and Sass versions locked in `package-lock.json` via `npm ci`. Vite is available on port 5173 and is forwarded automatically by VS Code.
+The container uses Node.js 22 and installs the TypeScript, Vite and Sass versions locked in `package-lock.json` via `npm ci`. Before installing, setup fixes ownership of the persistent `node_modules` volume so the `node` user can write to it. Vite is available on port 5173 and is forwarded automatically by VS Code.
 
 ## Local Development without Dev Container
 
