@@ -157,13 +157,16 @@ body:has(.settings-screen:not(.hide)) {
         opacity: 0;
         transition: opacity 0.2s ease;
       }
-
-      .option-row:hover::after {
-        // opacity: 1;
+      
+      .theme-option--selected::after {
+        opacity: 1;
       }
-
-      .theme-option--selected::after,
-      .theme-option--selected:hover::after {
+      
+      &:hover .theme-option--selected::after {
+        opacity: 0;
+      }
+      
+      .option-row:hover::after {
         opacity: 1;
       }
     }
