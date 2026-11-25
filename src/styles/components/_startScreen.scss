@@ -24,7 +24,7 @@ body:has(.start-screen:not(.hide)) {
   background-repeat: no-repeat;
   box-sizing: border-box;
 
-  h2 {
+  p {
     font-family: base.$font-almarai;
     font-weight: base.$font-weight-regular;
     font-size: 48px;
@@ -57,7 +57,7 @@ body:has(.start-screen:not(.hide)) {
       font-size: 96px;
     }
 
-    h2 {
+    p {
       font-size: 40px;
     }
   }
@@ -72,7 +72,7 @@ body:has(.start-screen:not(.hide)) {
       font-size: 84px;
     }
 
-    h2 {
+    p {
       font-size: 34px;
     }
   }
@@ -88,7 +88,7 @@ body:has(.start-screen:not(.hide)) {
       font-size: 72px;
     }
 
-    h2 {
+    p {
       font-size: 30px;
     }
   }
@@ -103,7 +103,7 @@ body:has(.start-screen:not(.hide)) {
       font-size: 56px;
     }
 
-    h2 {
+    p {
       font-size: 26px;
     }
   }
