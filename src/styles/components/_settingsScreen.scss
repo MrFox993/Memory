@@ -83,18 +83,51 @@ body:has(.settings-screen:not(.hide)) {
         $align: flex-start,
         $direction: column
       );
-      gap: 8px;
+      gap: 10px;
+      padding-left: 36px;
 
-      div {
+      .option-row {
         position: relative;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
         padding-right: 26px;
       }
 
       input[type="radio"] {
+        appearance: none;
+        flex: 0 0 auto;
+        width: 22px;
+        height: 22px;
+        margin: 0;
+        border: 2px solid abstracts.$primary-font-color;
+        border-radius: 50%;
+        background-color: transparent;
         cursor: pointer;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      input[type="radio"]::after {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+        margin: 4px auto 0;
+        border-radius: 50%;
+        background-color: abstracts.$primary-font-color;
+        transform: scale(0);
+        transition: transform 0.2s ease;
+      }
+
+      input[type="radio"]:checked::after {
+        transform: scale(1);
+      }
+
+      input[type="radio"]:hover,
+      input[type="radio"]:focus-visible {
+        outline: none;
       }
 
       label {
@@ -102,24 +135,18 @@ body:has(.settings-screen:not(.hide)) {
         transition: font-weight 0.2s ease;
         width: 180px;
       }
+    }
 
-      .player-option--selected label,
-      .board-size-option--selected label,
-      .theme-option--selected label {
-        font-weight: base.$font-weight-bold;
-      }
+    .theme-option--selected label,
+    .player-option--selected label,
+    .board-size-option--selected label {
+      font-weight: base.$font-weight-bold;
     }
 
     .game-themes-options {
-      @include abstracts.flexContent(
-        $display: flex,
-        $justify: flex-start,
-        $align: flex-start,
-        $direction: column
-      );
       gap: 16px;
 
-      div::after {
+      .option-row::after {
         content: "";
         width: 50px;
         height: 22px;
@@ -135,13 +162,12 @@ body:has(.settings-screen:not(.hide)) {
         opacity: 1;
       }
 
-      input[type="radio"] {
-        position: relative;
-        z-index: 1;
+      &:hover .theme-option--selected::after {
+        opacity: 0;
       }
 
-      label {
-        width: 180px;
+      .option-row:hover::after {
+        opacity: 1;
       }
     }
   }
@@ -326,11 +352,11 @@ body:has(.settings-screen:not(.hide)) {
         padding-bottom: 32px;
       }
 
-      [class$="-options"],
-      .game-themes-options {
+      [class$="-options"] {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 12px 20px;
+        padding-left: 24px;
       }
     }
 
@@ -368,9 +394,9 @@ body:has(.settings-screen:not(.hide)) {
         padding-bottom: 18px;
       }
 
-      [class$="-options"],
-      .game-themes-options {
+      [class$="-options"] {
         flex-direction: column;
+        padding-left: 16px;
       }
     }
 
