@@ -6,7 +6,7 @@ import {
   RESET_TURN_DELAY_MS,
   WINNER_SCREEN_DELAY_MS,
 } from "../constants/game-config";
-import { gameOverPanel, domElement } from "../dom/dom-elements";
+import { domElement } from "../dom/dom-elements";
 import { showGameOverScreen, showWinnerScreen } from "../ui/screens";
 import { updateGameHeader } from "../ui/game-header";
 import { gameState } from "./game-state";

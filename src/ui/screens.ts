@@ -1,14 +1,4 @@
 import {
-  backToStartButton,
-  finalBlueScoreElement,
-  finalOrangeScoreElement,
-  gameOverPanel,
-  gameOverScreen,
-  gameScreen,
-  winnerConfettiElement,
-  winnerImageElement,
-  winnerScreen,
-  winnerStatusElement,
   domElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";

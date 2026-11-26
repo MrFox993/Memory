@@ -1,5 +1,5 @@
 import { DISPLAY_NUMBER_OFFSET } from "../constants/game-config";
-import { cardTemplate, gameBoard, domElement } from "../dom/dom-elements";
+import { domElement } from "../dom/dom-elements";
 import type { CardData, GameSettings, MemoryCardElements } from "../types/game";
 import { createCards } from "./card-factory";
 import { handleCardClick } from "./game-logic";

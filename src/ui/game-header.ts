@@ -1,10 +1,4 @@
 import {
-  activePlayerDisplay,
-  activePlayerPawn,
-  blueScoreCard,
-  blueScoreElement,
-  orangeScoreCard,
-  orangeScoreElement,
   domElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";

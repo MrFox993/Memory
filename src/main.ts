@@ -1,16 +1,6 @@
 import "./styles/main.scss";
 
 import {
-  backToGameButton,
-  backToStartButton,
-  confirmQuitGameButton,
-  exitGameButton,
-  gameScreen,
-  quitGameDialog,
-  settingsScreen,
-  startButton,
-  startScreen,
-  winnerScreen,
   domElement,
 } from "./dom/dom-elements";
 import {
