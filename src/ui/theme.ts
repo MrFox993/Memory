@@ -18,7 +18,7 @@ function setGameThemeVariable(name: string, value: string): void {
  */
 function updateThemedScreens(themeId: string): void {
   domElement("gameScreen")?.setAttribute("data-theme", themeId);
-  gameOverScreen()?.setAttribute("data-theme", themeId);
+  domElement("gameOverScreen")?.setAttribute("data-theme", themeId);
   winnerScreen()?.setAttribute("data-theme", themeId);
 }
 

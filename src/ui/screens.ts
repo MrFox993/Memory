@@ -48,10 +48,10 @@ export function showScreen(
 
 /** Resets all end-screen elements to their initial hidden state. */
 export function resetEndScreens(): void {
-  gameOverScreen()?.classList.add("hide");
+  domElement("gameOverScreen")?.classList.add("hide");
   winnerScreen()?.classList.add("hide");
   winnerConfettiElement()?.classList.add("hide");
-  gameOverPanel()?.classList.remove("end-screen__panel--exit-up");
+  domElement("gameOverPanel")?.classList.remove("end-screen__panel--exit-up");
 }
 
 /**
@@ -68,8 +68,8 @@ function getWinner(): Player | "draw" {
 
 /** Copies the current score values into the game-over screen. */
 function updateFinalScoreScreen(): void {
-  const blue = finalBlueScoreElement();
-  const orange = finalOrangeScoreElement();
+  const blue = domElement("finalBlueScoreElement");
+  const orange = domElement("finalOrangeScoreElement");
   if (blue) {
     blue.textContent = String(gameState.scores.blue);
   }
@@ -141,8 +141,8 @@ async function ensureWinnerScreenReady(): Promise<void> {
 /** Shows the final winner screen and moves focus to its action button. */
 export async function showWinnerScreen(): Promise<void> {
   await ensureWinnerScreenReady();
-  gameOverScreen()?.classList.add("hide");
-  gameOverPanel()?.classList.remove("end-screen__panel--exit-up");
+  domElement("gameOverScreen")?.classList.add("hide");
+  domElement("gameOverPanel")?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
   winnerScreen()?.classList.remove("hide");
   backToStartButton()?.focus();
@@ -153,5 +153,5 @@ export async function showGameOverScreen(): Promise<void> {
   await loadScreen("gameOver");
   updateFinalScoreScreen();
   domElement("gameScreen")?.classList.add("hide");
-  gameOverScreen()?.classList.remove("hide");
+  domElement("gameOverScreen")?.classList.remove("hide");
 }

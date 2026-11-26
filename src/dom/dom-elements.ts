@@ -88,46 +88,6 @@ export function domElement<K extends DomElementKey>(
   return document.querySelector<DomElementMap[K]>(domSelectors[key]);
 }
 
-/* Game screen --------------------------------------------------- */
-
-
-/* Game-over screen ---------------------------------------------- */
-
-/**
- * Returns the intermediate end screen that displays the final score.
- *
- * @returns Game-over screen element or null when not in the DOM.
- */
-export function gameOverScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameOverScreen");
-}
-
-/**
- * Returns the animated panel inside the game-over screen.
- *
- * @returns Game-over panel element or null when not in the DOM.
- */
-export function gameOverPanel(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameOverPanel");
-}
-
-/**
- * Returns the final blue score value on the game-over screen.
- *
- * @returns Final blue-score element or null when not in the DOM.
- */
-export function finalBlueScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#finalBlueScore");
-}
-
-/**
- * Returns the final orange score value on the game-over screen.
- *
- * @returns Final orange-score element or null when not in the DOM.
- */
-export function finalOrangeScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#finalOrangeScore");
-}
 
 /* Winner screen ------------------------------------------------- */
 
