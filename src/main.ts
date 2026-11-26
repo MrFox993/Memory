@@ -228,7 +228,7 @@ async function showSettingsScreen(): Promise<void> {
   gameState.currentSettings = null;
   resetGameProgress();
   await ensureSettingsScreenReady();
-  await showScreenLazy(settingsScreen(), startScreen());
+  await showScreenLazy(settingsScreen(), domElement("startScreen"));
 }
 
 /** Updates all settings-related UI elements after a radio selection changes. */

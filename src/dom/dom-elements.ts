@@ -88,17 +88,6 @@ export function domElement<K extends DomElementKey>(
   return document.querySelector<DomElementMap[K]>(domSelectors[key]);
 }
 
-/* Start screen -------------------------------------------------- */
-
-/**
- * Returns the initial landing screen of the application.
- *
- * @returns Start-screen element or null when not in the DOM.
- */
-export function startScreen(): HTMLElement | null {
-  return domElement("startScreen");
-}
-
 /* Settings screen ----------------------------------------------- */
 
 /**
