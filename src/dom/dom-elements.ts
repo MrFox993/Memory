@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the score value element for the blue player.
- *
- * @returns Blue-score element or null when not in the DOM.
- */
-export function blueScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#blueScore");
-}
-
-/**
  * Returns the score value element for the orange player.
  *
  * @returns Orange-score element or null when not in the DOM.
