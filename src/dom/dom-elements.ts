@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the button that closes the quit confirmation dialog.
- *
- * @returns Back-to-game button or null when not in the DOM.
- */
-export function backToGameButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#backToGameButton");
-}
-
-/**
  * Returns the button that confirms leaving the current game.
  *
  * @returns Confirm-quit-game button or null when not in the DOM.
