@@ -107,7 +107,7 @@ async function showScreenLazy(
 
 /** Binds the game screen listeners (exit button and quit dialog). */
 function bindGameListeners(): void {
-  exitGameButton()?.addEventListener("click", openQuitGameDialog);
+  domElement("exitGameButton")?.addEventListener("click", openQuitGameDialog);
   backToGameButton()?.addEventListener("click", closeQuitGameDialog);
   confirmQuitGameButton()?.addEventListener("click", (): void => {
     void exitGame();
@@ -166,7 +166,7 @@ function openQuitGameDialog(): void {
 /** Closes the quit confirmation dialog and restores focus to the exit button. */
 function closeQuitGameDialog(): void {
   quitGameDialog()?.classList.add("hide");
-  exitGameButton()?.focus();
+  domElement("exitGameButton")?.focus();
 }
 
 /** Leaves the current game and returns to the settings screen. */

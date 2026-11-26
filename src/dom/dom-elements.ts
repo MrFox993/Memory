@@ -90,14 +90,6 @@ export function domElement<K extends DomElementKey>(
 
 /* Game screen --------------------------------------------------- */
 
-/**
- * Returns the button that opens the quit confirmation dialog during a game.
- *
- * @returns Exit-game button or null when not in the DOM.
- */
-export function exitGameButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#exitGameButton");
-}
 
 /**
  * Returns the screen that contains the active memory game board.
