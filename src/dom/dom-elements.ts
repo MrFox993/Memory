@@ -90,14 +90,6 @@ export function domElement<K extends DomElementKey>(
 
 /* Settings screen ----------------------------------------------- */
 
-/**
- * Returns the button that starts a new game with the selected settings.
- *
- * @returns Start-game button or null when not in the DOM.
- */
-export function startButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#startGameButton");
-}
 
 /**
  * Returns the screen that contains all game setting controls.

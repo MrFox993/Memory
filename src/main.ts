@@ -207,7 +207,7 @@ async function bindSettingsListeners(): Promise<void> {
   themeOptions?.addEventListener("pointerleave", (): void => {
     updateThemePreview();
   });
-  startButton()?.addEventListener("click", (): void => {
+  domElement("startButton")?.addEventListener("click", (): void => {
     void startGame();
   });
 }
