@@ -49,8 +49,8 @@ export function showScreen(
 /** Resets all end-screen elements to their initial hidden state. */
 export function resetEndScreens(): void {
   domElement("gameOverScreen")?.classList.add("hide");
-  winnerScreen()?.classList.add("hide");
-  winnerConfettiElement()?.classList.add("hide");
+  domElement("winnerScreen")?.classList.add("hide");
+  domElement("winnerConfettiElement")?.classList.add("hide");
   domElement("gameOverPanel")?.classList.remove("end-screen__panel--exit-up");
 }
 
@@ -80,12 +80,12 @@ function updateFinalScoreScreen(): void {
 
 /** Displays the draw state on the winner screen. */
 function showDrawResult(): void {
-  winnerConfettiElement()?.classList.add("hide");
-  const status = winnerStatusElement();
+  domElement("winnerConfettiElement")?.classList.add("hide");
+  const status = domElement("winnerStatusElement");
   if (status) {
     status.textContent = "It's a DRAW";
   }
-  const image = winnerImageElement();
+  const image = domElement("winnerImageElement");
   if (!image) {
     return;
   }
@@ -102,12 +102,12 @@ function showDrawResult(): void {
 function showPlayerWinnerResult(winner: Player): void {
   const winnerLabel = getPlayerLabel(winner);
 
-  winnerConfettiElement()?.classList.remove("hide");
-  const status = winnerStatusElement();
+  domElement("winnerConfettiElement")?.classList.remove("hide");
+  const status = domElement("winnerStatusElement");
   if (status) {
     status.textContent = `The Winner is ${winnerLabel}`;
   }
-  const image = winnerImageElement();
+  const image = domElement("winnerImageElement");
   if (!image) {
     return;
   }
@@ -144,8 +144,8 @@ export async function showWinnerScreen(): Promise<void> {
   domElement("gameOverScreen")?.classList.add("hide");
   domElement("gameOverPanel")?.classList.remove("end-screen__panel--exit-up");
   updateWinnerScreen();
-  winnerScreen()?.classList.remove("hide");
-  backToStartButton()?.focus();
+  domElement("winnerScreen")?.classList.remove("hide");
+  domElement("backToStartButton")?.focus();
 }
 
 /** Shows the intermediate game-over screen with the final score. */

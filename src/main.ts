@@ -183,7 +183,7 @@ async function backToStart(): Promise<void> {
   resetEndScreensIfLoaded();
   gameState.currentSettings = null;
   resetGameProgress();
-  await showScreenLazy(domElement("settingsScreen"), winnerScreen());
+  await showScreenLazy(domElement("settingsScreen"), domElement("winnerScreen"));
 }
 
 /** Binds the settings screen listeners (radios + start button). */
@@ -272,7 +272,7 @@ function handleEscapeKey(event: KeyboardEvent): void {
 
 /** Binds the winner screen listeners after it has been loaded. */
 function bindWinnerListeners(): void {
-  backToStartButton()?.addEventListener("click", (): void => {
+  domElement("backToStartButton")?.addEventListener("click", (): void => {
     void backToStart();
   });
 }
