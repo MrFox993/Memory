@@ -112,7 +112,7 @@ function bindGameListeners(): void {
   confirmQuitGameButton()?.addEventListener("click", (): void => {
     void exitGame();
   });
-  quitGameDialog()?.addEventListener("click", handleQuitDialogBackdropClick);
+  domElement("quitGameDialog")?.addEventListener("click", handleQuitDialogBackdropClick);
 }
 
 /** Lazy-loads the game screen and binds its listeners on first use. */
@@ -159,13 +159,13 @@ async function startGame(): Promise<void> {
 
 /** Opens the quit confirmation dialog and moves focus into it. */
 function openQuitGameDialog(): void {
-  quitGameDialog()?.classList.remove("hide");
+  domElement("quitGameDialog")?.classList.remove("hide");
   backToGameButton()?.focus();
 }
 
 /** Closes the quit confirmation dialog and restores focus to the exit button. */
 function closeQuitGameDialog(): void {
-  quitGameDialog()?.classList.add("hide");
+  domElement("quitGameDialog")?.classList.add("hide");
   domElement("exitGameButton")?.focus();
 }
 
@@ -253,7 +253,7 @@ async function handleSettingsSelectionChange(): Promise<void> {
  * @param event - Mouse event dispatched by the dialog overlay.
  */
 function handleQuitDialogBackdropClick(event: MouseEvent): void {
-  if (event.target === quitGameDialog()) {
+  if (event.target === domElement("quitGameDialog")) {
     closeQuitGameDialog();
   }
 }
@@ -264,7 +264,7 @@ function handleQuitDialogBackdropClick(event: MouseEvent): void {
  * @param event - Keyboard event dispatched on the document.
  */
 function handleEscapeKey(event: KeyboardEvent): void {
-  const dialog = quitGameDialog();
+  const dialog = domElement("quitGameDialog");
   if (event.key === "Escape" && dialog && !dialog.classList.contains("hide")) {
     closeQuitGameDialog();
   }

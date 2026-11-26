@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the dialog overlay used to confirm leaving the current game.
- *
- * @returns Quit-game dialog element or null when not in the DOM.
- */
-export function quitGameDialog(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#quitGameDialog");
-}
-
-/**
  * Returns the button that closes the quit confirmation dialog.
  *
  * @returns Back-to-game button or null when not in the DOM.
