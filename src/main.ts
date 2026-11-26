@@ -1,8 +1,6 @@
 import "./styles/main.scss";
 
-import {
-  domElement,
-} from "./dom/dom-elements";
+import { domElement } from "./dom/dom-elements";
 import {
   gameState,
   resetGameProgress,
@@ -98,11 +96,17 @@ async function showScreenLazy(
 /** Binds the game screen listeners (exit button and quit dialog). */
 function bindGameListeners(): void {
   domElement("exitGameButton")?.addEventListener("click", openQuitGameDialog);
-  domElement("backToGameButton")?.addEventListener("click", closeQuitGameDialog);
+  domElement("backToGameButton")?.addEventListener(
+    "click",
+    closeQuitGameDialog,
+  );
   domElement("confirmQuitGameButton")?.addEventListener("click", (): void => {
     void exitGame();
   });
-  domElement("quitGameDialog")?.addEventListener("click", handleQuitDialogBackdropClick);
+  domElement("quitGameDialog")?.addEventListener(
+    "click",
+    handleQuitDialogBackdropClick,
+  );
 }
 
 /** Lazy-loads the game screen and binds its listeners on first use. */
@@ -173,7 +177,10 @@ async function backToStart(): Promise<void> {
   resetEndScreensIfLoaded();
   gameState.currentSettings = null;
   resetGameProgress();
-  await showScreenLazy(domElement("settingsScreen"), domElement("winnerScreen"));
+  await showScreenLazy(
+    domElement("settingsScreen"),
+    domElement("winnerScreen"),
+  );
 }
 
 /** Binds the settings screen listeners (radios + start button). */

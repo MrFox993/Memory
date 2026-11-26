@@ -1,6 +1,4 @@
-import {
-  domElement,
-} from "../dom/dom-elements";
+import { domElement } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";
 import type { Player } from "../types/game";
 import { getPlayerPawnSrc, getPublicAssetSrc } from "../utils/assets";
