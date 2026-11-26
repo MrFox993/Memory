@@ -8,10 +8,10 @@ import {
   gameScreen,
   quitGameDialog,
   settingsScreen,
-  showSettingsButton,
   startButton,
   startScreen,
   winnerScreen,
+  domElement,
 } from "./dom/dom-elements";
 import {
   gameState,
@@ -279,7 +279,7 @@ function bindWinnerListeners(): void {
 
 /** Registers the global listeners that must exist from app start. */
 function registerGlobalListeners(): void {
-  showSettingsButton()?.addEventListener("click", (): void => {
+  domElement("showSettingsButton")?.addEventListener("click", (): void => {
     void showSettingsScreen();
   });
   document.addEventListener("keydown", handleEscapeKey);

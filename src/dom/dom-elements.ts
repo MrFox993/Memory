@@ -91,21 +91,12 @@ export function domElement<K extends DomElementKey>(
 /* Start screen -------------------------------------------------- */
 
 /**
- * Returns the button that opens the settings screen from the start screen.
- *
- * @returns Settings-navigation button or null when not in the DOM.
- */
-export function showSettingsButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#showSettingsButton");
-}
-
-/**
  * Returns the initial landing screen of the application.
  *
  * @returns Start-screen element or null when not in the DOM.
  */
 export function startScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#startScreen");
+  return domElement("startScreen");
 }
 
 /* Settings screen ----------------------------------------------- */
