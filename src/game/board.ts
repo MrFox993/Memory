@@ -1,5 +1,5 @@
 import { DISPLAY_NUMBER_OFFSET } from "../constants/game-config";
-import { cardTemplate, gameBoard } from "../dom/dom-elements";
+import { cardTemplate, gameBoard, domElement } from "../dom/dom-elements";
 import type { CardData, GameSettings, MemoryCardElements } from "../types/game";
 import { createCards } from "./card-factory";
 import { handleCardClick } from "./game-logic";
@@ -10,7 +10,7 @@ import { handleCardClick } from "./game-logic";
  * @param settings - Settings of the current game round.
  */
 function resetGameBoardElement(settings: GameSettings): void {
-  const board = gameBoard();
+  const board = domElement("gameBoard");
   if (!board) {
     return;
   }
@@ -69,7 +69,7 @@ function configureMemoryCard(
  * @param cardData - Generated data for the memory card.
  */
 function appendMemoryCard(cardData: CardData): void {
-  const board = gameBoard();
+  const board = domElement("gameBoard");
   const template = cardTemplate();
   if (!board || !template) {
     return;
@@ -94,7 +94,7 @@ function appendMemoryCard(cardData: CardData): void {
  * @param settings - Settings that define the board size and theme.
  */
 export function renderGameBoard(settings: GameSettings): void {
-  if (!gameBoard() || !cardTemplate()) {
+  if (!domElement("gameBoard") || !cardTemplate()) {
     return;
   }
 

@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the container element into which memory cards are rendered.
- *
- * @returns Game-board element or null when not in the DOM.
- */
-export function gameBoard(): HTMLDivElement | null {
-  return document.querySelector<HTMLDivElement>("#gameBoard");
-}
-
-/**
  * Returns the template used to create individual memory card elements.
  *
  * @returns Memory-card template element or null when not in the DOM.
