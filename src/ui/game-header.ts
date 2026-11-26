@@ -44,11 +44,11 @@ function updateActivePlayerPawn(): void {
 
 /** Applies the active-player visual state to the score cards. */
 function updateActiveScoreCards(): void {
-  blueScoreCard()?.classList.toggle(
+  domElement("blueScoreCard")?.classList.toggle(
     "game-score__player--active",
     gameState.activePlayer === "blue",
   );
-  orangeScoreCard()?.classList.toggle(
+  domElement("orangeScoreCard")?.classList.toggle(
     "game-score__player--active",
     gameState.activePlayer === "orange",
   );

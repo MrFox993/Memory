@@ -92,24 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the score card container for the blue player.
- *
- * @returns Blue-score card element or null when not in the DOM.
- */
-export function blueScoreCard(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#blueScoreCard");
-}
-
-/**
- * Returns the score card container for the orange player.
- *
- * @returns Orange-score card element or null when not in the DOM.
- */
-export function orangeScoreCard(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#orangeScoreCard");
-}
-
-/**
  * Returns the dialog overlay used to confirm leaving the current game.
  *
  * @returns Quit-game dialog element or null when not in the DOM.
