@@ -177,6 +177,8 @@ body:has(.end-screen:not(.hide)) {
 .memory-card {
   min-width: 0;
   min-height: 0;
+  max-width: 250px;
+  max-height: 350px;
   width: 100%;
   height: 100%;
   border: 0;
