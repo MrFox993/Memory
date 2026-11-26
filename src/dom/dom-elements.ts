@@ -88,18 +88,6 @@ export function domElement<K extends DomElementKey>(
   return document.querySelector<DomElementMap[K]>(domSelectors[key]);
 }
 
-/* Settings screen ----------------------------------------------- */
-
-
-/**
- * Returns the screen that contains all game setting controls.
- *
- * @returns Settings-screen element or null when not in the DOM.
- */
-export function settingsScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#settingsScreen");
-}
-
 /* Game screen --------------------------------------------------- */
 
 /**

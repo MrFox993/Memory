@@ -154,7 +154,7 @@ async function startGame(): Promise<void> {
   themeMod.applyThemeColors(settings.themeId);
   boardMod.renderGameBoard(settings);
   headerMod.updateGameHeader();
-  screensMod.showScreen(gameScreen(), settingsScreen());
+  screensMod.showScreen(gameScreen(), domElement("settingsScreen"));
 }
 
 /** Opens the quit confirmation dialog and moves focus into it. */
@@ -174,7 +174,7 @@ async function exitGame(): Promise<void> {
   clearEndScreenTimersIfLoaded();
   resetEndScreensIfLoaded();
   closeQuitGameDialog();
-  await showScreenLazy(settingsScreen(), gameScreen());
+  await showScreenLazy(domElement("settingsScreen"), gameScreen());
 }
 
 /** Resets the finished game and shows the settings screen again. */
@@ -183,7 +183,7 @@ async function backToStart(): Promise<void> {
   resetEndScreensIfLoaded();
   gameState.currentSettings = null;
   resetGameProgress();
-  await showScreenLazy(settingsScreen(), winnerScreen());
+  await showScreenLazy(domElement("settingsScreen"), winnerScreen());
 }
 
 /** Binds the settings screen listeners (radios + start button). */
@@ -228,7 +228,7 @@ async function showSettingsScreen(): Promise<void> {
   gameState.currentSettings = null;
   resetGameProgress();
   await ensureSettingsScreenReady();
-  await showScreenLazy(settingsScreen(), domElement("startScreen"));
+  await showScreenLazy(domElement("settingsScreen"), domElement("startScreen"));
 }
 
 /** Updates all settings-related UI elements after a radio selection changes. */
