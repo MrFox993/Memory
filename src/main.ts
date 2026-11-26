@@ -154,7 +154,7 @@ async function startGame(): Promise<void> {
   themeMod.applyThemeColors(settings.themeId);
   boardMod.renderGameBoard(settings);
   headerMod.updateGameHeader();
-  screensMod.showScreen(gameScreen(), domElement("settingsScreen"));
+  screensMod.showScreen(domElement("gameScreen"), domElement("settingsScreen"));
 }
 
 /** Opens the quit confirmation dialog and moves focus into it. */
@@ -174,7 +174,7 @@ async function exitGame(): Promise<void> {
   clearEndScreenTimersIfLoaded();
   resetEndScreensIfLoaded();
   closeQuitGameDialog();
-  await showScreenLazy(domElement("settingsScreen"), gameScreen());
+  await showScreenLazy(domElement("settingsScreen"), domElement("gameScreen"));
 }
 
 /** Resets the finished game and shows the settings screen again. */

@@ -1,5 +1,5 @@
 import { THEME_COLOR_MAP } from "../constants/game-config";
-import { gameOverScreen, gameScreen, winnerScreen } from "../dom/dom-elements";
+import { gameOverScreen, gameScreen, winnerScreen, domElement } from "../dom/dom-elements";
 
 /**
  * Sets a CSS custom property on the document root.
@@ -17,7 +17,7 @@ function setGameThemeVariable(name: string, value: string): void {
  * @param themeId - Selected theme identifier.
  */
 function updateThemedScreens(themeId: string): void {
-  gameScreen()?.setAttribute("data-theme", themeId);
+  domElement("gameScreen")?.setAttribute("data-theme", themeId);
   gameOverScreen()?.setAttribute("data-theme", themeId);
   winnerScreen()?.setAttribute("data-theme", themeId);
 }

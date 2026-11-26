@@ -9,6 +9,7 @@ import {
   winnerImageElement,
   winnerScreen,
   winnerStatusElement,
+  domElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";
 import type { Player } from "../types/game";
@@ -151,6 +152,6 @@ export async function showWinnerScreen(): Promise<void> {
 export async function showGameOverScreen(): Promise<void> {
   await loadScreen("gameOver");
   updateFinalScoreScreen();
-  gameScreen()?.classList.add("hide");
+  domElement("gameScreen")?.classList.add("hide");
   gameOverScreen()?.classList.remove("hide");
 }

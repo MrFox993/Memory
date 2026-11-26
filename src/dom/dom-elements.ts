@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the screen that contains the active memory game board.
- *
- * @returns Game-screen element or null when not in the DOM.
- */
-export function gameScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameScreen");
-}
-
-/**
  * Returns the container element into which memory cards are rendered.
  *
  * @returns Game-board element or null when not in the DOM.
