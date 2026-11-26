@@ -109,7 +109,7 @@ async function showScreenLazy(
 function bindGameListeners(): void {
   domElement("exitGameButton")?.addEventListener("click", openQuitGameDialog);
   domElement("backToGameButton")?.addEventListener("click", closeQuitGameDialog);
-  confirmQuitGameButton()?.addEventListener("click", (): void => {
+  domElement("confirmQuitGameButton")?.addEventListener("click", (): void => {
     void exitGame();
   });
   domElement("quitGameDialog")?.addEventListener("click", handleQuitDialogBackdropClick);
