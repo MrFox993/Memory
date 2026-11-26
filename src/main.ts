@@ -40,6 +40,11 @@ let gameHeaderModule: GameHeaderModule | null = null;
 let themeModule: ThemeModule | null = null;
 let timersModule: TimersModule | null = null;
 
+/* One-time initialization flags for lazy-loaded screens. */
+let settingsInitialized = false;
+let gameInitialized = false;
+let winnerCallbackRegistered = false;
+
 /** Loads the settings-screen UI module on demand. */
 async function getSelectionModule(): Promise<SelectionModule> {
   selectionModule ??= await import("./ui/selection");
@@ -99,11 +104,6 @@ async function showScreenLazy(
   const { showScreen } = await getScreensModule();
   showScreen(screenToShow, screenToHide);
 }
-
-/* One-time initialization flags for lazy-loaded screens. */
-let settingsInitialized = false;
-let gameInitialized = false;
-let winnerCallbackRegistered = false;
 
 /** Binds the game screen listeners (exit button and quit dialog). */
 function bindGameListeners(): void {

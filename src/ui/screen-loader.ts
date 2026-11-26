@@ -1,14 +1,3 @@
-/**
- * Screen loader: fetches HTML fragments of individual screens on demand
- * and injects them into the main mount point (#app). Each screen is
- * loaded at most once and served from the internal cache afterwards.
- */
-
-/** Identifier of a lazy-loadable screen. */
-export type ScreenName = "settings" | "game" | "gameOver" | "winner";
-
-type ScreenHtmlLoader = () => Promise<{ default: string }>;
-
 /* Screen registry and mount point ------------------------------- */
 
 const SCREEN_HTML_LOADERS: Record<ScreenName, ScreenHtmlLoader> = {
@@ -28,6 +17,17 @@ const loadedScreens = new Set<ScreenName>();
  * because raw HTML fragments bypass Vite's HTML transformation.
  */
 const PUBLIC_ASSET_ATTRIBUTE_PATTERN = /(src|href)="\/(?!\/)/g;
+
+/**
+ * Screen loader: fetches HTML fragments of individual screens on demand
+ * and injects them into the main mount point (#app). Each screen is
+ * loaded at most once and served from the internal cache afterwards.
+ */
+
+/** Identifier of a lazy-loadable screen. */
+export type ScreenName = "settings" | "game" | "gameOver" | "winner";
+
+type ScreenHtmlLoader = () => Promise<{ default: string }>;
 
 /**
  * Resolves the application mount point from the DOM.
