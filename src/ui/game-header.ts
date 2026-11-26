@@ -14,7 +14,7 @@ import { getPlayerLabel } from "../utils/players";
 /** Updates the visible score values for both players. */
 function updateScoreDisplay(): void {
   const blue = domElement("blueScoreElement");
-  const orange = orangeScoreElement();
+  const orange = domElement("orangeScoreElement");
   if (blue) {
     blue.textContent = String(gameState.scores.blue);
   }
