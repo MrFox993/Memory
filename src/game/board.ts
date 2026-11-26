@@ -70,7 +70,7 @@ function configureMemoryCard(
  */
 function appendMemoryCard(cardData: CardData): void {
   const board = domElement("gameBoard");
-  const template = cardTemplate();
+  const template = domElement("cardTemplate");
   if (!board || !template) {
     return;
   }
@@ -94,7 +94,7 @@ function appendMemoryCard(cardData: CardData): void {
  * @param settings - Settings that define the board size and theme.
  */
 export function renderGameBoard(settings: GameSettings): void {
-  if (!domElement("gameBoard") || !cardTemplate()) {
+  if (!domElement("gameBoard") || !domElement("cardTemplate")) {
     return;
   }
 

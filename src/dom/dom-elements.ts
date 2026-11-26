@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the template used to create individual memory card elements.
- *
- * @returns Memory-card template element or null when not in the DOM.
- */
-export function cardTemplate(): HTMLTemplateElement | null {
-  return document.querySelector<HTMLTemplateElement>("#memoryCardTemplate");
-}
-
-/**
  * Returns the accessible live region that announces the current player.
  *
  * @returns Active-player display element or null when not in the DOM.
