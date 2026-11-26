@@ -92,15 +92,6 @@ export function domElement<K extends DomElementKey>(
 
 
 /**
- * Returns the pawn image that visualizes the currently active player.
- *
- * @returns Active-player pawn image or null when not in the DOM.
- */
-export function activePlayerPawn(): HTMLImageElement | null {
-  return document.querySelector<HTMLImageElement>("#activePlayerPawn");
-}
-
-/**
  * Returns the score value element for the blue player.
  *
  * @returns Blue-score element or null when not in the DOM.

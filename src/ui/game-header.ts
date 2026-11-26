@@ -33,7 +33,7 @@ function updateActivePlayerDisplay(): void {
 
 /** Updates the pawn image that represents the active player. */
 function updateActivePlayerPawn(): void {
-  const pawn = activePlayerPawn();
+  const pawn = domElement("activePlayerPawn");
   if (!pawn) {
     return;
   }
