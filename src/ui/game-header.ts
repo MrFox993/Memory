@@ -5,6 +5,7 @@ import {
   blueScoreElement,
   orangeScoreCard,
   orangeScoreElement,
+  domElement,
 } from "../dom/dom-elements";
 import { gameState } from "../game/game-state";
 import { getPlayerPawnSrc } from "../utils/assets";
@@ -24,7 +25,7 @@ function updateScoreDisplay(): void {
 
 /** Updates the accessible label for the current player display. */
 function updateActivePlayerDisplay(): void {
-  activePlayerDisplay()?.setAttribute(
+  domElement("activePlayerDisplay")?.setAttribute(
     "aria-label",
     `Current player: ${gameState.activePlayer}`,
   );
