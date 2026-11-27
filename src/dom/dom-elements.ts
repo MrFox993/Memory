@@ -1,251 +1,119 @@
 /**
  * Lazy getters for DOM elements of the individual screens.
+ * Maps logical element keys to their CSS selector strings.
  *
  * Screens are injected into the DOM at runtime, so element references must
  * not be cached at module load time. Each getter runs `document.querySelector`
  * freshly on every call.
+ * Grouped by screen:
+ * - Start screen
+ * - Settings screen
+ * - Game screen (board, score cards, quit dialog)
+ * - Game-over screen
+ * - Winner screen
  */
 
-/* Start screen -------------------------------------------------- */
+const domSelectors = {
+  // Start screen
+  showSettingsButton: "#showSettingsButton",
+  startScreen: "#startScreen",
+
+  // Settings screen
+  startButton: "#startGameButton",
+  settingsScreen: "#settingsScreen",
+
+  // Game screen
+  exitGameButton: "#exitGameButton",
+  gameScreen: "#gameScreen",
+  gameBoard: "#gameBoard",
+  cardTemplate: "#memoryCardTemplate",
+  activePlayerDisplay: "#activePlayerDisplay",
+  activePlayerPawn: "#activePlayerPawn",
+  blueScoreElement: "#blueScore",
+  orangeScoreElement: "#orangeScore",
+  blueScoreCard: "#blueScoreCard",
+  orangeScoreCard: "#orangeScoreCard",
+  quitGameDialog: "#quitGameDialog",
+  backToGameButton: "#backToGameButton",
+  confirmQuitGameButton: "#confirmQuitGameButton",
+
+  // Game-over screen
+  gameOverScreen: "#gameOverScreen",
+  gameOverPanel: "#gameOverPanel",
+  finalBlueScoreElement: "#finalBlueScore",
+  finalOrangeScoreElement: "#finalOrangeScore",
+
+  // Winner screen
+  winnerScreen: "#winnerScreen",
+  winnerStatusElement: "#winnerStatus",
+  winnerImageElement: "#winnerImage",
+  winnerConfettiElement: "#winnerConfetti",
+  backToStartButton: "#backToStartButton",
+} as const;
 
 /**
- * Returns the button that opens the settings screen from the start screen.
+ * Maps every logical element key to its concrete `HTMLElement` subtype.
  *
- * @returns Settings-navigation button or null when not in the DOM.
+ * This type is the single source of truth for the element types returned by
+ * {@link domElement}. Add a new entry here whenever a new selector is
+ * registered in `domSelectors`.
  */
-export function showSettingsButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#showSettingsButton");
-}
+type DomElementMap = {
+  // Start screen
+  showSettingsButton: HTMLButtonElement;
+  startScreen: HTMLElement;
+
+  // Settings screen
+  startButton: HTMLButtonElement;
+  settingsScreen: HTMLElement;
+
+  // Game screen
+  exitGameButton: HTMLButtonElement;
+  gameScreen: HTMLElement;
+  gameBoard: HTMLDivElement;
+  cardTemplate: HTMLTemplateElement;
+  activePlayerDisplay: HTMLElement;
+  activePlayerPawn: HTMLImageElement;
+  blueScoreElement: HTMLElement;
+  orangeScoreElement: HTMLElement;
+  blueScoreCard: HTMLElement;
+  orangeScoreCard: HTMLElement;
+  quitGameDialog: HTMLElement;
+  backToGameButton: HTMLButtonElement;
+  confirmQuitGameButton: HTMLButtonElement;
+
+  // Game-over screen
+  gameOverScreen: HTMLElement;
+  gameOverPanel: HTMLElement;
+  finalBlueScoreElement: HTMLElement;
+  finalOrangeScoreElement: HTMLElement;
+
+  // Winner screen
+  winnerScreen: HTMLElement;
+  winnerStatusElement: HTMLElement;
+  winnerImageElement: HTMLImageElement;
+  winnerConfettiElement: HTMLImageElement;
+  backToStartButton: HTMLButtonElement;
+};
+
+/** Union of all valid keys that can be passed to {@link domElement}. */
+export type DomElementKey = keyof DomElementMap;
 
 /**
- * Returns the initial landing screen of the application.
+ * Returns the DOM element identified by `key`, or `null` when the element is
+ * not yet present in the document.
  *
- * @returns Start-screen element or null when not in the DOM.
- */
-export function startScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#startScreen");
-}
-
-/* Settings screen ----------------------------------------------- */
-
-/**
- * Returns the button that starts a new game with the selected settings.
+ * The lookup is performed via `document.querySelector` on every invocation so
+ * that callers always receive a fresh reference even after dynamic screen
+ * transitions.
  *
- * @returns Start-game button or null when not in the DOM.
+ * @param key - The logical identifier of the element as defined in
+ *   {@link DomElementMap}.
+ * @returns The strongly-typed element for the given `key`, or `null` if no
+ *   matching element exists in the current document.
  */
-export function startButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#startGameButton");
-}
-
-/**
- * Returns the screen that contains all game setting controls.
- *
- * @returns Settings-screen element or null when not in the DOM.
- */
-export function settingsScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#settingsScreen");
-}
-
-/* Game screen --------------------------------------------------- */
-
-/**
- * Returns the button that opens the quit confirmation dialog during a game.
- *
- * @returns Exit-game button or null when not in the DOM.
- */
-export function exitGameButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#exitGameButton");
-}
-
-/**
- * Returns the screen that contains the active memory game board.
- *
- * @returns Game-screen element or null when not in the DOM.
- */
-export function gameScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameScreen");
-}
-
-/**
- * Returns the container element into which memory cards are rendered.
- *
- * @returns Game-board element or null when not in the DOM.
- */
-export function gameBoard(): HTMLDivElement | null {
-  return document.querySelector<HTMLDivElement>("#gameBoard");
-}
-
-/**
- * Returns the template used to create individual memory card elements.
- *
- * @returns Memory-card template element or null when not in the DOM.
- */
-export function cardTemplate(): HTMLTemplateElement | null {
-  return document.querySelector<HTMLTemplateElement>("#memoryCardTemplate");
-}
-
-/**
- * Returns the accessible live region that announces the current player.
- *
- * @returns Active-player display element or null when not in the DOM.
- */
-export function activePlayerDisplay(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#activePlayerDisplay");
-}
-
-/**
- * Returns the pawn image that visualizes the currently active player.
- *
- * @returns Active-player pawn image or null when not in the DOM.
- */
-export function activePlayerPawn(): HTMLImageElement | null {
-  return document.querySelector<HTMLImageElement>("#activePlayerPawn");
-}
-
-/**
- * Returns the score value element for the blue player.
- *
- * @returns Blue-score element or null when not in the DOM.
- */
-export function blueScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#blueScore");
-}
-
-/**
- * Returns the score value element for the orange player.
- *
- * @returns Orange-score element or null when not in the DOM.
- */
-export function orangeScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#orangeScore");
-}
-
-/**
- * Returns the score card container for the blue player.
- *
- * @returns Blue-score card element or null when not in the DOM.
- */
-export function blueScoreCard(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#blueScoreCard");
-}
-
-/**
- * Returns the score card container for the orange player.
- *
- * @returns Orange-score card element or null when not in the DOM.
- */
-export function orangeScoreCard(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#orangeScoreCard");
-}
-
-/**
- * Returns the dialog overlay used to confirm leaving the current game.
- *
- * @returns Quit-game dialog element or null when not in the DOM.
- */
-export function quitGameDialog(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#quitGameDialog");
-}
-
-/**
- * Returns the button that closes the quit confirmation dialog.
- *
- * @returns Back-to-game button or null when not in the DOM.
- */
-export function backToGameButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#backToGameButton");
-}
-
-/**
- * Returns the button that confirms leaving the current game.
- *
- * @returns Confirm-quit-game button or null when not in the DOM.
- */
-export function confirmQuitGameButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#confirmQuitGameButton");
-}
-
-/* Game-over screen ---------------------------------------------- */
-
-/**
- * Returns the intermediate end screen that displays the final score.
- *
- * @returns Game-over screen element or null when not in the DOM.
- */
-export function gameOverScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameOverScreen");
-}
-
-/**
- * Returns the animated panel inside the game-over screen.
- *
- * @returns Game-over panel element or null when not in the DOM.
- */
-export function gameOverPanel(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#gameOverPanel");
-}
-
-/**
- * Returns the final blue score value on the game-over screen.
- *
- * @returns Final blue-score element or null when not in the DOM.
- */
-export function finalBlueScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#finalBlueScore");
-}
-
-/**
- * Returns the final orange score value on the game-over screen.
- *
- * @returns Final orange-score element or null when not in the DOM.
- */
-export function finalOrangeScoreElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#finalOrangeScore");
-}
-
-/* Winner screen ------------------------------------------------- */
-
-/**
- * Returns the final screen that displays the winner or draw result.
- *
- * @returns Winner-screen element or null when not in the DOM.
- */
-export function winnerScreen(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#winnerScreen");
-}
-
-/**
- * Returns the text element that displays the winner status.
- *
- * @returns Winner-status element or null when not in the DOM.
- */
-export function winnerStatusElement(): HTMLElement | null {
-  return document.querySelector<HTMLElement>("#winnerStatus");
-}
-
-/**
- * Returns the image element that displays the winning player or draw icon.
- *
- * @returns Winner image element or null when not in the DOM.
- */
-export function winnerImageElement(): HTMLImageElement | null {
-  return document.querySelector<HTMLImageElement>("#winnerImage");
-}
-
-/**
- * Returns the decorative confetti image on the winner screen.
- *
- * @returns Winner-confetti image or null when not in the DOM.
- */
-export function winnerConfettiElement(): HTMLImageElement | null {
-  return document.querySelector<HTMLImageElement>("#winnerConfetti");
-}
-
-/**
- * Returns the button that returns from the winner screen to the settings screen.
- *
- * @returns Back-to-start button or null when not in the DOM.
- */
-export function backToStartButton(): HTMLButtonElement | null {
-  return document.querySelector<HTMLButtonElement>("#backToStartButton");
+export function domElement<K extends DomElementKey>(
+  key: K,
+): DomElementMap[K] | null {
+  return document.querySelector<DomElementMap[K]>(domSelectors[key]);
 }

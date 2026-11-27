@@ -187,5 +187,6 @@ Deployment to GitHub Pages is prepared in `.github/workflows/deploy.yml`. On eve
 
 - Add new themes to `public/assets/<theme-folder>/`, then register them in `THEME_ASSET_MAP`, `THEME_PREVIEW_MAP` and `THEME_COLOR_MAP` inside `src/constants/game-config.ts`.
 - Add new board sizes via `BOARD_SIZE_MAP`. The card count should be even because the game always creates card pairs.
-- Register new UI elements centrally in `src/dom/dom-elements.ts` so other modules do not need duplicate DOM queries. Because screens are injected lazily, prefer function-based accessors over cached references so that elements are resolved after their fragment has been loaded.
+- Register new UI elements centrally in `src/dom/dom-elements.ts`: add the CSS selector to `domSelectors` and the matching element type to `DomElementMap`.
+  Other modules then access the element via `domElement("<key>")`. Because screens are injected lazily, the lookup runs on every call rather than being cached at module load time, so elements are always resolved after their fragment has been injected.
 - Add new screens by creating an HTML fragment under `src/screens/`, registering it in `SCREEN_HTML_LOADERS` inside `src/ui/screen-loader.ts`, and loading it on demand via `loadScreen("<name>")`.

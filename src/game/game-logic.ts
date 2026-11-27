@@ -6,7 +6,7 @@ import {
   RESET_TURN_DELAY_MS,
   WINNER_SCREEN_DELAY_MS,
 } from "../constants/game-config";
-import { gameOverPanel } from "../dom/dom-elements";
+import { domElement } from "../dom/dom-elements";
 import { showGameOverScreen, showWinnerScreen } from "../ui/screens";
 import { updateGameHeader } from "../ui/game-header";
 import { gameState } from "./game-state";
@@ -35,7 +35,7 @@ function finishGame(): void {
   void showGameOverScreen();
 
   const gameOverExitTimeoutId = window.setTimeout((): void => {
-    gameOverPanel()?.classList.add("end-screen__panel--exit-up");
+    domElement("gameOverPanel")?.classList.add("end-screen__panel--exit-up");
     setGameTimer(
       "winnerScreen",
       window.setTimeout((): void => {

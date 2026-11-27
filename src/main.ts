@@ -1,18 +1,6 @@
 import "./styles/main.scss";
 
-import {
-  backToGameButton,
-  backToStartButton,
-  confirmQuitGameButton,
-  exitGameButton,
-  gameScreen,
-  quitGameDialog,
-  settingsScreen,
-  showSettingsButton,
-  startButton,
-  startScreen,
-  winnerScreen,
-} from "./dom/dom-elements";
+import { domElement } from "./dom/dom-elements";
 import {
   gameState,
   resetGameProgress,
@@ -39,6 +27,11 @@ let boardModule: BoardModule | null = null;
 let gameHeaderModule: GameHeaderModule | null = null;
 let themeModule: ThemeModule | null = null;
 let timersModule: TimersModule | null = null;
+
+/* One-time initialization flags for lazy-loaded screens. */
+let settingsInitialized = false;
+let gameInitialized = false;
+let winnerCallbackRegistered = false;
 
 /** Loads the settings-screen UI module on demand. */
 async function getSelectionModule(): Promise<SelectionModule> {
@@ -100,19 +93,20 @@ async function showScreenLazy(
   showScreen(screenToShow, screenToHide);
 }
 
-/* One-time initialization flags for lazy-loaded screens. */
-let settingsInitialized = false;
-let gameInitialized = false;
-let winnerCallbackRegistered = false;
-
 /** Binds the game screen listeners (exit button and quit dialog). */
 function bindGameListeners(): void {
-  exitGameButton()?.addEventListener("click", openQuitGameDialog);
-  backToGameButton()?.addEventListener("click", closeQuitGameDialog);
-  confirmQuitGameButton()?.addEventListener("click", (): void => {
+  domElement("exitGameButton")?.addEventListener("click", openQuitGameDialog);
+  domElement("backToGameButton")?.addEventListener(
+    "click",
+    closeQuitGameDialog,
+  );
+  domElement("confirmQuitGameButton")?.addEventListener("click", (): void => {
     void exitGame();
   });
-  quitGameDialog()?.addEventListener("click", handleQuitDialogBackdropClick);
+  domElement("quitGameDialog")?.addEventListener(
+    "click",
+    handleQuitDialogBackdropClick,
+  );
 }
 
 /** Lazy-loads the game screen and binds its listeners on first use. */
@@ -154,19 +148,19 @@ async function startGame(): Promise<void> {
   themeMod.applyThemeColors(settings.themeId);
   boardMod.renderGameBoard(settings);
   headerMod.updateGameHeader();
-  screensMod.showScreen(gameScreen(), settingsScreen());
+  screensMod.showScreen(domElement("gameScreen"), domElement("settingsScreen"));
 }
 
 /** Opens the quit confirmation dialog and moves focus into it. */
 function openQuitGameDialog(): void {
-  quitGameDialog()?.classList.remove("hide");
-  backToGameButton()?.focus();
+  domElement("quitGameDialog")?.classList.remove("hide");
+  domElement("backToGameButton")?.focus();
 }
 
 /** Closes the quit confirmation dialog and restores focus to the exit button. */
 function closeQuitGameDialog(): void {
-  quitGameDialog()?.classList.add("hide");
-  exitGameButton()?.focus();
+  domElement("quitGameDialog")?.classList.add("hide");
+  domElement("exitGameButton")?.focus();
 }
 
 /** Leaves the current game and returns to the settings screen. */
@@ -174,7 +168,7 @@ async function exitGame(): Promise<void> {
   clearEndScreenTimersIfLoaded();
   resetEndScreensIfLoaded();
   closeQuitGameDialog();
-  await showScreenLazy(settingsScreen(), gameScreen());
+  await showScreenLazy(domElement("settingsScreen"), domElement("gameScreen"));
 }
 
 /** Resets the finished game and shows the settings screen again. */
@@ -183,7 +177,10 @@ async function backToStart(): Promise<void> {
   resetEndScreensIfLoaded();
   gameState.currentSettings = null;
   resetGameProgress();
-  await showScreenLazy(settingsScreen(), winnerScreen());
+  await showScreenLazy(
+    domElement("settingsScreen"),
+    domElement("winnerScreen"),
+  );
 }
 
 /** Binds the settings screen listeners (radios + start button). */
@@ -207,7 +204,7 @@ async function bindSettingsListeners(): Promise<void> {
   themeOptions?.addEventListener("pointerleave", (): void => {
     updateThemePreview();
   });
-  startButton()?.addEventListener("click", (): void => {
+  domElement("startButton")?.addEventListener("click", (): void => {
     void startGame();
   });
 }
@@ -228,7 +225,7 @@ async function showSettingsScreen(): Promise<void> {
   gameState.currentSettings = null;
   resetGameProgress();
   await ensureSettingsScreenReady();
-  await showScreenLazy(settingsScreen(), startScreen());
+  await showScreenLazy(domElement("settingsScreen"), domElement("startScreen"));
 }
 
 /** Updates all settings-related UI elements after a radio selection changes. */
@@ -253,7 +250,7 @@ async function handleSettingsSelectionChange(): Promise<void> {
  * @param event - Mouse event dispatched by the dialog overlay.
  */
 function handleQuitDialogBackdropClick(event: MouseEvent): void {
-  if (event.target === quitGameDialog()) {
+  if (event.target === domElement("quitGameDialog")) {
     closeQuitGameDialog();
   }
 }
@@ -264,7 +261,7 @@ function handleQuitDialogBackdropClick(event: MouseEvent): void {
  * @param event - Keyboard event dispatched on the document.
  */
 function handleEscapeKey(event: KeyboardEvent): void {
-  const dialog = quitGameDialog();
+  const dialog = domElement("quitGameDialog");
   if (event.key === "Escape" && dialog && !dialog.classList.contains("hide")) {
     closeQuitGameDialog();
   }
@@ -272,14 +269,14 @@ function handleEscapeKey(event: KeyboardEvent): void {
 
 /** Binds the winner screen listeners after it has been loaded. */
 function bindWinnerListeners(): void {
-  backToStartButton()?.addEventListener("click", (): void => {
+  domElement("backToStartButton")?.addEventListener("click", (): void => {
     void backToStart();
   });
 }
 
 /** Registers the global listeners that must exist from app start. */
 function registerGlobalListeners(): void {
-  showSettingsButton()?.addEventListener("click", (): void => {
+  domElement("showSettingsButton")?.addEventListener("click", (): void => {
     void showSettingsScreen();
   });
   document.addEventListener("keydown", handleEscapeKey);
